@@ -8,6 +8,10 @@
  * is the difference between ten calls and three.
  *
  *   node tools/v8/figma-push.mjs <svg dir> --rows=<y0,y1,..> --per=10 [--out=dir]
+ *   node tools/v8/figma-push.mjs <svg dir> --swap=a,b,c [--out=dir]
+ *
+ * `--swap` rebuilds the vectors inside sets that already exist instead of
+ * creating them: component ids survive, so every Catalog instance stays linked.
  */
 import { readFileSync, readdirSync, writeFileSync, mkdirSync } from 'node:fs';
 import { join, dirname } from 'node:path';
@@ -91,7 +95,58 @@ for (const [name, x, y, base, stars] of JOBS) {
 }
 return { createdNodeIds: made.map((m) => m.id), made };`;
 
+const SWAP = arg('swap', '').split(',').filter(Boolean);
+
+const swapBody = (chunk) => `const p = figma.root.children.find((n) => n.name === 'Components');
+if (figma.currentPage.id !== p.id) await figma.setCurrentPageAsync(p);
+if (figma.currentPage.name !== 'Components') return 'wrong page: ' + figma.currentPage.name;
+
+const UNIT = '${unit}';
+const N = UNIT.match(/-?\\d*\\.?\\d+/g).map(Number);
+const star = (cx, cy, R) => { let i = 0; return UNIT.replace(/-?\\d*\\.?\\d+/g, () => { const v = N[i] * R + (i++ % 2 ? cy : cx); return String(Math.round(v * 1e4) / 1e4); }); };
+const SW = (d) => '<path d="' + d + '" fill="none" stroke="black" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>';
+const SOLID = (d) => '<path d="' + d + '" fill="black"/>';
+
+const JOBS = ${JSON.stringify(chunk.map((j) => [j.name, j.base, j.stars]))};
+
+const byName = new Map(figma.currentPage.children.map((n) => [n.name, n]));
+const missing = JOBS.filter(([n]) => !byName.has(n)).map(([n]) => n);
+if (missing.length) throw new Error('not on the page: ' + missing.join(' '));
+
+const done = [];
+for (const [name, base, stars] of JOBS) {
+  const set = byName.get(name);
+  const v = set.children.find((c) => c.name === 'Container=regular, Style=stroke, Corners=regular');
+  if (!v) throw new Error('no stroke variant on ' + name);
+  const svg = '<svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">'
+    + base.map(SW).join('') + stars.map((s) => SOLID(star(s[0], s[1], s[2]))).join('') + '</svg>';
+  const frame = figma.createNodeFromSvg(svg);
+  for (const old of [...v.children]) old.remove();
+  v.appendChild(frame); frame.x = 0; frame.y = 0;
+  for (const k of [...frame.children]) {
+    const kx = k.x, ky = k.y;
+    v.appendChild(k); k.x = kx; k.y = ky;
+    k.constraints = { horizontal: 'SCALE', vertical: 'SCALE' };
+    k.strokeAlign = 'CENTER';
+    k.name = 'Vector';
+  }
+  frame.remove();
+  done.push({ name, id: v.id, layers: v.children.length });
+}
+return { mutatedNodeIds: done.map((d) => d.id), done };`;
+
 mkdirSync(OUT, { recursive: true });
+if (SWAP.length) {
+  const only = jobs.filter((j) => SWAP.includes(j.name));
+  const missing = SWAP.filter((n) => !only.some((j) => j.name === n));
+  if (missing.length) throw new Error('not in the directory: ' + missing.join(' '));
+  for (let i = 0, k = 1; i < only.length; i += PER, k++) {
+    const f = join(OUT, `swap-${k}.js`);
+    writeFileSync(f, swapBody(only.slice(i, i + PER)));
+    console.log(f, `${Math.min(PER, only.length - i)} sets`, `${readFileSync(f, 'utf8').length} chars`);
+  }
+  process.exit(0);
+}
 const chunks = [];
 for (let i = 0; i < jobs.length; i += PER) chunks.push(jobs.slice(i, i + PER));
 chunks.forEach((c, i) => {
