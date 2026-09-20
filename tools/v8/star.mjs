@@ -13,7 +13,8 @@
  * is that scaled. He used R 2, 2.5, 3, 3.5 and 4, and no other, with centres on
  * the half unit. A cluster is two stars, three where the drawing has room.
  */
-const f = (v) => { const s = (Math.round(v * 1e4) / 1e4).toFixed(4).replace(/\.?0+$/, ''); return s === '-0' ? '0' : s; };
+const round = (v, dp) => { const s = v.toFixed(dp).replace(/\.?0+$/, ''); return s === '-0' ? '0' : s; };
+const f = (v) => round(Math.round(v * 1e4) / 1e4, 4);
 
 // One quadrant, at R=1 about the origin, starting on the edge below the top tip
 // and running clockwise: straight to the waist, the waist fillet, straight to
@@ -31,6 +32,19 @@ const rot = ([x, y], k) => (k === 0 ? [x, y] : k === 1 ? [-y, x] : k === 2 ? [-x
 /** The sparkle of half-extent `R` centred on `c`, as a closed filled path. */
 export function star([cx, cy], R) {
   const P = (p, k) => { const q = rot(p, k); return `${f(cx + q[0] * R)} ${f(cy + q[1] * R)}`; };
+  let d = `M${P(START, 0)}`;
+  for (let k = 0; k < 4; k++) for (const [cmd, ...pts] of Q) d += cmd + pts.map((p) => P(p, k)).join(' ');
+  return `${d}Z`;
+}
+
+/**
+ * The same star at R=1 about the origin, carried to `dp` places. The Figma
+ * payload scales THIS rather than shipping 52 path strings, and 4 places is
+ * not enough to scale from: it drifts 2e-4, which is past the 1e-4 the file's
+ * own comparisons call noise.
+ */
+export function unitStar(dp = 6) {
+  const P = (p, k) => { const q = rot(p, k); return `${round(q[0], dp)} ${round(q[1], dp)}`; };
   let d = `M${P(START, 0)}`;
   for (let k = 0; k < 4; k++) for (const [cmd, ...pts] of Q) d += cmd + pts.map((p) => P(p, k)).join(' ');
   return `${d}Z`;
