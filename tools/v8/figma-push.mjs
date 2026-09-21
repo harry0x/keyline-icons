@@ -34,20 +34,20 @@ const jobs = [];
 readdirSync(DIR).filter((f) => f.endsWith('.svg')).sort().forEach((f, i) => {
   const name = f.replace('.svg', '');
   const svg = readFileSync(join(DIR, f), 'utf8');
-  const base = [], stars = [];
+  const base = [], stars = [], solids = [];
   for (const tag of svg.match(/<path[^>]*>/g) || []) {
     const d = (tag.match(/ d="([^"]+)"/) || [])[1];
     if (/ stroke="(?!none)/.test(tag)) { base.push(d); continue; }
-    // a filled path is a star: recover its centre and half-extent
+    // A filled path is a star wherever it matches one; `list`'s bullets and
+    // `shopping-cart`'s wheels are filled too, and those travel as they are.
     const v = (d.match(/-?\d*\.?\d+/g) || []).map(Number);
     const xs = v.filter((_, k) => k % 2 === 0), ys = v.filter((_, k) => k % 2 === 1);
     const cx = (Math.min(...xs) + Math.max(...xs)) / 2, cy = (Math.min(...ys) + Math.max(...ys)) / 2;
     const R = ((Math.max(...xs) - Math.min(...xs)) + (Math.max(...ys) - Math.min(...ys))) / 4;
-    if (star([cx, cy], R) !== d) throw new Error(`${name}: filled path is not the house star`);
-    stars.push([cx, cy, R]);
+    if (star([cx, cy], R) === d) stars.push([cx, cy, R]); else solids.push(d);
   }
   const row = Math.floor(i / PER), col = i % PER;
-  jobs.push({ name, x: col * PITCH, y: ROWS[row], base, stars });
+  jobs.push({ name, x: col * PITCH, y: ROWS[row], base, stars, solids });
 });
 
 const body = (chunk) => `const p = figma.root.children.find((n) => n.name === 'Components');
@@ -60,7 +60,7 @@ const star = (cx, cy, R) => { let i = 0; return UNIT.replace(/-?\\d*\\.?\\d+/g, 
 const SW = (d) => '<path d="' + d + '" fill="none" stroke="black" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>';
 const SOLID = (d) => '<path d="' + d + '" fill="black"/>';
 
-const JOBS = ${JSON.stringify(chunk.map((j) => [j.name, j.x, j.y, j.base, j.stars]))};
+const JOBS = ${JSON.stringify(chunk.map((j) => [j.name, j.x, j.y, j.base, j.stars, j.solids]))};
 
 const taken = new Set(figma.currentPage.children.map((n) => n.name));
 const clash = JOBS.filter(([n]) => taken.has(n));
@@ -70,9 +70,9 @@ const busy = JOBS.filter(([, x, y]) => slots.has(x + ',' + y));
 if (busy.length) throw new Error('slot taken: ' + busy.map((b) => b[0]).join(' '));
 
 const made = [];
-for (const [name, x, y, base, stars] of JOBS) {
+for (const [name, x, y, base, stars, solids] of JOBS) {
   const svg = '<svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">'
-    + base.map(SW).join('') + stars.map((s) => SOLID(star(s[0], s[1], s[2]))).join('') + '</svg>';
+    + base.map(SW).join('') + (solids || []).map(SOLID).join('') + stars.map((s) => SOLID(star(s[0], s[1], s[2]))).join('') + '</svg>';
   const frame = figma.createNodeFromSvg(svg);
   const c = figma.createComponent();
   c.resize(24, 24); c.clipsContent = false; c.fills = [];
@@ -107,19 +107,19 @@ const star = (cx, cy, R) => { let i = 0; return UNIT.replace(/-?\\d*\\.?\\d+/g, 
 const SW = (d) => '<path d="' + d + '" fill="none" stroke="black" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>';
 const SOLID = (d) => '<path d="' + d + '" fill="black"/>';
 
-const JOBS = ${JSON.stringify(chunk.map((j) => [j.name, j.base, j.stars]))};
+const JOBS = ${JSON.stringify(chunk.map((j) => [j.name, j.base, j.stars, j.solids]))};
 
 const byName = new Map(figma.currentPage.children.map((n) => [n.name, n]));
 const missing = JOBS.filter(([n]) => !byName.has(n)).map(([n]) => n);
 if (missing.length) throw new Error('not on the page: ' + missing.join(' '));
 
 const done = [];
-for (const [name, base, stars] of JOBS) {
+for (const [name, base, stars, solids] of JOBS) {
   const set = byName.get(name);
   const v = set.children.find((c) => c.name === 'Container=regular, Style=stroke, Corners=regular');
   if (!v) throw new Error('no stroke variant on ' + name);
   const svg = '<svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">'
-    + base.map(SW).join('') + stars.map((s) => SOLID(star(s[0], s[1], s[2]))).join('') + '</svg>';
+    + base.map(SW).join('') + (solids || []).map(SOLID).join('') + stars.map((s) => SOLID(star(s[0], s[1], s[2]))).join('') + '</svg>';
   const frame = figma.createNodeFromSvg(svg);
   for (const old of [...v.children]) old.remove();
   v.appendChild(frame); frame.x = 0; frame.y = 0;

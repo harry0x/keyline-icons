@@ -38,7 +38,7 @@ const ICONS = {
   'folder-sparkles':      { base: 'folder',      stars: [[18.5, 6.5, 3.5], [8.5, 14.5, 2]] },
   'user-sparkles':        { base: 'user',        stars: [[18.5, 5, 3], [4.5, 9, 2]] },
   'calendar-sparkles':    { base: 'calendar',    stars: [[18.5, 18.5, 3.5], [8, 14, 2]] },
-  'table-sparkles':       { base: 'table',       stars: [[18.5, 5.5, 3.5], [6.5, 19, 2]], keep: 2 },
+  'table-sparkles':       { base: 'table',       stars: [[18.5, 5.5, 3.5], [6.5, 19, 2]] },
   'terminal-sparkles':    { base: 'terminal',    stars: [[17.5, 7.5, 3.5], [12.5, 13, 2]] },
   'globe-sparkles':       { base: 'globe',       stars: [[20, 4, 3], [4, 20, 2]] },
   'camera-sparkles':      { base: 'camera',      stars: [[19.5, 6, 3], [5, 17, 2]] },
@@ -66,6 +66,47 @@ const ICONS = {
   'phone-sparkles':       { base: 'phone',       stars: [[19.5, 4.5, 3], [3.5, 20.5, 2]] },
 };
 
+
+/**
+ * His own seventeen, rebuilt from the SHIPPED bases rather than carried over
+ * as files (21 Sep 2026, "fix, and improve if needed and then add my icons
+ * too"). Rebuilding is what lets the cut and the seat be solved: his drawings
+ * are hand-cut, so moving a star would leave the opening where it was.
+ *
+ * Three differ from the shipped base and are restored to it:
+ *   film   he moved the whole filmstrip by (-1, +1) to make room. The sparkles
+ *          sit INSIDE its top-right corner and never reach past 21, so the
+ *          move bought nothing and cost the centring: 1 left, 1 down.
+ *   list   his bars are `menu`'s three, run out to x=2 and cut. Ours is bullets
+ *          plus bars, and a `list-sparkles` without the bullets is a different
+ *          family; the name follows the drawing or the drawing follows the name.
+ *   image  the sun comes out and a sparkle takes its place, which is his own
+ *          move and is kept: `drop` does it.
+ */
+const HIS = {
+  'audio-lines-sparkles':    { base: 'audio-lines',    stars: [[5.5, 4.5, 2.5], [16, 18, 4]] },
+  'brain-sparkles':          { base: 'brain',          stars: [[12, 12, 3.5], [4, 5.5, 3]] },
+  'code-sparkles':           { base: 'code',           stars: [[14.5, 16.5, 3.5], [11, 9, 2]] },
+  'cursor-sparkles':         { base: 'cursor',         stars: [[9.5, 18.5, 3.5], [17, 17, 2]] },
+  'film-sparkles':           { base: 'film',           stars: [[18, 6, 3], [12, 8, 2]] },
+  'image-sparkles':          { base: 'image',          stars: [[8, 8, 2], [18, 6, 4]], drop: [1] },
+  'language-sparkles':       { base: 'language',       stars: [[16, 4.5, 3.5], [6, 17, 2]] },
+  'list-sparkles':           { base: 'list',           stars: [[15.5, 17.5, 2.5], [18.5, 11.5, 3.5]] },
+  // His three plain bars are `menu`, not `list`: ours carries the bullets. The
+  // drawing he made is worth keeping, so it ships under the name it actually
+  // draws, and `list-sparkles` above is the same cluster on our own list.
+  'menu-sparkles':           { base: 'menu',           stars: [[15.5, 16.5, 2.5], [17.5, 11.5, 3.5]] },
+  'mail-sparkles':           { base: 'mail',           stars: [[19.5, 17.5, 3.5], [7, 15, 2]] },
+  'message-sparkles':        { base: 'message',        stars: [[11, 11.5, 3], [19, 6, 4]] },
+  'message-square-sparkles': { base: 'message-square', stars: [[10, 10.5, 3], [18, 6, 4]] },
+  'mic-sparkles':            { base: 'mic',            stars: [[4.5, 5, 3], [20, 9.5, 2.5]] },
+  'pen-sparkles':            { base: 'pen',            stars: [[4.5, 4.5, 3.5], [19.5, 19.5, 2.5]] },
+  'search-2-sparkles':       { base: 'search-2',       stars: [[11, 11, 4], [4.5, 4.5, 2.5]] },
+  'search-sparkles':         { base: 'search',         stars: [[10, 10, 3], [4.5, 4.5, 2.5]] },
+  'shopping-cart-sparkles':  { base: 'shopping-cart',  stars: [[15, 10, 2], [19.5, 5.5, 3.5]] },
+  'video-sparkles':          { base: 'video',          stars: [[12, 12, 2], [14.5, 5.5, 3.5]] },
+};
+
 /** Drawings that are not a shipped base plus a cluster. */
 const CUSTOM = {
   // bot-2: the round assistant head he asked for (20 Sep 2026), our own circle
@@ -78,17 +119,25 @@ const CUSTOM = {
   ],
 };
 
+/**
+ * A surviving run shorter than the stroke width paints as a blob, and no base
+ * in this batch has one: all 43 clear 2 units. So anything under 2 left behind
+ * is a crumb of the cut, and goes.
+ */
+const KEEP = 2;
+
 const HEAD = '<svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">';
 const STROKE = (d) => `<path d="${d}" fill="none" stroke="black" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>`;
 const SOLID = (d) => `<path d="${d}" fill="black"/>`;
 
 /** Only when run as the command: `gen-motorsport.mjs` overwrote shipped files
  *  by being imported, and a flag is not a guard. */
-export { ICONS, CUSTOM };
+export { ICONS, HIS, CUSTOM };
 if (import.meta.url !== `file://${process.argv[1]}`) { /* imported as a library */ }
 else {
 mkdirSync(OUT, { recursive: true });
-for (const [name, spec] of Object.entries(ICONS)) {
+const ALL = process.argv.includes('--his') ? HIS : process.argv.includes('--all') ? { ...ICONS, ...HIS } : ICONS;
+for (const [name, spec] of Object.entries(ALL)) {
   if (ONLY.length && !ONLY.includes(name)) continue;
   const cluster = spec.stars.map(([x, y, R]) => star([x, y], R));
   const layers = [];
@@ -96,15 +145,15 @@ for (const [name, spec] of Object.entries(ICONS)) {
   paths.forEach((p, i) => {
     if ((spec.drop || []).includes(i)) return;
     if (p.solid) { layers.push(SOLID(p.d)); return; }          // dots keep their own path
-    const d = (spec.hold || []).includes(i) ? p.d : trim(p.d, cluster, { gap: spec.gap ?? 2.05, keep: spec.keep ?? 0.75 });
+    const d = (spec.hold || []).includes(i) ? p.d : trim(p.d, cluster, { gap: spec.gap ?? 2.05, keep: spec.keep ?? KEEP });
     if (d) layers.push(STROKE(d));
   });
   for (const d of cluster) layers.push(SOLID(d));
   writeFileSync(join(OUT, `${name}.svg`), `${HEAD}\n${layers.join('\n')}\n</svg>\n`);
 }
-for (const [name, ds] of Object.entries(CUSTOM)) {
+for (const [name, ds] of (process.argv.includes('--his') ? [] : Object.entries(CUSTOM))) {
   if (ONLY.length && !ONLY.includes(name)) continue;
   writeFileSync(join(OUT, `${name}.svg`), `${HEAD}\n${ds.map(STROKE).join('\n')}\n</svg>\n`);
 }
-console.log('wrote', Object.keys(ICONS).length + Object.keys(CUSTOM).length, 'to', OUT);
+console.log('wrote', Object.keys(ALL).length + (process.argv.includes('--his') ? 0 : Object.keys(CUSTOM).length), 'to', OUT);
 }
