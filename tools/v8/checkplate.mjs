@@ -10,9 +10,19 @@
  */
 import { readFileSync, readdirSync } from 'node:fs';
 import { band, runsOf, segAt } from './band.mjs';
-import { unionContours } from '../v6/outline.mjs';
+import { unionBands } from './union.mjs';
 
 const ROOT = '/Users/zafarismatullaev/Documents/GitHub/keyline-icons';
+const polyOf = (segs) => segs.flatMap((g) => Array.from({ length: 16 }, (_, i) => segAt(g, i / 16)));
+const areaOf = (segs) => Math.abs(polyOf(segs).reduce((a, p, i, q) => { const r = q[(i + 1) % q.length]; return a + p[0] * r[1] - r[0] * p[1]; }, 0)) / 2;
+const insidePoly = (poly, p) => { let c = false;
+  for (let i = 0, j = poly.length - 1; i < poly.length; j = i++) { const a = poly[i], b = poly[j];
+    if ((a[1] > p[1]) !== (b[1] > p[1]) && p[0] < ((b[0] - a[0]) * (p[1] - a[1])) / (b[1] - a[1]) + a[0]) c = !c; }
+  return c; };
+/** A plate is solid: the loops lying inside another are its holes and go. */
+const outerOnly = (loops) => { const polys = loops.map(polyOf);
+  return loops.filter((l, i) => !loops.some((o, j) => j !== i && areaOf(o) > areaOf(l) && insidePoly(polys[j], polys[i][0]))); };
+
 const sample = (segs, per = 40) => segs.flatMap((s) => Array.from({ length: per }, (_, i) => segAt(s, i / per)));
 const near = (p, pts) => Math.min(...pts.map((q) => Math.hypot(p[0] - q[0], p[1] - q[1])));
 const hausdorff = (a, b) => Math.max(...a.map((p) => near(p, b)));
@@ -58,7 +68,7 @@ export function report(names) {
     let unionWorst = null;
     if (best > 0.01) {
       try {
-        const loops = unionContours(runs.map((r) => band(r, 1).outer), runs, 1, 'round');
+        const loops = outerOnly(unionBands(runs.map((r) => band(r, 1).outer), runs, 1, 'round'));
         unionWorst = +hausdorff(want, loops.flatMap((l) => sample(l, 24))).toFixed(4);
       } catch (e) { unionWorst = 'threw'; }
     }

@@ -18,8 +18,8 @@ import { onArc, add, sub, mul, unit, len, dot } from '../v5/geom.mjs';
 
 const deg = (r) => (r * 180) / Math.PI;
 const ang = (c, p) => deg(Math.atan2(p[1] - c[1], p[0] - c[0]));
-const startPt = (s) => (s.type === 'L' ? s.p0 : onArc(s.c, s.r, s.a0));
-const endPt = (s) => (s.type === 'L' ? s.p1 : onArc(s.c, s.r, s.a1));
+export const startPt = (s) => (s.type === 'L' ? s.p0 : onArc(s.c, s.r, s.a0));
+export const endPt = (s) => (s.type === 'L' ? s.p1 : onArc(s.c, s.r, s.a1));
 const revSeg = (g) => (g.type === 'L'
   ? { type: 'L', p0: g.p1, p1: g.p0 }
   : { type: 'A', c: g.c, r: g.r, a0: g.a1, a1: g.a0 });
@@ -42,7 +42,7 @@ function leftOffset(s, half) {
   return r <= 1e-9 ? null : { type: 'A', c: s.c, r, a0: s.a0, a1: s.a1 };
 }
 
-const within = (s, p) => {
+export const within = (s, p) => {
   if (s.type === 'L') {
     const u = sub(s.p1, s.p0), t = dot(sub(p, s.p0), u) / dot(u, u);
     return t > -1e-6 && t < 1 + 1e-6;
@@ -80,7 +80,7 @@ const arcArc = (a, b) => {
   const m = add(a.c, mul(u, x));
   return [add(m, mul(n, h)), sub(m, mul(n, h))];
 };
-const crossings = (a, b) =>
+export const crossings = (a, b) =>
   a.type === 'L' && b.type === 'L' ? lineLine(a, b)
   : a.type === 'L' ? lineArc(a, b)
   : b.type === 'L' ? lineArc(b, a)
@@ -287,7 +287,7 @@ const distToRunEnd = (s, p, which) => {
 /** A piece's own length, for deciding which of two the other has swallowed. */
 const a2len = (s) => (s.type === 'L' ? len(sub(s.p1, s.p0)) : (Math.abs(s.a1 - s.a0) * Math.PI * s.r) / 180);
 
-const distToRun = (segs, p, cap = 'round') => {
+export const distToRun = (segs, p, cap = 'round') => {
   if (cap !== 'butt' || !segs.length) return Math.min(...segs.map((s) => distToSeg(s, p)));
   return Math.min(...segs.map((s, i) => {
     if (segs.length === 1) {
