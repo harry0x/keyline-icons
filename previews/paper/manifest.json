@@ -170,9 +170,9 @@
       "parts": 39,
       "into": "artboard",
       "width": 742,
-      "icons": 95,
+      "icons": 94,
       "variants": 16,
-      "bytes": 30134
+      "bytes": 30124
     },
     {
       "file": "ai-2.html",
@@ -615,8 +615,8 @@
       "into": "rows",
       "width": 742,
       "icons": 0,
-      "variants": 24,
-      "bytes": 32943
+      "variants": 16,
+      "bytes": 27120
     },
     {
       "file": "ai-39.html",
@@ -628,7 +628,7 @@
       "width": 742,
       "icons": 0,
       "variants": 8,
-      "bytes": 14414
+      "bytes": 14395
     },
     {
       "file": "animals.html",
@@ -782,9 +782,9 @@
       "parts": 2,
       "into": "artboard",
       "width": 742,
-      "icons": 5,
+      "icons": 6,
       "variants": 32,
-      "bytes": 38482
+      "bytes": 38498
     },
     {
       "file": "art-2.html",
@@ -795,8 +795,8 @@
       "into": "rows",
       "width": 742,
       "icons": 0,
-      "variants": 8,
-      "bytes": 7572
+      "variants": 16,
+      "bytes": 13395
     },
     {
       "file": "charts-1.html",
@@ -2748,7 +2748,7 @@
       "width": 744,
       "icons": 0,
       "variants": 0,
-      "bytes": 257899
+      "bytes": 255675
     },
     {
       "file": "changelog-earlier.html",

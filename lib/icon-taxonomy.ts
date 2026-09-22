@@ -63,9 +63,9 @@ export const CATEGORIES = [
   // which is why this is anchored on the two names rather than on `brain`.
   {
     label: "AI",
-    match: /(^|-)sparkles?$|^(bot(-off|-2)?$|brain-circuit|brain-cog|wand$)/,
+    match: /(^|-)sparkles?$|^(bot(-off|-2)?$|brain-circuit|brain-cog)/,
     blurb:
-      "The bots, the brain wired to a circuit and turning a cog, the wand, the sparkles and everything they mark as AI.",
+      "The bots, the brain wired to a circuit and turning a cog, the sparkles and everything they mark as AI.",
   },
   {
     label: "Arrows",
@@ -384,9 +384,12 @@ export const CATEGORIES = [
     // fall towards: these make a picture, where a hammer makes a repair. The
     // roller comes with them rather than with the tools for the same reason a
     // gallery comes with the images — the thing, not the drawing.
+    // The bare `wand` joined on 22 Sep 2026 (Zafar): it is the design app's
+    // magic tool, beside the brush and the palette, not an AI mark. The
+    // sparkles are what say AI, so `wand-sparkles` stays on that shelf.
     label: "Art",
-    match: /^(paint|palette|easel|swatch-book$)/,
-    blurb: "The brush, the roller, the palette, the swatch book and the easel.",
+    match: /^(paint|palette|easel|swatch-book$|wand$)/,
+    blurb: "The brush, the roller, the palette, the swatch book, the easel and the magic wand.",
   },
   {
     // The shelf follows what the thing is, not what the drawing is made of: a
