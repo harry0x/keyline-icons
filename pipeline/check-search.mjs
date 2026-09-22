@@ -200,6 +200,9 @@ const FINDS = [
   ["screen", "monitor", "the word for the object, which the drawing is not named after"],
   ["spinner", "loader", "and the word for the state, same"],
   ["office", "building", "nobody types `building` first"],
+  ["cc", "captions", "the two letters the drawing shows"],
+  ["cc", "captions-sparkles", "missed until 22 Sep 2026: only the plain one carried the letters"],
+  ["cc", "subtitles-sparkles", "and its sibling, same"],
 
   // The plural, which is what the category rail is written in and what every
   // other set answers. `arrows` matched `git-compare-arrows` and nothing else:
