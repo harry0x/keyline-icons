@@ -17,8 +17,10 @@ import {
   Circle,
   Clock,
   Coffee,
+  Command,
   Cursor,
   DiagramProject,
+  Divide,
   Eraser,
   FaceSmile,
   File,
@@ -205,6 +207,10 @@ const CATEGORY_ICONS: Record<
   AI: Bot,
   Science: FlaskConical,
   Health: Lungs,
+  // The two shelves the symbol batch opened, 22 Sep 2026. The division sign
+  // rather than the equals, which at 16px is two bars and reads as the menu.
+  Math: Divide,
+  Keyboard: Command,
   [OTHER_CATEGORY]: Circle,
 }
 

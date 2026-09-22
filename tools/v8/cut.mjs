@@ -118,6 +118,8 @@ export function trim(d, cluster, { gap = 2, half = 1, keep = 0.75 } = {}) {
     }
     // A closed subpath is a ring: rotate it so a run cut open is contiguous.
     const live = pieces.map((s) => clear(at(s, 0.5)) > 0);
+    // a closed ring nothing cut stays closed: its start is a join, not two ends
+    if (sp.closed && live.every(Boolean)) { out.push({ ring: pieces }); continue; }
     let order = pieces.map((_, i) => i);
     if (sp.closed && live[0] && live[live.length - 1]) {
       const k = live.lastIndexOf(false);
@@ -133,5 +135,5 @@ export function trim(d, cluster, { gap = 2, half = 1, keep = 0.75 } = {}) {
     for (const i of order) { if (live[i]) run.push(pieces[i]); else flush(); }
     flush();
   }
-  return out.map(segsToD).join('').replace(/^M/, 'M');
+  return out.map((r) => (r.ring ? segsToD(r.ring) + 'Z' : segsToD(r))).join('').replace(/^M/, 'M');
 }

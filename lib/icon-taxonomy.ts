@@ -50,11 +50,31 @@ export const CATEGORIES = [
   //
   // Opened 10 Sep 2026 for the fourteen of v0.7.0: the square bubble and its
   // eight companions, and qr-code, scan, scissors and hourglass; then the first
+  // AI leads, 22 Sep 2026, when the sparkle batch graduated: a sparkle
+  // compound files by its sparkle, not by what the sparkle sits on (Zafar's
+  // call, with the bare `sparkle` and `sparkles` moved in from Actions), so
+  // `calendar-sparkles` has to be claimed here before Time takes it on its
+  // `calendar` prefix, and the same for the eighty-odd others. The rail and
+  // both design files sort shelves by label, so leading changes resolution
+  // only.
+  //
+  // The machine that thinks: the bots, the brain wired to a circuit and the
+  // brain turning a cog. The bare `brain` is an organ and goes to Health,
+  // which is why this is anchored on the two names rather than on `brain`.
+  {
+    label: "AI",
+    match: /(^|-)sparkles?$|^(bot(-off|-2)?$|brain-circuit|brain-cog|wand$)/,
+    blurb:
+      "The bots, the brain wired to a circuit and turning a cog, the wand, the sparkles and everything they mark as AI.",
+  },
   {
     label: "Arrows",
-    match: /^(arrow|bracket-arrow|expand|refresh|rotate|move$)/,
+    // `corner-` joined on 22 Sep 2026: an arrow that turns is an arrow, whatever
+    // key it stands for. `reply` and `forward` are two of the eight turns and
+    // stay in Mail by name; `corner-up-left` and `corner-up-right` are aliases.
+    match: /^(arrow|bracket-arrow|expand|refresh|rotate|corner-|move$)/,
     blurb:
-      "Direction, movement and resizing, with the brackets, u-turns and dashed panels.",
+      "Direction, movement and resizing, with the brackets, u-turns, corner turns and dashed panels.",
   },
   // Split out of Arrows on 29 Aug 2026: the sharp matrix doubled every catalog
   // card's cells, and 104 rows, one per name on a card of 60 sets, stopped
@@ -169,11 +189,11 @@ export const CATEGORIES = [
     // wherever the two disagree — the same call the taxonomy makes for `wifi`.
     label: "Media",
     match:
-      /^(play|pause|stop|record|skip-|fast-forward|rewind|repeat|replay|volume|audio-lines|mic|megaphone|headphones|headset|earbuds|airpods|shuffle|music-note|list-music|list-video|camera|image|cast|subtitles|captions|picture-in-picture|gallery-|podcast|queue|film|airplay$|video$|broadcast$|radio$)/,
+      /^(play|pause|stop|record|skip-|fast-forward|rewind|repeat|replay|volume|audio-lines|mic|megaphone|headphones|headset|earbuds|airpods|shuffle|music-note|list-music|list-video|camera|image|cast|subtitles|captions|picture-in-picture|gallery-|podcast|queue|film|airplay$|video$|broadcast$|radio$|eject$)/,
     // `earbuds` and `airpods` beside `headphones`, 13 Sep 2026: what you listen
     // through files where listening does, not with the phone they pair to.
     blurb:
-      "Playback, volume, capture, casting and AirPlay, video, broadcast and the radio, the sound and image marks and what you listen through.",
+      "Playback, volume, capture, casting and AirPlay, eject, video, broadcast and the radio, the sound and image marks and what you listen through.",
   },
   // `activity` is a pulse trace, not a transport control — it reads against the
   // bar charts and the signal bars, which is where the design file files it too.
@@ -265,6 +285,24 @@ export const CATEGORIES = [
     match: /^(mars|venus)$/,
     blurb: "The Mars and Venus marks.",
   },
+  // Opened 22 Sep 2026 with the symbol batch. Ahead of Actions, whose `x`
+  // would otherwise take `x-line-top`. `plus`, `minus` and `x` stay in Actions
+  // as verbs and `percent` in Commerce as a discount; these are the marks a
+  // formula is written in.
+  {
+    label: "Math",
+    match: /^(asterisk|divide|equal|hash|infinity|parentheses|radical|variable|x-line-top)(-|$)/,
+    blurb:
+      "The equals and its approximate and negated forms, divide, the radical, infinity, the asterisk, the hash, the parentheses, the variable and the mean.",
+  },
+  // Opened the same day: the keys a shortcut is spelled with. Caps lock, tab
+  // and return are arrows and file in Arrows; eject is a transport control and
+  // files in Media.
+  {
+    label: "Keyboard",
+    match: /^(command|option|escape|space)$/,
+    blurb: "The command and option keys, escape and the space bar.",
+  },
   // The faces and the two thumbs. Ahead of Actions so the thumbs are reactions
   // rather than verbs; a face is not a person and a thumb is not a verb.
   {
@@ -286,7 +324,7 @@ export const CATEGORIES = [
     // own. It stays here rather than moving: it is still the mark you set on a
     // thing, and there is no hand shelf for it to join.
     match:
-      /^(check|double-check|plus|minus|x|more|lock|unlock|key(?:-round|-square)?$|shield|badge|download|upload|filter|eye|star|heart|hand-heart|alert|octagon|triangle-alert|info|question|lightbulb|zap|flame|sparkle|ban|siren$|delete$)/,
+      /^(check|double-check|plus|minus|x|more|lock|unlock|key(?:-round|-square)?$|shield|badge|download|upload|filter|eye|star|heart|hand-heart|alert|octagon|triangle-alert|info|question|lightbulb|zap|flame|ban|siren$|delete$)/,
     blurb: "Checks, crosses, pluses, the everyday verbs, the siren and the marks that guard a thing.",
   },
   {
@@ -311,15 +349,7 @@ export const CATEGORIES = [
   },
   // Three shelves opened 13 Sep 2026 with the twenty-nine of batch B, whose
   // names had been filing under Other. Each files by what the drawing IS.
-  {
-    // The machine that thinks: the bot, the brain wired to a circuit and the
-    // brain turning a cog. The
-    // bare `brain` is an organ and goes to Health, which is why this is
-    // anchored on the two names rather than on `brain`.
-    label: "AI",
-    match: /^(bot(-off)?$|brain-circuit|brain-cog)/,
-    blurb: "The bot, on and off, the brain wired to a circuit and the brain turning a cog.",
-  },
+  // The third, AI, now leads the list (see the top).
   {
     label: "Science",
     match: /^(flask|test-tube)/,

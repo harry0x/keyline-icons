@@ -240,6 +240,11 @@ const SIZE_KNOWN = new Set([
   // rule and he asked for his own 18 back on 17 Sep 2026: a mouse taller than
   // that reads as a stretched pill.
   'mouse',
+  // Compact marks drawn at the plus, minus and x mark size (22 Sep 2026), not
+  // stretched to the band: an equals sign 22 wide reads as a menu, and an
+  // asterisk or a divide sign at full size outweighs every sign beside it.
+  'asterisk', 'divide', 'equal', 'equal-approximately', 'equal-approximately-not',
+  'equal-not', 'x-line-top',
 ]);
 /**
  * Drawings of a real product, which keep the product's proportions and radii
