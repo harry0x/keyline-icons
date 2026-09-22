@@ -336,6 +336,8 @@ export const SET_UNRELEASED: Unreleased | null = HISTORY.unreleased ?? null
 /** Exported so the copy that explains the badge cannot drift from the rule. */
 export const NEW_FOR_DAYS: number = badges.newForDays ?? 30
 const BADGES_CLEARED_BEFORE: string = badges.clearedBefore ?? ""
+/** Drawings the floor skips; the 30 days still apply. See the file's comment. */
+const BADGES_CLEARED_EXCEPT = new Set<string>(badges.clearedExcept ?? [])
 
 /**
  * Compared as instants, never as strings.
@@ -353,7 +355,10 @@ export const isNewSince = (icon: Icon) =>
   Boolean(
     icon.history &&
       at(icon.history.added) >
-        Math.max(CLEARED_AT, Date.now() - NEW_FOR_DAYS * 86_400_000)
+        Math.max(
+          BADGES_CLEARED_EXCEPT.has(icon.name) ? 0 : CLEARED_AT,
+          Date.now() - NEW_FOR_DAYS * 86_400_000
+        )
   )
 
 /**

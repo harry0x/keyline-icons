@@ -984,7 +984,10 @@ and a set shipping twice in a week showed a badge for about a day.
 The badge is an **age**. `isNewSince` asks whether a drawing was added inside
 `newForDays`, floored by `clearedBefore`, both in `lib/icon-badges.json`, which
 is source rather than generated and which only Zafar changes, stated explicitly,
-every time. **Cutting a release must never touch either value.** Read that file
+every time. `clearedExcept` lists names the floor skips (the window still
+applies): a date floor cannot follow a release, and `car` and `rocket` were first
+drawn on a branch on 4 and 9 Sep 2026 and shipped in 1.0.0, so the v0.8.0 floor
+of 22 Sep would have cleared two of the release's own badges. **Cutting a release must never touch either value.** Read that file
 before saying anything about what a badge does; the sentence above stood here
 wrong for long enough to mislead a session into offering to clear 78 of them.
 

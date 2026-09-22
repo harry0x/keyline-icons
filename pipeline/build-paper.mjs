@@ -258,12 +258,15 @@ const BADGES = JSON.parse(
    in lib/icons.ts, compared as instants because git's offset dates and a
    window computed from the clock do not sort against each other as strings. */
 const NEW_FOR_DAYS = BADGES.newForDays ?? 30
+const NEW_WINDOW = Date.now() - NEW_FOR_DAYS * 86_400_000
 const NEW_SINCE = Math.max(
   BADGES.clearedBefore ? Date.parse(BADGES.clearedBefore) : 0,
-  Date.now() - NEW_FOR_DAYS * 86_400_000
+  NEW_WINDOW
 )
+/* Names the floor skips, as in lib/icons.ts; the window still applies. */
+const CLEARED_EXCEPT = new Set(BADGES.clearedExcept ?? [])
 const since = Object.entries(HISTORY.icons ?? {})
-  .filter(([, h]) => Date.parse(h.added) > NEW_SINCE)
+  .filter(([name, h]) => Date.parse(h.added) > (CLEARED_EXCEPT.has(name) ? NEW_WINDOW : NEW_SINCE))
   .sort(([a], [b]) => a.localeCompare(b))
 const NEW_NAMES = new Set(since.map(([name]) => name))
 
