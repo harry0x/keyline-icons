@@ -17,6 +17,7 @@ import { mkdir, readdir, readFile, writeFile } from "node:fs/promises"
 import { existsSync } from "node:fs"
 import { dirname, join } from "node:path"
 import { fileURLToPath } from "node:url"
+import { categories, OTHER, shelfGlyphs } from "./lib/taxonomy.mjs"
 
 const ROOT = fileURLToPath(new URL("..", import.meta.url))
 
@@ -97,6 +98,58 @@ async function checkPluginUrl() {
     if (path !== want) console.error(`      path:  ui.html says ${path}, this script writes ${want}`)
     console.error(`\n  Fix the URL in packages/figma-plugin/ui.html. It is compiled into every`)
     console.error(`  installed copy, so a wrong one needs a Figma review to correct.`)
+    process.exit(1)
+  }
+}
+
+/**
+ * Every drawing the plugin's own chrome asks for by name has to be in the set.
+ *
+ * The panel draws its search mark, its style samples and its corner toggle from
+ * the bundle rather than carrying copies, so a rename here changes what every
+ * installed copy renders the next time the CDN refreshes, with no plugin update
+ * and no review in between. `CHROME` in `ui.html` is the list; this reads it the
+ * way `checkPluginUrl` reads the URL, and fails before the bundle is published
+ * rather than after.
+ *
+ * Checked in every style and both treatments, because that is how the panel
+ * asks: the style samples draw one name in each style, and the corner toggle
+ * draws one in each treatment.
+ */
+async function checkPluginGlyphs(icons) {
+  const ui = join(ROOT, "packages", "figma-plugin", "ui.html")
+  if (!existsSync(ui)) return
+
+  /* To the object's own closing line, comments stripped, and every key must
+     yield a quoted name: the same count guard the taxonomy parse uses, so an
+     entry written some other way fails here instead of going unchecked. */
+  const src = await readFile(ui, "utf8")
+  const start = src.indexOf("const CHROME = {")
+  const end = src.indexOf("\n  }\n", start)
+  const block =
+    start < 0 || end < 0
+      ? ""
+      : src
+          .slice(start + "const CHROME = {".length, end)
+          .replace(/\/\*[\s\S]*?\*\//g, "")
+          .replace(/\/\/[^\n]*/g, "")
+  const keys = [...block.matchAll(/^\s*\w+\s*:/gm)].length
+  const names = [...block.matchAll(/^\s*\w+\s*:\s*"([^"]+)",?\s*$/gm)].map((m) => m[1])
+  if (!keys || keys !== names.length) {
+    console.error(`  ${c(31, "✗")} packages/figma-plugin/ui.html: read ${names.length} of ${keys} CHROME names`)
+    console.error(`\n  Each entry is \`key: "name",\` on its own line. Fix the entry or this parse.`)
+    process.exit(1)
+  }
+  const missing = names
+    .filter(
+      (name) =>
+        !STYLES.every((s) => icons[name]?.[s] && icons[name].sharp?.[s])
+    )
+  if (missing.length) {
+    console.error(`  ${c(31, "✗")} the plugin's chrome draws ${missing.join(", ")}, not in every style and treatment`)
+    console.error(`\n  Rename it in CHROME in packages/figma-plugin/ui.html too. Installed copies`)
+    console.error(`  keep the old name until a plugin update clears review, so keep the old`)
+    console.error(`  drawing reachable until then.`)
     process.exit(1)
   }
 }
@@ -226,8 +279,51 @@ const foreignNames = {}
 for (const [icon, list] of Object.entries(foreign ?? {}))
   for (const name of list) foreignNames[name] = icon
 
+/*
+ * The site's shelves, so the plugin can browse the set the way the rail does
+ * instead of as one alphabetical run of 1,114.
+ *
+ * Carried as data rather than written into the plugin, for the reason the
+ * styles are: a shelf the site opens reaches every installed copy on the next
+ * push, where anything written into `ui.html` waits for Figma's review. Each
+ * shelf lists its own names, containered ones included, resolved by base name
+ * exactly as the site files them, and carries the glyph the rail draws it with.
+ *
+ * Alphabetical with Other last, the rail's order, and only shelves that hold
+ * something: the review shelf sits empty between batches and an empty heading
+ * in the panel is a dead end.
+ */
+const TAXONOMY = await categories(ROOT)
+const GLYPHS = await shelfGlyphs(ROOT, Object.keys(sorted))
+const shelfOf = (name) => {
+  const container = NOT_CONTAINERS.has(name) ? null : /^(square|circle)-(.+)$/.exec(name)
+  const base = container && sorted[container[2]] ? container[2] : name
+  return TAXONOMY.find((t) => t.match.test(base))?.label ?? OTHER
+}
+const shelves = [
+  ...TAXONOMY.map((t) => t.label).sort((a, b) => a.localeCompare(b)),
+  OTHER,
+]
+  .map((label) => ({
+    label,
+    glyph: GLYPHS[label],
+    names: Object.keys(sorted).filter((name) => shelfOf(name) === label),
+  }))
+  .filter((shelf) => shelf.names.length)
+
+const unglyphed = shelves.filter((shelf) => !shelf.glyph).map((shelf) => shelf.label)
+if (unglyphed.length) {
+  console.error(`  ${c(31, "✗")} no rail glyph for ${unglyphed.join(", ")}`)
+  console.error(`\n  Add a row to CATEGORY_ICONS in components/icon-browser.tsx.`)
+  process.exit(1)
+}
+
 const CONTENT =
-  JSON.stringify({ ...base, keywords, names: foreignNames }, null, 0) + "\n"
+  JSON.stringify(
+    { ...base, keywords, names: foreignNames, categories: shelves },
+    null,
+    0
+  ) + "\n"
 
 const names = Object.keys(sorted).length
 
@@ -246,9 +342,11 @@ if (check) {
     process.exit(1)
   }
   await checkPluginUrl()
+  await checkPluginGlyphs(sorted)
   console.log(c(32, `${OUTS.length} data bundles in sync with icons/ (${names} names)`))
 } else {
   await checkPluginUrl()
+  await checkPluginGlyphs(sorted)
   for (const [label, path] of OUTS) {
     const out = CONTENT
     await mkdir(dirname(path), { recursive: true })

@@ -103,7 +103,9 @@ Two corner treatments, and every drawing has both. Rounded is the keyline the se
 
 Search knows more than the file names. 989 icons carry curated words, so "south" finds arrow-down, "hamburger" finds menu and "trash" finds bin. Paste a component name straight out of your code and it resolves: CheckCircle2 finds circle-check.
 
-In a design file an insert arrives as a 24 × 24 frame, which is what makes a row of icons line up. In FigJam it arrives as a group, so FigJam's colour control reaches the drawing instead of painting a box around it. Double-click into one and every path takes its own colour, which is how a gift gets a red box and a yellow bow, and how duotone keeps both of its tones.
+Browse the set the way the site files it, shelf by shelf, with every shelf a click away from wherever you are. The icons you used last wait at the top, and the panel opens next time on the style, corners and size you left it on.
+
+Click an icon, or drag it to exactly where it should go, at 16, 20, 24 or 32. In a design file it arrives as a square frame, which is what makes a row of icons line up. In FigJam it arrives as a group, so FigJam's colour control reaches the drawing instead of painting a box around it. Double-click into one and every path takes its own colour, which is how a gift gets a red box and a yellow bow, and how duotone keeps both of its tones.
 
 Every drawing sits on one 24 × 24 grid with a shared keyline, so icons of different weights still read as one family at the same size.
 
@@ -113,6 +115,9 @@ keylineicons.com
 github.com/keyline-icons/keyline-icons
 
 Changelog
+
+1.1.1
+The panel, redrawn: browse by shelf, recent icons at the top, drag onto the canvas, insert at 16, 20, 24 or 32, and your style, corners and size remembered between runs.
 
 1.1.0
 114 new drawings, taking the set to 1,114 names and 8,912 SVGs, and two new shelves. The set now installs in React Native too, as @keyline-icons/react-native.
@@ -250,6 +255,16 @@ without a plugin update or a review cycle. A republish is only required when the
 plugin's own code changes, or when the listing copy goes stale, which it does
 every time the counts move. jsDelivr serves the repository, so the drawings have
 to be **pushed** before any of this is true for anyone but you.
+
+### 1.1.1
+
+```
+The panel, redrawn. Browse the set shelf by shelf, the way the site files it, with a list of every shelf one click from wherever you are. The icons you used last wait at the top. Drag an icon to exactly where it should go, or click to drop it in the selected frame. Insert at 16, 20, 24 or 32, with the line scaled to match. The panel remembers your style, corners and size the next time it opens, and the keyboard works: type to search, Enter for the top hit, arrows through the grid.
+```
+
+**A republish is required**, because the plugin's own code changed: `ui.html`
+and `code.js`, not only the set. The Data security answers below were
+re-checked for it; question 4 is still `No`, and why is written there.
 
 ### 1.1.0
 
@@ -550,9 +565,13 @@ auth, tokens, login, or OAuth.
 **4. Does it store data read/derived from Figma's plugin API?**
 `No, my plugin/widget does not store any data read/derived from Figma's plugin
 API.`
-No `figma.clientStorage`, no `localStorage`, no `setPluginData`. The only
-mention of `clientStorage` in the repository is in this package's README, under
-"Not done yet".
+It stores something since 1.1.1, and none of it is read from the plugin API.
+`code.js` keeps one `figma.clientStorage` key, `prefs`: the style, the corner
+treatment and the insert size the panel was left on, and the last eighteen icon
+names inserted from it. The first three are the panel's own controls and the
+names come out of this set's own bundle, so nothing in it comes from the
+document, and `clientStorage` stays on the user's machine. No `localStorage`,
+no `setPluginData`.
 
 The judgement call, so it is not re-made from scratch next time: `code.js` keeps
 `OURS`, an in-memory map of node ids, so a second insert does not land inside
@@ -580,7 +599,8 @@ The plugin fetches one JSON file, the icon set, from jsDelivr. It is fetched
 rather than bundled so that adding an icon does not require a plugin update and
 a second trip through review. Nothing is sent anywhere: the fetch is a GET with
 no body, no credentials and no query string. The plugin reads no user data,
-stores nothing, and the only other URL in it is the footer link to
+stores only its own settings and the icons last inserted, on the user's
+machine, and the only other URL in it is the footer link to
 keylineicons.com, which is an anchor the user clicks rather than a request.
 
 `pipeline/check-search.mjs` and `pipeline/build-data.mjs --check` both run in CI

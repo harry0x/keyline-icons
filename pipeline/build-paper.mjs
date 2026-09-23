@@ -49,6 +49,7 @@ import { existsSync } from "node:fs"
 import { mkdir, readdir, readFile, unlink, writeFile } from "node:fs/promises"
 import { join } from "node:path"
 import { fileURLToPath } from "node:url"
+import { categories, OTHER } from "./lib/taxonomy.mjs"
 
 const ROOT = fileURLToPath(new URL("..", import.meta.url))
 const ICONS = join(ROOT, "icons")
@@ -94,46 +95,6 @@ const STRIPE = "#f5f5f5"
 
 const FONT =
   "-apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif"
-
-/**
- * Read the site's own category table out of lib/icon-taxonomy.ts.
- *
- * Parsed rather than duplicated, because a second copy of eighteen regexes is a
- * second thing to keep in step, and the one that drifts is always the copy
- * nobody renders. check-demos.mjs reads lib/*.ts the same way and for the same
- * reason.
- *
- * The guard is the label count: every entry declares a `label`, so a `match`
- * this parse fails to pick up shows as a pair count short of the labels, and
- * the script stops. Without it a regex written across two lines would silently
- * hand its whole category to Other, which looks like a grouping decision rather
- * than a broken read.
- */
-async function categories() {
-  const src = await readFile(join(ROOT, "lib", "icon-taxonomy.ts"), "utf8")
-  const start = src.indexOf("export const CATEGORIES")
-  if (start < 0) throw new Error("lib/icon-taxonomy.ts: no CATEGORIES export")
-  const block = src
-    .slice(start, src.indexOf("\n]", start))
-    .replace(/\/\*[\s\S]*?\*\//g, "")
-    .replace(/\/\/[^\n]*/g, "")
-
-  const labels = [...block.matchAll(/label:\s*"([^"]+)"/g)].length
-  const pairs = [
-    ...block.matchAll(
-      /label:\s*"([^"]+)",\s*match:\s*(\/(?:[^/\\\n]|\\.)+\/),\s*blurb:\s*"([^"]+)"/g
-    ),
-  ].map(([, label, re, blurb]) => ({ label, match: new RegExp(re.slice(1, -1)), blurb }))
-
-  if (pairs.length !== labels) {
-    throw new Error(
-      `lib/icon-taxonomy.ts: read ${pairs.length} of ${labels} categories. ` +
-        `A match pattern has moved off its label's line; fix this parse rather ` +
-        `than letting the difference fall into Other.`
-    )
-  }
-  return pairs
-}
 
 const ATTR = /([\w-]+)="([^"]*)"/g
 /** Re-declared on the tile, so the file's own copies are 1,231 times redundant. */
@@ -204,8 +165,12 @@ const containerOf = (name) => {
   return m && names.has(m[2]) ? m[1] : "regular"
 }
 
-const CATEGORIES = await categories()
-const OTHER = "Other"
+/*
+ * The site's own category table, parsed rather than duplicated, so a renamed
+ * shelf or a new pattern reaches the boards without a second edit. See
+ * pipeline/lib/taxonomy.mjs for the guard that stops a half-read table.
+ */
+const CATEGORIES = await categories(ROOT)
 
 /**
  * The release, read from the same file the site's changelog page reads.
