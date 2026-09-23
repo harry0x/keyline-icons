@@ -3,13 +3,17 @@
   right. Everything visible happens here.
 
   No build step and no dependencies. Figma loads this file as-is through
-  `__html__`, so a bundler would only exist to inline what is already inline,
-  and the whole surface is a search box, a style switch and a grid.
+  `__html__`, so a bundler would only exist to inline what is already inline.
+
+  Every glyph in the panel's own chrome, the search mark, the shelf marks, the
+  style samples, is drawn from the set it browses. Same rule as the site: a
+  borrowed glyph is a lie about coverage, and a copy pasted in here would drift
+  from its drawing the next time that drawing changed.
 -->
 <meta charset="utf-8" />
 <!--
-  Declared rather than inherited. This file holds three non-ASCII characters:
-  the ellipsis in "Loading the set…" and the curly quotes around a failed query.
+  Declared rather than inherited. This file holds non-ASCII characters, the
+  ellipsis in "Loading the set…" and the curly quotes around a failed query.
   Without a charset the host decides, and a host that does not say UTF-8 renders
   the first of those as mojibake on the plugin's opening frame. Found by serving
   this file over a plain static server, where it read "Loading the setâ€¦".
@@ -18,108 +22,256 @@
   :root {
     color-scheme: light dark;
     --bg: var(--figma-color-bg, #fff);
-    --text: var(--figma-color-text, #000);
-    --dim: var(--figma-color-text-secondary, #7a7a7a);
-    --hover: var(--figma-color-bg-hover, #f2f2f2);
+    --bg2: var(--figma-color-bg-secondary, #f5f5f5);
+    --text: var(--figma-color-text, #1e1e1e);
+    --dim: var(--figma-color-text-secondary, #757575);
+    --hover: var(--figma-color-bg-hover, #f0f0f0);
     --line: var(--figma-color-border, #e6e6e6);
+    --focus: var(--figma-color-border-selected, #0d99ff);
     --sel: var(--figma-color-bg-selected, #e5f4ff);
   }
 
   * { box-sizing: border-box; }
+  [hidden] { display: none !important; }
 
   body {
     margin: 0;
     background: var(--bg);
     color: var(--text);
-    font: 11px/1.4 Inter, ui-sans-serif, system-ui, sans-serif;
+    font: 11px/16px Inter, ui-sans-serif, system-ui, sans-serif;
     display: flex;
     flex-direction: column;
     height: 100vh;
+    position: relative;
+    overflow: hidden;
   }
+
+  button { font: inherit; color: inherit; cursor: pointer; }
+  svg { display: block; }
+  .g16 svg { width: 16px; height: 16px; }
+  a { color: inherit; }
 
   header {
-    position: sticky;
-    top: 0;
-    padding: 8px 8px 6px;
-    background: var(--bg);
+    display: grid;
+    gap: 8px;
+    padding: 8px;
     border-bottom: 1px solid var(--line);
   }
+  .row { display: flex; gap: 8px; }
 
-  input {
-    width: 100%;
-    padding: 7px 8px;
-    border: 1px solid var(--line);
+  .search {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    height: 32px;
+    padding: 0 4px 0 8px;
+    border: 1px solid transparent;
     border-radius: 5px;
+    background: var(--bg2);
+    color: var(--dim);
+  }
+  .search:focus-within { border-color: var(--focus); background: var(--bg); }
+  .search input {
+    flex: 1;
+    min-width: 0;
+    height: 100%;
+    border: 0;
     background: transparent;
-    color: inherit;
+    color: var(--text);
     font: inherit;
     outline: none;
   }
-  input:focus { border-color: var(--figma-color-border-selected, #0d99ff); }
-
-  .styles { display: flex; gap: 2px; margin-top: 6px; }
-  .styles button {
-    flex: 1;
-    padding: 5px 0;
+  .search input::placeholder { color: var(--dim); }
+  .search input::-webkit-search-cancel-button { display: none; }
+  .search button {
+    display: grid;
+    place-items: center;
+    width: 24px;
+    height: 24px;
     border: 0;
     border-radius: 4px;
     background: transparent;
     color: var(--dim);
-    font: inherit;
-    text-transform: capitalize;
-    cursor: pointer;
   }
-  .styles button:hover { background: var(--hover); }
-  .styles button[aria-pressed="true"] { background: var(--sel); color: var(--text); }
+  .search button:hover { background: var(--hover); color: var(--text); }
 
-  main { flex: 1; overflow-y: auto; padding: 8px; }
+  /* One control for every axis: a track, and a raised thumb on the choice. */
+  .seg {
+    display: flex;
+    gap: 2px;
+    height: 32px;
+    padding: 2px;
+    border-radius: 6px;
+    background: var(--bg2);
+  }
+  .seg button {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+    padding: 0 6px;
+    border: 0;
+    border-radius: 4px;
+    background: transparent;
+    color: var(--dim);
+    white-space: nowrap;
+  }
+  .seg button:hover { color: var(--text); }
+  /* Samples in full ink even when their label is dimmed: greyed, the plate and
+     the detail collapse into one tone and the four styles look alike. */
+  .seg button svg { color: var(--text); }
+  .seg button[aria-checked="true"] {
+    background: var(--bg);
+    color: var(--text);
+    box-shadow: 0 0 0 1px var(--line), 0 1px 2px rgb(0 0 0 / 6%);
+  }
+  .seg button:focus-visible { outline: 2px solid var(--focus); outline-offset: -2px; }
+  .seg.square button { flex: none; width: 28px; padding: 0; }
+
+  main {
+    flex: 1;
+    overflow-y: auto;
+    overscroll-behavior: contain;
+    position: relative;
+  }
+
+  /*
+    Each shelf's heading sticks inside its own section, so the heading on screen
+    is always the shelf being scrolled through, with no scroll listener. It is
+    also the button that opens the shelf list, which is how forty shelves get a
+    menu without costing the panel a row.
+  */
+  section h2 {
+    position: sticky;
+    top: 0;
+    z-index: 1;
+    margin: 0;
+    padding: 6px 8px 4px;
+    background: var(--bg);
+    font: inherit;
+  }
+  .shelf {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    height: 24px;
+    margin-left: -4px;
+    padding: 0 4px;
+    border: 0;
+    border-radius: 4px;
+    background: transparent;
+    font-weight: 600;
+  }
+  .shelf:hover { background: var(--hover); }
+  .shelf:focus-visible { outline: 2px solid var(--focus); outline-offset: -2px; }
+  .shelf .n, .results .n { color: var(--dim); font-weight: 400; }
+  .shelf .chev { color: var(--dim); }
+  .results { display: flex; align-items: center; gap: 6px; height: 24px; font-weight: 600; }
 
   .grid {
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(40px, 1fr));
     gap: 2px;
+    padding: 0 8px 8px;
   }
-
   /* The icons paint with `currentColor`, so the tile's colour is the icon's. */
   .grid button {
     aspect-ratio: 1;
     display: grid;
     place-items: center;
+    padding: 0;
     border: 0;
     border-radius: 5px;
     background: transparent;
     color: var(--text);
-    cursor: pointer;
-    padding: 0;
+    /* Clear of the sticky heading when the keyboard scrolls a tile into view. */
+    scroll-margin-top: 36px;
   }
   .grid button:hover { background: var(--hover); }
-  .grid svg { width: 24px; height: 24px; display: block; }
+  .grid button:focus-visible { outline: 2px solid var(--focus); outline-offset: -2px; }
+  .grid svg { width: 24px; height: 24px; }
 
-  .note { color: var(--dim); padding: 6px 2px; }
-  footer {
-    padding: 6px 8px;
-    border-top: 1px solid var(--line);
-    color: var(--dim);
-    display: flex;
-    justify-content: space-between;
+  .note { color: var(--dim); padding: 8px; }
+
+  .menu {
+    position: absolute;
+    left: 8px;
+    right: 8px;
+    z-index: 2;
+    overflow-y: auto;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    padding: 4px;
+    border: 1px solid var(--line);
+    border-radius: 8px;
+    background: var(--bg);
+    box-shadow: 0 10px 24px rgb(0 0 0 / 14%);
   }
-  a { color: inherit; }
+  .menu button {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    height: 28px;
+    padding: 0 8px;
+    border: 0;
+    border-radius: 4px;
+    background: transparent;
+    text-align: left;
+  }
+  .menu button:hover { background: var(--hover); }
+  .menu button[aria-current="true"] { background: var(--sel); }
+  .menu .n { margin-left: auto; color: var(--dim); }
+
+  footer {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    height: 44px;
+    padding: 0 8px;
+    border-top: 1px solid var(--line);
+  }
+  .detail {
+    flex: 1;
+    min-width: 0;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    color: var(--dim);
+  }
+  .detail b { color: var(--text); font-weight: 500; }
+  footer .seg { height: 28px; }
+  footer .seg button {
+    flex: none;
+    width: 30px;
+    padding: 0;
+    font-variant-numeric: tabular-nums;
+  }
 </style>
 
 <header>
-  <input id="q" type="search" placeholder="Search icons" autocomplete="off" autofocus />
-  <div class="styles" id="styles"></div>
-  <div class="styles" id="corners"></div>
+  <div class="row">
+    <label class="search">
+      <span class="g16" id="search-glyph"></span>
+      <input id="q" type="search" placeholder="Search icons" autocomplete="off" spellcheck="false" autofocus />
+      <button id="clear" class="g16" type="button" title="Clear" hidden></button>
+    </label>
+    <div class="seg square" id="corners" role="radiogroup" aria-label="Corners" hidden></div>
+  </div>
+  <div class="seg" id="styles" role="radiogroup" aria-label="Style"></div>
 </header>
 
-<main>
+<main id="main">
   <div class="note" id="note">Loading the set…</div>
-  <div class="grid" id="grid"></div>
+  <div id="list"></div>
 </main>
 
+<div class="menu" id="menu" role="menu" hidden></div>
+
 <footer>
-  <span id="count"></span>
-  <a href="https://keylineicons.com" target="_blank" rel="noreferrer">keylineicons.com</a>
+  <div class="detail" id="detail"></div>
+  <div class="seg" id="sizes" role="radiogroup" aria-label="Insert size"></div>
 </footer>
 
 <script>
@@ -134,57 +286,164 @@
   const DATA_URL =
     "https://cdn.jsdelivr.net/gh/keyline-icons/keyline-icons@main/packages/figma-plugin/icons.json"
 
+  /*
+    The drawings the panel's own chrome is made of, by name.
+
+    Read by pipeline/build-data.mjs, which fails if any of them is missing from
+    a style or a treatment. That check is the only thing standing between a
+    rename in the set and a blank control in every installed copy, because the
+    set reaches those copies over the CDN and this list does not.
+  */
+  const CHROME = {
+    search: "search",
+    clear: "x",
+    menu: "chevron-down",
+    recent: "clock",
+    // Drawn in every style, one per tab: the body and the clapper split
+    // differently in each, which is what tells two-tone from duotone.
+    styles: "bell",
+    // Drawn in both treatments: four corners, rounded or not, is the whole axis.
+    corners: "square",
+  }
+
+  const SIZES = [16, 20, 24, 32]
+  const RECENT_MAX = 18
+
   const $ = (id) => document.getElementById(id)
-  const grid = $("grid")
+  const list = $("list")
   const note = $("note")
+  const menu = $("menu")
 
   let ICONS = {}
   let KEYWORDS = {}
   let NAMES = []
+  let STYLES = ["stroke"]
+  let CORNERS = []
+  let SHELVES = []
+  let SHELF_OF = {}
+  let loaded = false
+
   let style = "stroke"
   /*
     Rounded until asked otherwise, which is what every caller of the set
     defaults to: someone who has never heard of the axis gets the drawing they
-    have always got. The row below only appears if the data offers the axis, so
-    a stale cached bundle degrades to the plugin this was before.
+    have always got. The toggle only appears if the data offers the axis, so a
+    stale cached bundle degrades to the plugin this was before.
   */
   let corners = "regular"
+  let size = 24
+  let recent = []
+
+  const esc = (s) =>
+    String(s).replace(/[&<>"]/g, (ch) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" })[ch])
+
+  /* ----------------------------------------------------------------- prefs */
+
+  const post = (msg) => parent.postMessage({ pluginMessage: msg }, "*")
+
+  /*
+    Kept by the main thread in `figma.clientStorage`, the only storage a plugin
+    is promised between runs. Someone who works in sharp duotone at 20 should
+    not have to say so every time the panel opens.
+
+    The first render waits for the answer, so the grid does not draw stroke and
+    then redraw in the style that was asked for. Up to 400ms: outside Figma
+    nothing answers, and a panel that never renders is worse than one that
+    flickers.
+
+    An answer that arrives after the user has already chosen something is
+    dropped. Applied, it would put back the style they just left and a recent
+    list without the icon they just inserted, and the next save would write
+    both over what they meant.
+  */
+  let settle
+  const prefsReady = new Promise((resolve) => {
+    settle = resolve
+    setTimeout(resolve, 400)
+  })
+  let touched = false
+
+  function savePrefs() {
+    touched = true
+    post({ type: "prefs", value: { style, corners, size, recent } })
+  }
+
+  window.onmessage = (e) => {
+    const msg = e.data && e.data.pluginMessage
+    if (!msg || msg.type !== "prefs" || touched) return
+    const v = msg.value || {}
+    if (typeof v.style === "string") style = v.style
+    if (typeof v.corners === "string") corners = v.corners
+    if (SIZES.includes(v.size)) size = v.size
+    if (Array.isArray(v.recent)) recent = v.recent.filter((n) => typeof n === "string").slice(0, RECENT_MAX)
+    settle()
+    if (loaded) {
+      settleAxes()
+      render()
+    }
+  }
+
+  post({ type: "ready" })
 
   /* ------------------------------------------------------------------ data */
 
+  async function fetchBundle() {
+    /*
+      Revalidate, then fall back to whatever is cached.
+
+      jsDelivr answers with `max-age=604800`, so a plain fetch is served from
+      this browser's own cache for a week without asking. That is why the panel
+      still loads with the network off, which is worth having. It also meant a
+      new icon release reached nobody who had already run the plugin until
+      their cache expired: seven days, not the twelve hours the edge cache
+      costs.
+
+      `no-cache` keeps the stored copy but always asks the server whether it
+      changed, so an unchanged set comes back as a 304 and costs nothing. When
+      that ask cannot happen, `force-cache` takes the stored copy however stale
+      it is, which is the offline case and the only one where stale is better
+      than nothing.
+    */
+    let res
+    try {
+      res = await fetch(DATA_URL, { cache: "no-cache" })
+    } catch (offline) {
+      res = await fetch(DATA_URL, { cache: "force-cache" })
+    }
+    if (!res.ok) throw new Error(`HTTP ${res.status}`)
+    return res.json()
+  }
+
+  /** A remembered choice the bundle cannot honour falls back to its default. */
+  function settleAxes() {
+    if (!STYLES.includes(style)) style = STYLES[0]
+    if (!CORNERS.includes(corners)) corners = "regular"
+  }
+
   async function load() {
     try {
-      /*
-        Revalidate, then fall back to whatever is cached.
-
-        jsDelivr answers with `max-age=604800`, so a plain fetch is served from
-        this browser's own cache for a week without asking. That is why the panel
-        still loads with the network off, which is worth having. It also meant a
-        new icon release reached nobody who had already run the plugin until
-        their cache expired: seven days, not the twelve hours the edge cache
-        costs.
-
-        `no-cache` keeps the stored copy but always asks the server whether it
-        changed, so an unchanged set comes back as a 304 and costs nothing. When
-        that ask cannot happen, `force-cache` takes the stored copy however stale
-        it is, which is the offline case and the only one where stale is better
-        than nothing.
-      */
-      let res
-      try {
-        res = await fetch(DATA_URL, { cache: "no-cache" })
-      } catch (offline) {
-        res = await fetch(DATA_URL, { cache: "force-cache" })
-      }
-      if (!res.ok) throw new Error(`HTTP ${res.status}`)
-      const data = await res.json()
+      const [data] = await Promise.all([fetchBundle(), prefsReady])
 
       ICONS = data.icons
       KEYWORDS = data.keywords || {}
       NAMES = Object.keys(ICONS)
+      STYLES = data.styles
+      CORNERS = data.corners && data.corners.length > 1 ? data.corners : []
+      /*
+        Shelves are read off the bundle, like the styles, so a shelf the site
+        opens reaches the plugin on the next data push. A bundle from before
+        they were baked has none, and the grid falls back to one flat run.
+      */
+      SHELVES = data.categories || []
+      SHELF_OF = {}
+      for (const shelf of SHELVES) for (const name of shelf.names) SHELF_OF[name] = shelf.label
 
-      renderStyles(data.styles)
-      renderCorners(data.corners)
+      settleAxes()
+      $("search-glyph").innerHTML = glyph(CHROME.search)
+      $("clear").innerHTML = glyph(CHROME.clear)
+      $("q").placeholder = `Search ${NAMES.length.toLocaleString("en")} icons`
+      buildControls()
+      loaded = true
       render()
     } catch (err) {
       note.textContent = `Could not load the icon set (${err.message}). `
@@ -291,9 +550,10 @@
    * A query carrying a camelCase boundary is a component identifier someone
    * pasted out of their code rather than a phrase they typed, `CheckCircle2` or
    * `RefreshCw`, so it is split on those boundaries and a leftover bare digit is
-   * dropped: lucide's trailing `2` disambiguates inside lucide and means nothing
-   * here. Two shapes count: a camelCase boundary, and a single capitalised word
-   * ending in digits, which is what `Share2` is and what this missed.
+   * dropped: another set's trailing `2` disambiguates inside that set and means
+   * nothing here. Two shapes count: a camelCase boundary, and a single
+   * capitalised word ending in digits, which is what `Share2` is and what this
+   * missed.
    *
    * Still guarded, because `clock-3`, `dice-5` and `bar-chart-2` are real names
    * and a lowercase query keeps its digits.
@@ -323,7 +583,7 @@
    * `arrow-down-narrow-wide`.
    *
    * The word tier is why this is not just `indexOf`. Compounds here read
-   * base-first, so a designer carrying lucide's `CheckCircle2` types
+   * base-first, so a designer carrying another set's `CheckCircle2` types
    * "check-circle", and matching the whole string finds nothing even though
    * `circle-check` is right there. This plugin shipped with that bug after the
    * MCP server and the CLI were fixed for it, because nothing checks that the
@@ -370,91 +630,151 @@
     ).length
   }
 
+
   /* ---------------------------------------------------------------- render */
 
   /**
    * One drawing, by name, style and treatment.
    *
-   * The bundle nests rather than spreads — `icons[name][style]` is still the
-   * rounded drawing and `icons[name].sharp[style]` is its squared twin — so
+   * The bundle nests rather than spreads: `icons[name][style]` is still the
+   * rounded drawing and `icons[name].sharp[style]` is its squared twin, so
    * every existing lookup went on meaning what it meant and this is the only
-   * place that has to know the axis exists. Five call sites used to index the
-   * bundle directly; they all come through here now, because a treatment that
-   * four of them honour and the fifth does not is a grid that draws one thing
-   * and inserts another.
+   * place that has to know the axis exists. Every call site comes through
+   * here, because a treatment that the grid honours and the insert does not is
+   * a grid that draws one thing and inserts another.
    */
-  const artOf = (name) => {
+  const artOf = (name, s = style, c = corners) => {
     const icon = ICONS[name]
     if (!icon) return undefined
-    return corners === "sharp" ? icon.sharp && icon.sharp[style] : icon[style]
+    return c === "sharp" ? icon.sharp && icon.sharp[s] : icon[s]
   }
 
-  function svgFor(name) {
-    const art = artOf(name)
+  function svgFor(name, s = style, c = corners, px = 24) {
+    const art = artOf(name, s, c)
     const attrs = Object.entries(art.root)
       .map(([k, v]) => ` ${k}="${v}"`)
       .join("")
     return (
-      `<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" ` +
+      `<svg xmlns="http://www.w3.org/2000/svg" width="${px}" height="${px}" ` +
       `viewBox="0 0 24 24"${attrs}>${art.body}</svg>`
     )
   }
 
-  function renderStyles(styles) {
-    $("styles").innerHTML = styles
-      .map((s) => `<button data-style="${s}" aria-pressed="${s === style}">${s}</button>`)
-      .join("")
-  }
+  /** A 16px chrome glyph; nothing rather than a crash if a name ever goes missing. */
+  const glyph = (name, s = "stroke", c = "regular") => (artOf(name, s, c) ? svgFor(name, s, c, 16) : "")
+
+  const title = (s) => s[0].toUpperCase() + s.slice(1)
 
   /*
-    Read off the bundle rather than written here, exactly as the styles are, so
-    a treatment added later needs no plugin update to appear — which is the
-    whole point of fetching the set instead of shipping it. A bundle that
-    predates the axis offers nothing and the row stays empty, so an offline
-    copy from before this release still works.
+    The three controls are built once and then only told which choice is on.
+    Rebuilt on every change, they destroyed the button that had just been
+    pressed, and keyboard focus fell back to the top of the document.
 
     "Rounded" rather than "regular": the property is called `regular` in Figma
     to leave room for a third treatment, and the word a designer reads should
     say what the corner does.
   */
-  function renderCorners(list) {
-    const row = $("corners")
-    if (!list || list.length < 2) {
-      row.style.display = "none"
-      return
-    }
-    row.innerHTML = list
-      .map(
-        (c) =>
-          `<button data-corners="${c}" aria-pressed="${c === corners}">` +
-          `${c === "regular" ? "rounded" : c}</button>`
+  function buildControls() {
+    $("styles").innerHTML = STYLES.map(
+      (s) =>
+        `<button type="button" role="radio" data-style="${s}" aria-checked="false">` +
+        `<span class="g16" data-sample="${s}"></span>${title(s)}</button>`
+    ).join("")
+    $("corners").hidden = !CORNERS.length
+    $("corners").innerHTML = CORNERS.map((c) => {
+      const name = c === "regular" ? "Rounded" : title(c)
+      return (
+        `<button type="button" role="radio" data-corners="${c}" aria-checked="false" ` +
+        `class="g16" title="${name}" aria-label="${name}">${glyph(CHROME.corners, "stroke", c)}</button>`
       )
-      .join("")
+    }).join("")
+    $("sizes").innerHTML = SIZES.map(
+      (px) =>
+        `<button type="button" role="radio" data-size="${px}" aria-checked="false" ` +
+        `title="Insert at ${px} × ${px}">${px}</button>`
+    ).join("")
   }
 
+  function syncControls() {
+    for (const b of $("styles").children) b.setAttribute("aria-checked", String(b.dataset.style === style))
+    for (const b of $("corners").children) b.setAttribute("aria-checked", String(b.dataset.corners === corners))
+    for (const b of $("sizes").children) b.setAttribute("aria-checked", String(Number(b.dataset.size) === size))
+    // The samples follow the treatment, so the tabs show the style as it will insert.
+    for (const el of $("styles").querySelectorAll("[data-sample]")) {
+      el.innerHTML = glyph(CHROME.styles, el.dataset.sample, corners)
+    }
+  }
+
+  const tile = (name) =>
+    `<button type="button" data-name="${name}" draggable="true" aria-label="${name}">${svgFor(name)}</button>`
+
+  const section = (key, heading, names) =>
+    `<section data-shelf="${esc(key)}">${heading ? `<h2>${heading}</h2>` : ""}` +
+    `<div class="grid">${names.map(tile).join("")}</div></section>`
+
+  const shelfHeading = (label, glyphName, count) =>
+    `<button type="button" class="shelf g16" data-menu="${esc(label)}" aria-haspopup="menu">` +
+    `${glyph(glyphName)}${esc(label)}<span class="n">${count}</span>` +
+    `<span class="chev">${glyph(CHROME.menu)}</span></button>`
+
+  /*
+    Recent as the grid last drew it. The menu lists this rather than the live
+    list, or after a first insert it offers a Recent row with no section to
+    jump to.
+  */
+  let shownRecent = []
+
   function render() {
+    // Before the set arrives there is nothing to search, and rendering anyway
+    // replaces "Loading the set…", or the error and its retry, with a false
+    // "Nothing matches". load() renders the typed query once the data is in.
+    if (!loaded) return
+
     // Both forms. The lowercased one is what the substring tiers match on; the
     // raw one still carries the case boundary that tells `wordsOf` it is looking
     // at a pasted identifier rather than a typed phrase.
     const raw = $("q").value.trim()
     const q = raw.toLowerCase()
-    const hits = search(q, raw)
+    const hits = search(q, raw).map((h) => h.name)
+    $("clear").hidden = !raw
+    closeMenu()
 
-    // One write, not one per icon. The whole set is under 500 names, so the grid
-    // is built as a string and handed over in a single assignment.
-    grid.innerHTML = hits
-      .map((h) => `<button data-name="${h.name}" title="${h.name}">${svgFor(h.name)}</button>`)
-      .join("")
+    let html = ""
+    if (q) {
+      // Ranked, not shelved: the best match leads wherever it is filed.
+      if (hits.length) {
+        html = section("results", `<div class="results">Results<span class="n">${hits.length}</span></div>`, hits)
+      }
+    } else {
+      /*
+        Recent is drawn from the list as it stood when the grid was last built,
+        not updated on every insert. Growing it live pushes every shelf down a
+        row under the pointer, so the second click of a run lands on the
+        neighbour of what was aimed at.
+      */
+      shownRecent = recent.filter((n) => artOf(n))
+      if (shownRecent.length) {
+        html += section("Recent", shelfHeading("Recent", CHROME.recent, shownRecent.length), shownRecent)
+      }
+      if (SHELVES.length) {
+        for (const shelf of SHELVES) {
+          const names = hits.filter((n) => SHELF_OF[n] === shelf.label)
+          if (names.length) html += section(shelf.label, shelfHeading(shelf.label, shelf.glyph, names.length), names)
+        }
+      } else {
+        // A bundle from before the shelves: one run, headed so it does not
+        // read as part of Recent above it.
+        html += section("all", shownRecent.length ? `<div class="results">All icons<span class="n">${hits.length}</span></div>` : "", hits)
+      }
+    }
+    // One write, not one per icon.
+    list.innerHTML = html
 
     /*
-      Four states, and the empty one is the reason this exists. Duotone and fill
-      need a region to fill and some glyphs have none, so an empty grid is
-      usually coverage rather than a failure, and saying only "nothing matches"
-      reads as "we do not have this icon" when we do.
-
-      This used to surface the count only when the grid already had hits, which
-      is the case that needs it least. Searching `wifi` in fill showed
-      "Nothing matches" while six wifi icons sat one tab away.
+      Four states, and the empty one is the reason this exists. Every name has
+      been in all four styles since 1.0.0, so a gap now means an old bundle or a
+      treatment with holes, but an empty grid still reads as "we do not have
+      this icon" when it is one switch away.
     */
     const missing = q ? elsewhere(q, raw) : 0
     note.textContent = hits.length
@@ -463,29 +783,110 @@
         : ""
       : missing
         ? `Nothing in ${style}. ${missing} match in another style.`
-        : `Nothing matches “${q}”.`
-    note.style.display = note.textContent ? "block" : "none"
+        : `Nothing matches “${raw}”.`
+    note.hidden = !note.textContent
 
-    $("count").textContent =
-      `${hits.length} ${style}` + (corners === "sharp" ? " sharp" : "")
+    syncControls()
+    idle()
+  }
 
-    for (const b of $("styles").children) {
-      b.setAttribute("aria-pressed", String(b.dataset.style === style))
+  /* ---------------------------------------------------------------- detail */
+
+  function idle() {
+    $("detail").innerHTML =
+      `Click or drag to insert · ` +
+      `<a href="https://keylineicons.com" target="_blank" rel="noreferrer">keylineicons.com</a>`
+  }
+
+  function describe(name) {
+    const shelf = SHELF_OF[name]
+    $("detail").innerHTML = `<b>${name}</b>${shelf ? ` · ${esc(shelf)}` : ""}`
+  }
+
+  /* ---------------------------------------------------------------- insert */
+
+  function remember(name) {
+    recent = [name, ...recent.filter((n) => n !== name)].slice(0, RECENT_MAX)
+    savePrefs()
+  }
+
+  function insert(name) {
+    post({ type: "insert", name, size, svg: svgFor(name) })
+    remember(name)
+  }
+
+  /* ------------------------------------------------------------------ menu */
+
+  function openMenu(anchor) {
+    const current = anchor.dataset.menu
+    const rows = [
+      { label: "Recent", glyph: CHROME.recent, count: shownRecent.length },
+      ...SHELVES.map((s) => ({ ...s, count: s.names.filter((n) => artOf(n)).length })),
+    ].filter((row) => row.count)
+    menu.innerHTML = rows
+      .map(
+        (row) =>
+          `<button type="button" role="menuitem" class="g16" data-jump="${esc(row.label)}" ` +
+          `aria-current="${row.label === current}">${glyph(row.glyph)}${esc(row.label)}` +
+          `<span class="n">${row.count}</span></button>`
+      )
+      .join("")
+    /*
+      Below the heading when it fits, above it when there is more room there.
+      A heading clicked low in the grid otherwise opened a menu over the footer
+      and past the bottom of the panel, with two rows showing.
+    */
+    const rect = anchor.getBoundingClientRect()
+    const footer = $("sizes").closest("footer").getBoundingClientRect().top
+    const below = footer - rect.bottom - 8
+    const above = rect.top - 8
+    const up = below < 200 && above > below
+    menu.style.top = up ? "" : `${rect.bottom + 4}px`
+    menu.style.bottom = up ? `${innerHeight - rect.top + 4}px` : ""
+    menu.style.maxHeight = `${Math.min(340, up ? above : below)}px`
+    menu.hidden = false
+    const here = menu.querySelector('[aria-current="true"]')
+    if (here) {
+      here.scrollIntoView({ block: "nearest" })
+      here.focus()
     }
-    for (const b of $("corners").children) {
-      b.setAttribute("aria-pressed", String(b.dataset.corners === corners))
-    }
+  }
+
+  function closeMenu() {
+    menu.hidden = true
+  }
+
+  menu.onclick = (e) => {
+    const b = e.target.closest("[data-jump]")
+    if (!b) return
+    closeMenu()
+    const target = [...list.querySelectorAll("section")].find((s) => s.dataset.shelf === b.dataset.jump)
+    if (!target) return
+    $("main").scrollTop = target.offsetTop
+    target.querySelector("h2 button")?.focus({ preventScroll: true })
   }
 
   /* ---------------------------------------------------------------- events */
 
-  $("q").oninput = render
+  $("q").oninput = () => {
+    $("main").scrollTop = 0
+    render()
+  }
+
+  $("clear").onclick = (e) => {
+    e.preventDefault()
+    $("q").value = ""
+    $("main").scrollTop = 0
+    render()
+    $("q").focus()
+  }
 
   $("styles").onclick = (e) => {
     const b = e.target.closest("button")
     if (!b) return
     style = b.dataset.style
     render()
+    savePrefs()
   }
 
   $("corners").onclick = (e) => {
@@ -493,14 +894,156 @@
     if (!b) return
     corners = b.dataset.corners
     render()
+    savePrefs()
   }
 
-  grid.onclick = (e) => {
+  $("sizes").onclick = (e) => {
     const b = e.target.closest("button")
     if (!b) return
-    const name = b.dataset.name
-    parent.postMessage({ pluginMessage: { type: "insert", name, svg: svgFor(name) } }, "*")
+    size = Number(b.dataset.size)
+    syncControls()
+    savePrefs()
   }
+
+  list.onclick = (e) => {
+    const heading = e.target.closest("[data-menu]")
+    if (heading) return menu.hidden ? openMenu(heading) : closeMenu()
+    const b = e.target.closest(".grid button")
+    if (b) insert(b.dataset.name)
+  }
+
+  document.addEventListener("pointerdown", (e) => {
+    if (!menu.hidden && !e.target.closest("#menu, [data-menu]")) closeMenu()
+  })
+  $("main").addEventListener("scroll", () => menu.hidden || closeMenu(), { passive: true })
+
+  list.addEventListener("mouseover", (e) => {
+    const b = e.target.closest(".grid button")
+    if (b) describe(b.dataset.name)
+  })
+  list.addEventListener("mouseleave", () => {
+    const name = document.activeElement && document.activeElement.dataset.name
+    name ? describe(name) : idle()
+  })
+  list.addEventListener("focusin", (e) => {
+    if (e.target.dataset.name) describe(e.target.dataset.name)
+  })
+
+  /*
+    Drag onto the canvas. A drag that ends outside the iframe is posted to
+    Figma as `pluginDrop`, which comes back to the main thread as a `drop` event
+    carrying the canvas point it landed on. The drawing rides along as
+    metadata, already in the style, treatment and size the panel is set to.
+
+    `e.view.length === 0` is Figma's own test for a drag that ended inside the
+    panel, taken as documented.
+  */
+  list.addEventListener("dragend", (e) => {
+    const b = e.target.closest(".grid button")
+    if (!b || e.view.length === 0) return
+    const name = b.dataset.name
+    parent.postMessage(
+      {
+        pluginDrop: {
+          clientX: e.clientX,
+          clientY: e.clientY,
+          items: [],
+          dropMetadata: { type: "keyline-icon", name, size, svg: svgFor(name) },
+        },
+      },
+      "*"
+    )
+    remember(name)
+  })
+
+  /* -------------------------------------------------------------- keyboard */
+
+  const tiles = () => [...list.querySelectorAll(".grid button")]
+
+  /*
+    By geometry, not by index. The shelves end on part-filled rows, so index
+    plus columns drifts sideways at every heading; the tile nearest below is
+    what someone pressing down means.
+  */
+  function step(from, key) {
+    const all = tiles()
+    if (key === "ArrowLeft" || key === "ArrowRight") {
+      return all[all.indexOf(from) + (key === "ArrowRight" ? 1 : -1)]
+    }
+    const r = from.getBoundingClientRect()
+    const down = key === "ArrowDown"
+    let best
+    let bestRow = Infinity
+    let bestDx = Infinity
+    for (const t of all) {
+      const s = t.getBoundingClientRect()
+      const dy = down ? s.top - r.top : r.top - s.top
+      if (dy < 4) continue
+      const dx = Math.abs(s.left - r.left)
+      if (dy < bestRow - 4 || (Math.abs(dy - bestRow) < 4 && dx < bestDx)) {
+        best = t
+        bestRow = dy
+        bestDx = dx
+      }
+    }
+    return best
+  }
+
+  list.addEventListener("keydown", (e) => {
+    const t = e.target.closest(".grid button")
+    if (!t) return
+    if (e.key === "Escape") return $("q").focus()
+    if (!e.key.startsWith("Arrow")) return
+    e.preventDefault()
+    const next = step(t, e.key)
+    if (next) {
+      next.focus()
+      next.scrollIntoView({ block: "nearest" })
+      describe(next.dataset.name)
+    } else if (e.key === "ArrowUp") $("q").focus()
+  })
+
+  $("q").addEventListener("keydown", (e) => {
+    const first = tiles()[0]
+    if (e.key === "ArrowDown" && first) {
+      e.preventDefault()
+      first.focus()
+      describe(first.dataset.name)
+    } else if (e.key === "Enter" && first && $("q").value.trim()) {
+      // The top hit, so a name typed in full is one keystroke from the canvas.
+      insert(first.dataset.name)
+    } else if (e.key === "Escape" && $("q").value) {
+      e.preventDefault()
+      $("q").value = ""
+      $("main").scrollTop = 0
+      render()
+    }
+  })
+
+  menu.addEventListener("keydown", (e) => {
+    const items = [...menu.querySelectorAll("button")]
+    const i = items.indexOf(document.activeElement)
+    const move = { ArrowDown: 2, ArrowUp: -2, ArrowRight: 1, ArrowLeft: -1 }[e.key]
+    if (move && items[i + move]) {
+      e.preventDefault()
+      items[i + move].focus()
+    }
+  })
+
+  // Typing anywhere searches, so the panel answers the keyboard the moment it
+  // has focus, whatever was clicked last. Space is left alone: on a tile or a
+  // button it is the key that presses it.
+  document.addEventListener("keydown", (e) => {
+    if (e.key === "Escape" && !menu.hidden) {
+      closeMenu()
+      return $("q").focus()
+    }
+    if (e.target === $("q") || e.metaKey || e.ctrlKey || e.altKey) return
+    if (e.key === "/" || (e.key.length === 1 && e.key !== " ")) {
+      if (e.key === "/") e.preventDefault()
+      $("q").focus()
+    }
+  })
 
   load()
 </script>
