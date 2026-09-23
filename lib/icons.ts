@@ -148,6 +148,8 @@ export type ReleaseTopic = {
   title: string | null
   /** A drawing from the set, by name, for the chip. Chips only. */
   icon: string | null
+  /** A platform's own mark in place of the drawing, by key: `react`. Chips only. */
+  logo?: string
   /** The link fragment, `v1.0.0-people` or `v1.0.0-redrawn-files`. Null untitled. */
   anchor: string | null
   text: string | null

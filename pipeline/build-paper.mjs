@@ -790,6 +790,20 @@ function catalogSheet(icons, totals, release) {
 const esc = (t) =>
   t.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;")
 
+const MONO = "'Geist Mono', ui-monospace, SFMono-Regular, Menlo, monospace"
+
+/* Backticks set code, the same grammar components/prose.tsx reads on the site,
+   so a package name in a release note is set as one on both surfaces. */
+const prose = (t, ink) =>
+  esc(t)
+    .split("`")
+    .map((part, i) =>
+      i % 2
+        ? `<code style="font-family:${MONO};font-size:0.9em${ink ? `;color:${ink}` : ""}">${part}</code>`
+        : part
+    )
+    .join("")
+
 /**
  * Whether a release entry draws its strips on this board, or only names them.
  *
@@ -1012,7 +1026,7 @@ function changelogSheet(icons, release) {
             : `<h4 style="margin:24px 0 0;font-size:14px;font-weight:600">${esc(topic.title)}</h4>`
           : "") +
         (topic.text
-          ? `<p style="margin:${topic.title ? 8 : 24}px 0 0;font-size:14px;line-height:1.7">${esc(topic.text)}</p>`
+          ? `<p style="margin:${topic.title ? 8 : 24}px 0 0;font-size:14px;line-height:1.7">${prose(topic.text, INK)}</p>`
           : "") +
         (topic.names.length ? tiles(topic.names) : "") +
         (pairs.length ? redraws(pairs) : "") +
@@ -1051,7 +1065,6 @@ function changelogSheet(icons, release) {
     const NAME = "#454545"
     const BLUE = "#006aa5"
     const SANS = "Geist, -apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif"
-    const MONO = "'Geist Mono', ui-monospace, SFMono-Regular, Menlo, monospace"
     const CAPS = `font-size:11px;letter-spacing:1.1px;color:${MUTED_};white-space:nowrap`
     const COLUMN = 688
 
@@ -1068,6 +1081,20 @@ function changelogSheet(icons, release) {
     const glyph = (name, size) => {
       const art = icons.get(name)?.art?.stroke
       return art ? svg({ name, art, size }) : ""
+    }
+    /* A platform's mark for a chip about that platform, the site's `LOGOS` in
+       app/changelog/page.tsx. Drawn from components/brand-logos.tsx, which is
+       TSX and so cannot be imported here. It carries the three data attributes
+       every drawing on a board does, or the importer's rename count throws. */
+    const LOGOS = {
+      react: (size) =>
+        `<svg width="${size}" height="${size}" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" ` +
+        `role="img" aria-label="react logo" data-icon="react" data-style="logo" data-corners="regular" ` +
+        `fill="none" stroke="#61DAFB">` +
+        `<circle cx="12" cy="12" r="2.05" fill="#61DAFB" stroke="none"/>` +
+        `<g stroke-width="1"><ellipse cx="12" cy="12" rx="11" ry="4.2"/>` +
+        `<ellipse cx="12" cy="12" rx="11" ry="4.2" transform="rotate(60 12 12)"/>` +
+        `<ellipse cx="12" cy="12" rx="11" ry="4.2" transform="rotate(120 12 12)"/></g></svg>`,
     }
 
     const tile = (width, inner, name, caption = "") =>
@@ -1167,7 +1194,7 @@ function changelogSheet(icons, release) {
               `<div style="display:flex;align-items:center;gap:10px;padding:4px 14px 4px 4px;border-radius:999px;background:${FILL};` +
                 `font-size:14px;font-weight:500;color:${INK_};white-space:nowrap">` +
                 `<div style="display:flex;align-items:center;justify-content:center;width:28px;height:28px;border-radius:999px;background:#ffffff;color:${INK_}">` +
-                  (t.icon ? glyph(t.icon, 16) : "") +
+                  (t.logo ? LOGOS[t.logo](16) : t.icon ? glyph(t.icon, 16) : "") +
                 `</div>` +
                 `<span>${esc(t.title)}</span>` +
                 (count ? `<span style="font-weight:400;color:${MUTED_}">${count.toLocaleString("en-US")}</span>` : "") +
@@ -1177,14 +1204,14 @@ function changelogSheet(icons, release) {
                 : "") +
             `</div>` +
             `<div style="display:flex;flex-direction:column;gap:20px;margin:20px 0 0">` +
-              (t.text ? `<p style="margin:0;max-width:672px;font-size:15px;line-height:24px;color:${MUTED_}">${esc(t.text)}</p>` : "") +
+              (t.text ? `<p style="margin:0;max-width:672px;font-size:15px;line-height:24px;color:${MUTED_}">${prose(t.text, INK_)}</p>` : "") +
               strips(t) +
               (t.sections ?? [])
                 .map((x, i) =>
                   `<div style="display:flex;flex-direction:column;gap:16px;margin:${i === 0 && !t.text ? 0 : 16}px 0 0">` +
                     `<div style="display:flex;gap:5px;max-width:672px;font-size:15px;line-height:24px">` +
                       (x.title ? `<span style="font-weight:600;color:${INK_};white-space:nowrap;flex-shrink:0">${esc(x.title)}:</span>` : "") +
-                      `<span style="color:${MUTED_}">${esc(x.text ?? "")}</span>` +
+                      `<span style="color:${MUTED_}">${prose(x.text ?? "", INK_)}</span>` +
                     `</div>` +
                     strips(x) +
                   `</div>`
@@ -1215,12 +1242,12 @@ function changelogSheet(icons, release) {
             : u.names.length
               ? `${u.names.length.toLocaleString("en-US")} drawing${u.names.length === 1 ? "" : "s"} added since ${u.since}`
               : `${redrawn} drawing${redrawn === 1 ? "" : "s"} redrawn since ${u.since}`) +
-          `. The set holds ${u.count.toLocaleString("en-US")}.` +
+          `. The set is now ${u.count.toLocaleString("en-US")}.` +
         `</p>` +
         `<div style="display:flex;align-items:flex-start;gap:10px;margin:20px 0 0;padding:8px 12px;border-radius:10px;background:${FILL};` +
           `font-size:14px;line-height:20px;color:${MUTED_};width:fit-content">` +
           `<div style="width:6px;height:6px;margin:7px 0 0;border-radius:999px;background:${BLUE};flex-shrink:0"></div>` +
-          `<span>In the repository and the design files, and not on npm until the next release.</span>` +
+          `<span>In the repo and the design files. Not on npm until the next release.</span>` +
         `</div>` +
         cover +
         chips +

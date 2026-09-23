@@ -574,6 +574,7 @@ const topicsFor = (version, names, updatedNames) => {
     return {
       title: topic.title ?? null,
       icon: topic.icon ?? null,
+      ...(topic.logo && { logo: topic.logo }),
       anchor,
       text: fill(topic.text ?? null),
       names: own(topic.names, added),

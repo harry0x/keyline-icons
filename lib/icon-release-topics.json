@@ -1,13 +1,13 @@
 {
- "$comment": "SOURCE, NOT GENERATED. How a release reads on the changelog, shaped after Preline's (Zafar, 17 Sep 2026, pointing at preline.co/docs/changelog.html): a title, then chips (an icon and a label, like Preline's \"New Components & Improvements\" and \"Fixes and Improvements\"), each followed by its items with a bold lead (\"People:\", \"Layout:\") and the drawings the item is about. His asks on the way: \"topic > icons, topic > icons. not all topics first and then all icons after that\", \"categorize them, not just text > icons. titles, etc.\", \"redrawns deserve to be a separate topic, not within a topic and each subtitle must carry shareable link like the main titles\". So redraws are always their own chip. Per version: `title` (the release's headline, which every version has, released ones included, because the page heads each entry by it) and optionally `sections`: chips with `title`, `icon` (a drawing from this set, by name), `text`, and items in `sections` with `title`, `text`, `names` (added) or `redraws`. A version with no `sections` is drawn with default chips, New drawings and Redrawn, straight off git. pipeline/build-history.mjs gives every chip and item an `anchor` (v<version>-<chip>, v<version>-<chip>-<item>) that the site links, keeps only the drawings the entry carries, and appends anything no item claims in a last untitled group, reported, so a stale list never drops a drawing. Keyed by the version the work ships as, so nothing is re-keyed at the tag. Numbers go in as {names} and {files}. Where a version has sections they replace the note.",
+ "$comment": "SOURCE, NOT GENERATED. How a release reads on the changelog, shaped after Preline's (Zafar, 17 Sep 2026, pointing at preline.co/docs/changelog.html): a title, then chips (an icon and a label, like Preline's \"New Components & Improvements\" and \"Fixes and Improvements\"), each followed by its items with a bold lead (\"People:\", \"Layout:\") and the drawings the item is about. His asks on the way: \"topic > icons, topic > icons. not all topics first and then all icons after that\", \"categorize them, not just text > icons. titles, etc.\", \"redrawns deserve to be a separate topic, not within a topic and each subtitle must carry shareable link like the main titles\". So redraws are always their own chip. Per version: `title` (the release's headline, which every version has, released ones included, because the page heads each entry by it) and optionally `sections`: chips with `title`, `icon` (a drawing from this set, by name) or `logo` (a platform's own mark, for a chip about that platform, where a drawing of ours would stand in for someone else's trademark: `react`, drawn from components/brand-logos.tsx), `text`, and items in `sections` with `title`, `text`, `names` (added) or `redraws`. A version with no `sections` is drawn with default chips, New drawings and Redrawn, straight off git. pipeline/build-history.mjs gives every chip and item an `anchor` (v<version>-<chip>, v<version>-<chip>-<item>) that the site links, keeps only the drawings the entry carries, and appends anything no item claims in a last untitled group, reported, so a stale list never drops a drawing. Keyed by the version the work ships as, so nothing is re-keyed at the tag. Numbers go in as {names} and {files}. Anything in backticks is set as code, on the page and the Paper board both, the way a post sets an icon name. Where a version has sections they replace the note.",
  "releases": {
   "1.1.0": {
-   "title": "React Native support and 113 new drawings, from an AI shelf to the modifier keys",
+   "title": "React Native support and 113 new drawings",
    "sections": [
     {
      "title": "React Native",
-     "icon": "laptop-smartphone",
-     "text": "The whole set now installs in React Native apps too, Expo included, as @keyline-icons/react-native, with the same names, styles and corners as the React package. Code shared between a web app and a phone app changes the package name and nothing else; on a phone the colour comes from a color prop, since there is no text colour to inherit."
+     "logo": "react",
+     "text": "The full set now works in React Native apps, Expo included, as `@keyline-icons/react-native`. Same names, styles and corners as the React package. Shared code between web and phone only changes the package name. On phone, color comes from a `color` prop: there's no text color to inherit."
     },
     {
      "title": "New drawings",
@@ -15,7 +15,7 @@
      "sections": [
       {
        "title": "AI",
-       "text": "Every drawing the set marks with a star now sits here: the search, the message, the file, the chart, the cursor and seventy more, each carrying the same pair, and a second bot joins the first.",
+       "text": "Every icon that already had a sparkle version is here now: search, message, file, chart, cursor and seventy more. Same two-star mark on each. A second bot joins the first.",
        "names": [
         "activity-sparkles",
         "app-window-sparkles",
@@ -97,7 +97,7 @@
       },
       {
        "title": "Math",
-       "text": "The marks a sum needs: asterisk, divide, equal with its approximate and struck forms, hash, infinity, parentheses, the radical, a variable and a crossed top line, four of them circled and squared as well.",
+       "text": "The symbols a sum actually needs: asterisk, divide, equals (plus approximate and not-equal), hash, infinity, parentheses, radical, variable and a barred x. Four of them also come circled and squared.",
        "names": [
         "asterisk",
         "circle-asterisk",
@@ -123,7 +123,7 @@
       },
       {
        "title": "Keyboard",
-       "text": "The four modifier keys as a Mac prints them, for shortcut hints and key caps.",
+       "text": "The four Mac modifier keys as they print on the keyboard, for shortcut hints and keycaps.",
        "names": [
         "command",
         "escape",
@@ -133,7 +133,7 @@
       },
       {
        "title": "Arrows",
-       "text": "Six corner turns, an arrow with a dash over its head, and an arrow that runs into a line.",
+       "text": "Six corner turns, an arrow with a dash on top, and an arrow that runs into a line.",
        "names": [
         "arrow-big-up-dash",
         "arrow-right-to-line",
@@ -147,7 +147,7 @@
       },
       {
        "title": "Files",
-       "text": "The file takes a waveform and a play triangle, for audio and video.",
+       "text": "A file with a waveform and a file with a play triangle: audio and video.",
        "names": [
         "file-audio",
         "file-video"
@@ -179,11 +179,11 @@
     {
      "title": "Redrawn",
      "icon": "pen",
-     "text": "Drawings that already shipped and were drawn again, each shown before and after.",
+     "text": "One drawing that already shipped was drawn again. Before and after below.",
      "sections": [
       {
        "title": "AI",
-       "text": "The pen swaps its plus signs for the pair of stars every other drawing on the shelf carries.",
+       "text": "The pen drops the plus signs and uses the same two stars as the rest of the sparkle set.",
        "redraws": [
         "pen-sparkles"
        ]

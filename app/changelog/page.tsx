@@ -23,6 +23,8 @@ import { SET_TITLE } from "@/lib/site-chrome"
 import { SiteFooter } from "@/components/site-footer"
 import { SiteNav } from "@/components/site-nav"
 import { artOf, Glyph, STYLES } from "@/components/glyph"
+import { ReactLogo } from "@/components/brand-logos"
+import { prose } from "@/components/prose"
 import { ArrowRight } from "@/components/icons"
 import { ReleaseTicks, type ReleaseTick } from "@/components/release-ticks"
 import Link from "next/link"
@@ -562,6 +564,7 @@ function Chips({
     <>
       {topics.map((topic, i) => {
         const glyph = topic.icon && byName.get(topic.icon)
+        const Logo = topic.logo ? LOGOS[topic.logo] : undefined
         const count = drawingsIn(topic)
         return (
           <div
@@ -584,8 +587,12 @@ function Chips({
                   className="inline-flex items-center gap-x-2.5 rounded-full bg-muted py-1 ps-1 pe-3.5 text-sm font-medium text-foreground transition-colors hover:bg-muted-hover"
                 >
                   <span className="inline-flex size-7 items-center justify-center rounded-full bg-background text-foreground shadow-xs">
-                    {glyph && (
-                      <Glyph art={glyph.art.stroke!} size={16} stroke={2} />
+                    {Logo ? (
+                      <Logo className="size-4" />
+                    ) : (
+                      glyph && (
+                        <Glyph art={glyph.art.stroke!} size={16} stroke={2} />
+                      )
                     )}
                   </span>
                   {topic.title}
@@ -607,7 +614,7 @@ function Chips({
             <div className="mt-5 flex flex-col gap-5">
               {topic.text && (
                 <p className="max-w-2xl text-[15px] leading-relaxed text-muted-foreground">
-                  {topic.text}
+                  {prose(topic.text)}
                 </p>
               )}
               {extra && topic.anchor === extra.anchor && extra.node}
@@ -629,7 +636,7 @@ function Chips({
                         {item.title}:
                       </a>
                     )}{" "}
-                    {item.text}
+                    {item.text && prose(item.text)}
                   </p>
                   {drawings(item)}
                 </div>
@@ -641,6 +648,14 @@ function Chips({
     </>
   )
 }
+
+/**
+ * Marks a chip can carry in place of a drawing, by the key the topics file
+ * names. A chip about a platform shows that platform's own mark, the way the
+ * install page's framework picker does, because a drawing of ours standing in
+ * for it would be the set claiming a logo it does not ship.
+ */
+const LOGOS: Record<string, typeof ReactLogo> = { react: ReactLogo }
 
 /**
  * The chips a release gets when nobody wrote it any: what git says it added and
@@ -1050,10 +1065,10 @@ export default async function Page() {
                     : unreleased.icons.length > 0
                       ? `${plural(unreleased.icons.length, "drawing")} added since ${unreleased.since}`
                       : `${plural(unreleased.redrawn.length, "drawing")} redrawn since ${unreleased.since}`}
-                  . The set holds {unreleased.count.toLocaleString("en-US")}.
+                  . The set is now {unreleased.count.toLocaleString("en-US")}.
                 </p>
               }
-              notice="In the repository and the design files, and not on npm until the next release."
+              notice="In the repo and the design files. Not on npm until the next release."
               cover={coverOf({
                 version: SET_VERSION,
                 icons: unreleased.icons,
