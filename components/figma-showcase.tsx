@@ -137,13 +137,15 @@ const PLUGIN_MOCKUP = {
   image: pluginMockup,
   /*
     What this picture is evidence *of* is that the set is reachable from inside
-    a file without opening the library: a search field, the three styles, and a
-    grid of the whole set in a panel floating over the catalogue.
+    a file without opening the library: a search field, the four styles, and a
+    grid of the whole set in a panel floating over the catalogue. Retaken for
+    the 1.1.1 panel, the one with the corner toggle and the insert sizes.
   */
   alt:
     "The Keyline Icons plugin open in Figma: a panel floating over the " +
-    "catalogue with a search field, a Stroke, Two-tone, Duotone and Fill switch, and a " +
-    "grid of the whole set, with the library file's own Catalog page behind it.",
+    "catalogue with a search field beside a rounded and sharp toggle, a Stroke, " +
+    "Two-tone, Duotone and Fill switch, a grid of the whole set and a row of " +
+    "insert sizes, with the library file's own Catalog page behind it.",
 }
 
 /**
