@@ -1,178 +1,213 @@
 {
- "activity": {
+ "bell": {
   "lead": [
    19,
    6,
-   3
+   4
   ],
   "small": [
-   5,
+   9.5,
+   9.5,
+   2.5
+  ],
+  "shift": [
+   -3,
+   0
+  ]
+ },
+ "calendar": {
+  "lead": [
    18,
-   2
+   19,
+   4
+  ],
+  "small": [
+   9.5,
+   13.5,
+   2.5
+  ],
+  "shift": [
+   0,
+   -1
+  ]
+ },
+ "camera": {
+  "lead": [
+   19,
+   19,
+   4
+  ],
+  "small": [
+   7.5,
+   18.5,
+   2.5
+  ],
+  "shift": [
+   0,
+   -2
+  ]
+ },
+ "captions": {
+  "lead": [
+   19,
+   19,
+   4
+  ],
+  "small": [
+   7.5,
+   18.5,
+   2.5
+  ],
+  "shift": [
+   0,
+   -2
   ]
  },
  "chart-area": {
   "lead": [
-   9.5,
+   8,
    5,
-   3
+   4
   ],
   "small": [
    16.5,
-   4,
-   2
+   3.5,
+   2.5
+  ],
+  "shift": [
+   0,
+   1
   ]
  },
  "chart-bar": {
   "lead": [
    19,
-   5,
-   3
+   6,
+   4
   ],
   "small": [
-   18.5,
-   12,
-   2
-  ]
- },
- "chart-gantt": {
-  "lead": [
-   19,
+   8.5,
    5.5,
-   3.5
-  ],
-  "small": [
-   21,
-   12.5,
-   2
-  ]
- },
- "chart-line-increasing": {
-  "lead": [
-   10,
-   7.5,
-   3.5
-  ],
-  "small": [
-   15.5,
-   4,
-   2
-  ]
- },
- "chart-line": {
-  "lead": [
-   14.5,
-   5,
-   3
-  ],
-  "small": [
-   8,
-   7,
-   2
-  ]
- },
- "chart-no-axes-combined": {
-  "lead": [
-   20,
-   5,
-   3
-  ],
-  "small": [
-   13,
-   4.5,
-   2
-  ]
- },
- "chart-pyramid": {
-  "lead": [
-   20.5,
-   4.5,
    2.5
   ],
-  "small": [
-   4,
-   5,
-   2
+  "shift": [
+   -1,
+   0
   ]
  },
- "chart-scatter-3d": {
-  "lead": [
-   19,
-   7.5,
-   3
-  ],
-  "small": [
-   14,
-   11,
-   2
-  ]
- },
- "chart-scatter-bubble": {
+ "chart-column": {
   "lead": [
    17,
    6,
    4
   ],
   "small": [
-   18,
-   15,
-   2
-  ],
-  "allowLoss": [
-   1,
-   3
-  ]
- },
- "chart-scatter": {
-  "lead": [
-   19,
-   6.5,
-   3
-  ],
-  "small": [
    8,
    16,
    2
+  ],
+  "note": "second star 4 x 4 by his call (22 Sep 2026): 5 x 5 opens the axis"
+ },
+ "chart-line": {
+  "lead": [
+   8,
+   5,
+   4
+  ],
+  "small": [
+   16.5,
+   3.5,
+   2.5
+  ],
+  "shift": [
+   0,
+   1
   ]
+ },
+ "chart-no-axes-combined": {
+  "lead": [
+   5,
+   19,
+   4
+  ],
+  "small": [
+   9.5,
+   13.5,
+   2.5
+  ],
+  "shift": [
+   0,
+   -1
+  ],
+  "note": "top line kept whole on his word, 22 Sep: the stars take bars 4 and 8"
+ },
+ "chart-pyramid": {
+  "skip": true,
+  "dropped": "22 Sep 2026, his word: no seat holds 8 x 8 stars without losing the apex"
+ },
+ "chart-scatter": {
+  "lead": [
+   8,
+   5,
+   4
+  ],
+  "small": [
+   16.5,
+   3.5,
+   2.5
+  ],
+  "shift": [
+   0,
+   1
+  ]
+ },
+ "chart-scatter-3d": {
+  "skip": true,
+  "dropped": "22 Sep 2026, his word: at 8 and 5 the stars take the points or the 3D axes"
  },
  "chart-spline": {
   "lead": [
-   11,
    5,
-   3
+   5,
+   4
   ],
   "small": [
-   8.5,
-   10.5,
-   2
-  ]
+   13.5,
+   3.5,
+   2.5
+  ],
+  "shift": [
+   1,
+   1
+  ],
+  "note": "S kept whole at both ends, 22 Sep: it read as chart-line-increasing"
  },
  "circle-trending-up": {
   "lead": [
-   20,
-   4,
-   3
+   5,
+   5,
+   4
   ],
   "small": [
-   20,
-   17,
-   2
-  ],
-  "keep": 3.5,
-  "allowLoss": [
-   0
+   13.5,
+   3.5,
+   2.5
   ]
+ },
+ "code": {
+  "skip": true,
+  "note": "dropped on his word, 22 Sep"
  },
  "cpu": {
   "lead": [
-   14,
-   14,
-   3
+   12,
+   12,
+   4
   ],
   "small": [
-   9,
-   9,
-   2
+   20.5,
+   3.5,
+   2.5
   ],
   "drop": [
    [
@@ -185,174 +220,431 @@
  },
  "credit-card-2": {
   "lead": [
-   4,
-   6,
-   3
+   5,
+   19,
+   4
   ],
   "small": [
-   9,
-   10,
-   2
-  ]
- },
- "credit-card": {
-  "lead": [
-   19.5,
-   17.5,
-   3.5
+   4.5,
+   8.5,
+   2.5
   ],
-  "small": [
-   13.5,
-   14.5,
-   2
+  "shift": [
+   0,
+   -2
   ]
  },
  "dollar-sign": {
   "lead": [
-   19.5,
-   7.5,
+   19,
+   5,
+   4
+  ],
+  "small": [
+   20.5,
+   13.5,
    2.5
   ],
-  "small": [
-   4,
-   16.5,
-   2
-  ]
+  "shift": [
+   -4,
+   0
+  ],
+  "note": "S kept whole, 22 Sep: the $ moves left, both stars on the right"
  },
- "gift": {
+ "eraser": {
   "lead": [
-   17.5,
-   19.5,
-   3.5
+   5,
+   5,
+   4
   ],
   "small": [
-   9,
-   16.5,
+   15,
+   11,
    2
-  ]
- },
- "handbag": {
-  "lead": [
-   17.5,
-   18.5,
-   3.5
   ],
-  "small": [
-   10,
-   14,
-   2
-  ]
+  "shift": [
+   0,
+   1
+  ],
+  "note": "body and band kept whole in both corners, 22 Sep: a 4 x 4 second star in the head, as chart-column"
  },
- "inbox": {
+ "eye": {
   "lead": [
-   20,
+   19,
    6,
-   3
+   4
   ],
   "small": [
-   13,
-   9.5,
-   2
-  ]
+   20.5,
+   14.5,
+   2.5
+  ],
+  "shift": [
+   0,
+   1
+  ],
+  "note": "his arrangement, lead lifted off the pupil (base moved 1 down)"
  },
- "loader": {
+ "file": {
   "lead": [
-   18.5,
-   5.5,
-   3
+   19,
+   19,
+   4
   ],
   "small": [
-   5.5,
-   18.5,
-   2
+   10.5,
+   14.5,
+   2.5
   ],
-  "allowLoss": [
-   1,
-   5
+  "shift": [
+   -2,
+   0
   ]
  },
- "paper-bag": {
+ "film": {
   "lead": [
-   5.5,
-   18.5,
-   3.5
+   19,
+   5,
+   4
   ],
   "small": [
    12,
-   16,
+   8,
    2
+  ],
+  "shift": [
+   -1,
+   1
+  ],
+  "box": 4,
+  "note": "4x4 second star: a 5x5 cuts a frame line; cuts only what his drawing cut, box 4 ends the cut lines on the frame line"
+ },
+ "gift": {
+  "lead": [
+   19,
+   19,
+   4
+  ],
+  "small": [
+   11.5,
+   16.5,
+   2.5
+  ],
+  "note": "his arrangement; second star clear of the box side"
+ },
+ "globe": {
+  "skip": true,
+  "note": "dropped on his word, 22 Sep 2026"
+ },
+ "hand-pointer": {
+  "lead": [
+   19,
+   5,
+   4
+  ],
+  "small": [
+   11.5,
+   15.5,
+   2.5
+  ],
+  "shift": [
+   -2,
+   0
+  ],
+  "note": "no seat left of the finger; second star in the palm"
+ },
+ "image": {
+  "lead": [
+   19,
+   5,
+   4
+  ],
+  "small": [
+   13.5,
+   9.5,
+   2.5
+  ],
+  "shift": [
+   -1,
+   1
+  ],
+  "note": "a 5x5 cannot take the sun: sun kept, second star under the lead"
+ },
+ "inbox": {
+  "lead": [
+   19,
+   5,
+   4
+  ],
+  "small": [
+   12.5,
+   11.5,
+   2.5
+  ],
+  "shift": [
+   0,
+   2
+  ],
+  "note": "his arrangement, tray whole"
+ },
+ "language": {
+  "lead": [
+   5,
+   19,
+   4
+  ],
+  "small": [
+   19.5,
+   4.5,
+   2.5
+  ],
+  "note": "swapped: an 8x8 top right takes the dot of the character"
+ },
+ "layers": {
+  "skip": true,
+  "note": "dropped on his word, 22 Sep 2026"
+ },
+ "list": {
+  "lead": [
+   19,
+   6,
+   4
+  ],
+  "small": [
+   3.5,
+   19.5,
+   2.5
+  ],
+  "shift": [
+   0,
+   1
+  ],
+  "note": "his pick, 22 Sep: the second star takes the bottom bullet, middle line whole, paddings 2 all round"
+ },
+ "loader": {
+  "skip": true,
+  "note": "dropped on his word, 22 Sep 2026"
+ },
+ "mail": {
+  "lead": [
+   19,
+   19,
+   4
+  ],
+  "small": [
+   10.5,
+   14.5,
+   2.5
+  ],
+  "shift": [
+   0,
+   -2
+  ]
+ },
+ "mic": {
+  "lead": [
+   19,
+   5,
+   4
+  ],
+  "small": [
+   20.5,
+   15.5,
+   2.5
+  ],
+  "shift": [
+   -3,
+   0
+  ],
+  "note": "capsule and stand kept whole, 22 Sep: the mic moves 3 left, both stars on the right"
+ },
+ "pen": {
+  "lead": [
+   5,
+   5,
+   4
+  ],
+  "small": [
+   19.5,
+   19.5,
+   2.5
+  ],
+  "note": "his plus signs become stars, 22 Sep 2026 (option a): the lead where his big plus was, the second where the small one was"
+ },
+ "search": {
+  "lead": [
+   10,
+   10,
+   4
+  ],
+  "small": [
+   4.5,
+   4.5,
+   2.5
+  ],
+  "grey": [
+   [
+    13,
+    13,
+    23,
+    23
+   ]
   ]
  },
  "shirt": {
   "lead": [
    16,
-   20,
-   3
+   19,
+   4
   ],
   "small": [
-   11,
-   14,
-   2
-  ]
+   11.5,
+   13.5,
+   2.5
+  ],
+  "note": "his arrangement: lead on the hem, second inside; the second moved right so the left side stays whole"
+ },
+ "shopping-cart": {
+  "lead": [
+   19,
+   6,
+   4
+  ],
+  "small": [
+   12.5,
+   9.5,
+   2.5
+  ],
+  "note": "his arrangement: lead top right, second in the basket clear of its floor"
  },
  "signal": {
   "lead": [
    6,
-   6.5,
-   3.5
-  ],
-  "small": [
-   13.5,
    5,
-   2
-  ]
- },
- "tag-horizontal-start": {
-  "lead": [
-   19.5,
-   6.5,
-   3.5
+   4
   ],
   "small": [
    14.5,
-   15,
+   3.5,
+   2.5
+  ],
+  "shift": [
+   0,
    2
-  ]
+  ],
+  "note": "bars whole (grown, the third bar lost 2); base down 2"
  },
- "tag": {
+ "sliders-horizontal": {
   "lead": [
-   20,
-   4,
-   3
+   19,
+   5,
+   4
   ],
   "small": [
-   15,
-   10.5,
+   4.5,
+   19.5,
+   2.5
+  ],
+  "shift": [
+   -1,
+   1
+  ],
+  "note": "his arrangement: lead takes the top knob, second the bottom left track; middle row whole"
+ },
+ "table": {
+  "skip": true,
+  "note": "dropped on his word, 22 Sep 2026: an 8x8 above the header cuts its right end; no seat keeps the grid whole"
+ },
+ "tablet": {
+  "skip": true,
+  "note": "dropped on his word, 22 Sep 2026"
+ },
+ "terminal": {
+  "lead": [
+   19,
+   8,
+   4
+  ],
+  "small": [
+   14.5,
+   13.5,
+   2.5
+  ],
+  "shift": [
+   -2,
+   0
+  ],
+  "note": "his arrangement; chevron and underline whole; base left 2"
+ },
+ "truck": {
+  "lead": [
+   5,
+   5,
+   4
+  ],
+  "small": [
+   8.5,
+   11.5,
+   2.5
+  ],
+  "shift": [
+   0,
    2
+  ],
+  "note": "his arrangement: lead on the cargo corner, second inside; wheels and back wall whole; base down 2"
+ },
+ "user": {
+  "lead": [
+   19,
+   15,
+   4
+  ],
+  "small": [
+   20.5,
+   3.5,
+   2.5
+  ],
+  "shift": [
+   -3,
+   1
   ]
+ },
+ "video": {
+  "lead": [
+   15,
+   5,
+   4
+  ],
+  "small": [
+   11.5,
+   12.5,
+   2.5
+  ],
+  "shift": [
+   0,
+   1
+  ],
+  "drop": [
+   [
+    11.5,
+    3.5,
+    17.5,
+    9.5
+   ]
+  ],
+  "note": "his arrangement: lead replaces the second reel, second on the body top; first reel whole; base down 1"
  },
  "wallet": {
   "lead": [
-   5,
-   19,
-   3
+   6,
+   18,
+   4
   ],
   "small": [
-   8,
-   13.5,
-   2
-  ]
- },
- "mic": {
-  "lead": [
-   20.5,
-   4.5,
+   10.5,
+   12.5,
    2.5
   ],
-  "small": [
-   3,
-   5,
-   2
-  ]
+  "note": "his arrangement: lead bottom left, second up right inside; flap and clasp whole"
  }
 }

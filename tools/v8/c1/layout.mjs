@@ -27,8 +27,10 @@ const TOL = 1.95;
 
 /** The Figma set names of the batch: every ref but his duplicates and the shipped pen. */
 export function batchNames() {
-  // his three-bar list is menu-sparkles; bug and headphones dropped 22 Sep (star in the head, an ear cup gone)
-  const skip = new Set(['list-sparkles', 'pen-sparkles', 'Slice 1', 'bug-sparkles', 'headphones-sparkles']);
+  // his three-bar list is menu-sparkles; bug and headphones dropped 22 Sep (star in the head, an ear cup gone);
+  // book-open, chart-pyramid, chart-scatter-3d and code dropped 22 Sep at 8 and 5 (no seat keeps the drawing whole);
+  // globe, layers, table, tablet and loader dropped 22 Sep on his word
+  const skip = new Set(['list-sparkles', 'pen-sparkles', 'Slice 1', 'bug-sparkles', 'headphones-sparkles', 'book-open-sparkles', 'chart-pyramid-sparkles', 'chart-scatter-3d-sparkles', 'code-sparkles', 'globe-sparkles', 'layers-sparkles', 'table-sparkles', 'tablet-sparkles', 'loader-sparkles']);
   return readdirSync(REFS).filter((f) => f.endsWith('.svg')).map((f) => f.slice(0, -4))
     .filter((n) => !skip.has(n))
     .map((n) => (n === 'list-sparkles-1' ? 'list-sparkles' : n === 'search-s-sparkles' ? 'search-2-sparkles' : n))

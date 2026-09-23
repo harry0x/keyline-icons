@@ -10,6 +10,7 @@ import { parse, at } from '../cut.mjs';
 import { star } from '../star.mjs';
 import { sharpStar } from '../halo.mjs';
 import { cut, polyOf, distTo, starPolys } from './cutter.mjs';
+import { translate } from '../c1/kit.mjs';
 const ROOT = decodeURIComponent(new URL('../../..', import.meta.url).pathname).replace(/\/$/, '');
 const CONTAINER = { 'circle-trending-up': ['trending-up', 'circle'], 'square-trending-up': ['trending-up', 'square'] };
 const tags = (svg) => [...svg.matchAll(/<path[^>]*>/g)].map((m) => m[0]);
@@ -25,14 +26,15 @@ const fl = (d, op = 1) => (d ? `<path d="${d}" fill="black"${op < 1 ? ` fill-opa
 const pts = (d, step = 0.1) => polyOf(d, 32).flatMap((q) => { const o = []; for (let i = 1; i < q.length; i++) { const a = q[i - 1], b = q[i], n = Math.max(1, Math.ceil(Math.hypot(b[0] - a[0], b[1] - a[1]) / step)); for (let k = 0; k < n; k++) o.push([a[0] + (b[0] - a[0]) * k / n, a[1] + (b[1] - a[1]) * k / n]); } o.push(q.at(-1)); return o; });
 
 /** Grey strokes of a base whose two-tone rides the strokes, else null. */
-function strokeSplit(name) {
+function strokeSplit(name, shift) {
   const two = tags(readFileSync(baseFile(name, 'two-tone', 'regular'), 'utf8'));
   if (two.some((t) => !stroked(t) && muted(t)) || !two.some(muted)) return null;
-  return two.filter((t) => stroked(t) && muted(t)).map(dOf).join('');
+  return two.filter((t) => stroked(t) && muted(t)).map((t) => translate(dOf(t), shift)).join('');
 }
-function one(name, spec, corners) {
+function one(name, spec, corners, refRuns) {
   const sharp = corners === 'sharp';
-  const src = tags(readFileSync(baseFile(name, 'stroke', corners), 'utf8'));
+  // spec.shift: [dx, dy], the base moved whole before it is cut (user, 22 Sep 2026: seat f, as the -plus compounds move it)
+  const src = tags(readFileSync(baseFile(name, 'stroke', corners), 'utf8')).map((t) => t.replace(/ d="([^"]+)"/, (m, d) => ` d="${translate(d, spec.shift)}"`));
   // spec.drop: boxes [x0, y0, x1, y1]; a base subpath lying inside one is taken out whole (a part the star replaces)
   const inside = (d) => (spec.drop || []).some(([x0, y0, x1, y1]) => polyOf(d, 16).flat().every(([x, y]) => x >= x0 && x <= x1 && y >= y0 && y <= y1));
   const keepSub = (d) => (d.match(/M[^M]+/g) || []).filter((sp) => !inside(sp)).join('');
@@ -43,7 +45,10 @@ function one(name, spec, corners) {
   // dots: dropped when a star comes within 2 painted units of them
   const SP = starPolys(stars);
   const dots = dotsD ? dotsD.match(/M[^M]+/g).filter((d) => !pts(d).some((p) => SP.some((P) => distTo(p, P) < 2))) : [];
-  const runs = res.d ? res.d.match(/M[^M]+/g) : [];
+  let runs = res.d ? res.d.match(/M[^M]+/g) : [];
+  // sharp keeps only the runs the rounded drawing keeps: its extended ends can leave a stub
+  // just past `keep` where the rounded one drops it (chart-no-axes-combined, 22 Sep 2026)
+  if (refRuns) { const R = pts(refRuns.join(''), 0.2); runs = runs.filter((r) => pts(r, 0.2).some((p) => R.some((q) => Math.hypot(p[0] - q[0], p[1] - q[1]) < 1.2))); }
   // what the second star cuts on its own: his small stars sit clear, so any cut here is reported
   const leadOnly = cut(strokesD, [stars[0]], { air: spec.air ?? 2, box: spec.box === false ? null : spec.box ?? 3, keep: spec.keep ?? 1.5, stub: sharp }).d;
   const smallCuts = leadOnly !== res.d;
@@ -56,8 +61,11 @@ function one(name, spec, corners) {
   }).filter((l) => l.kept < 0.6 && !(spec.allowLoss || []).includes(l.i));
   const starsD = stars.map((s) => (sharp ? sharpStar(s.c, s.R) : star(s.c, s.R)));
   // B tones
-  const grey = strokeSplit(name);
+  // spec.grey: boxes [x0, y0, x1, y1]; the runs inside one are the grey part (his flips: search's handle, 21 Sep 2026)
+  const inBox = (r) => { const P = pts(r); return P.filter(([x, y]) => (spec.grey || []).some(([x0, y0, x1, y1]) => x >= x0 && x <= x1 && y >= y0 && y <= y1)).length / P.length >= 0.5; };
+  const grey = spec.grey ? null : strokeSplit(name, spec.shift);
   let body = [], black = runs;
+  if (spec.grey) { body = runs.filter(inBox); black = runs.filter((r) => !body.includes(r)); }
   if (grey) {
     const G = pts(grey);
     const onGrey = (p) => G.some((q) => Math.hypot(p[0] - q[0], p[1] - q[1]) < 1.1);
@@ -71,7 +79,7 @@ function one(name, spec, corners) {
 export function build(name, spec) {
   const out = {}, info = {};
   for (const corners of ['regular', 'sharp']) {
-    const r = one(name, spec, corners);
+    const r = one(name, spec, corners, corners === 'sharp' ? info.regular.runs : null);
     for (const s of ['stroke', 'two-tone', 'duotone', 'fill']) out[`Container=regular, Style=${s}, Corners=${corners}.svg`] = HEAD + r[s] + '</svg>\n';
     info[corners] = r;
   }
