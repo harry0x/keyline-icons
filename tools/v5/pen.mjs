@@ -9,7 +9,7 @@
  * diagonal object takes. Checked point for point rather than assumed: the cap
  * centre lands on (18.6667, 5.3333) and both shoulders land on his to 1e-4.
  *
- * **The band moved from the nib to the cap**, which is Lucide's `pen` and is
+ * **The band moved from the nib to the cap**, which is the other set's `pen` and is
  * not a scale of anything. It used to close the nib wedge; it now cuts the
  * barrel just below the cap, and that is what changes the fill: there is no
  * nib triangle to knock out any more.

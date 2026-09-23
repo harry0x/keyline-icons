@@ -480,7 +480,7 @@ export const SITE_LINKS: readonly SiteLink[] = [
   //
   // It lived at `/shadcn`, labelled "shadcn/ui", and both were too narrow for
   // what the page is. It covers copying an SVG, the React package, sizing,
-  // stroke weight, migrating off lucide and the three styles; shadcn/ui is the
+  // stroke weight, migrating from another set and the three styles; shadcn/ui is the
   // context for that, not the subject. A keyword in the URL was also the wrong
   // side of the line the route policy draws: "shadcn icons" belongs to `/`, and
   // a second page carrying the term in its address is how two pages end up

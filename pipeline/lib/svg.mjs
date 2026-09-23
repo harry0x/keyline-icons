@@ -234,7 +234,7 @@ function mergeAdjacent(list) {
 /**
  * Normalize one Figma export into a publishable icon.
  * Root carries stroke/cap/join so children stay minimal and consumers can
- * override strokeWidth on the root — the property Lucide's absoluteStrokeWidth needs.
+ * override strokeWidth on the root, the property an absoluteStrokeWidth prop needs.
  */
 /**
  * @param {object}  opts

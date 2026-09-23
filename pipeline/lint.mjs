@@ -415,7 +415,7 @@ const GAP_TOL = 0.02;
 /**
  * Corner radii the set actually draws, in grid units.
  *
- * These are the house values, not the guide's. Lucide specifies 2 for shapes of
+ * These are the house values, not the guide's. The other set specifies 2 for shapes of
  * 8 units or more and 1 below that; this set runs rounder — 3 for containers,
  * 4 for panels — and does so consistently across hundreds of corners, so it
  * reads as a deliberate voice rather than drift. What this rule catches is a

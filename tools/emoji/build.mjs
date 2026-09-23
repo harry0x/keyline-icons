@@ -99,7 +99,7 @@ function arcRun(c, r, a0, a1, sharp, box = [1, 1, 23, 23]) {
  * to (15,15) dipping to 16.5. That is the set's existing face and the reason
  * for this redraw (10 Sep 2026): the first cut had moved the ticks up a row
  * and widened the mouth to 8..16, and three of its parts had landed exactly
- * on Lucide's paths. The frown is the same mouth turned over about y = 16,
+ * on the other set's paths. The frown is the same mouth turned over about y = 16,
  * ends on 17 and the crest on 15.5, so its ink clears the eyes' by 2.5; the
  * neutral mouth is the chord alone, 9..15 on 16; the expressionless eyes are
  * dashes on the ticks' own centre line, 10.5. The laugh keeps its eyes two
@@ -235,7 +235,7 @@ const EYE = {
  * the house gap wants the eyes' ink to end on 10, so the ticks sit at 8..9,
  * two rows above the family's 10..11. With the family's eyes the chord would
  * have to sit on 15, and a closed shape 3 tall has no interior at all. As drawn the interior is 3, under the
- * 4 the reference asks of a closed shape and nearly twice what the Lucide
+ * 4 the reference asks of a closed shape and nearly twice what the other set's
  * mouth this follows holds; it is the ceiling the ring allows.
  */
 const D_C = [12, 13], D_R = 5, D_F = 1;

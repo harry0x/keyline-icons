@@ -1437,9 +1437,10 @@ const BATCH_0_5_0: BlogPost = {
     {
       kind: "p",
       text:
-        "This set follows Lucide's naming, and that is a decision worth being " +
+        "This set follows the naming of the most widely used open icon set, and " +
+        "that is a decision worth being " +
         "boring about: somebody arriving with an import list should not have " +
-        "to learn a second vocabulary to use a second icon set. Lucide calls " +
+        "to learn a second vocabulary to use a second icon set. That set calls " +
         "the interlocked diagonal chain `link`, and the horizontal one with " +
         "the bar through it `link-2`. This set had them the other way round, " +
         "and " +
@@ -1516,7 +1517,7 @@ const BATCH_0_5_0: BlogPost = {
           "The chain after the swap: `link`, `link-2`, `link-2-off` and " +
           "`unlink`. `unlink` is new, and it is the diagonal chain come " +
           "apart rather than " +
-          "the horizontal one, which is Lucide's reading of that name too.",
+          "the horizontal one, which is that set's reading of that name too.",
       },
     },
 

@@ -326,7 +326,7 @@ const SETS = {
     'stroke.sharp': (({ dots, rules }) => [F(dots), S(rules)])(I.sixIcon.list(true)),
   }),
 
-  // The diagonal chain is `link`, not `link-2` — Lucide's naming, which this
+  // The diagonal chain is `link`, not `link-2`: the other set's naming, which this
   // set follows, and which the two were swapped into on 8 Sep 2026. `link-2`
   // is the horizontal form with the bar, and it is not generated: it is the
   // drawing this name used to carry, sitting in raw/ as it always has.

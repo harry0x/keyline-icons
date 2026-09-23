@@ -25,7 +25,7 @@ import { cn } from "@/lib/utils"
 
 /*
   Every row on this page is drawn from `@/components/icons`. The cards used to
-  reach into lucide for the handful of subjects the set had no glyph for: a
+  reach into another icon set for the handful of subjects the set had no glyph for: a
   camera for Instagram, a cloud for SoundCloud, a sun and a thermometer for the
   light, a gauge for the transfer limit. That is a strange thing for the
   library's own shop window to do, because the demo was quietly advertising

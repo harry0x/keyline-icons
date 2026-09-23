@@ -21,7 +21,7 @@ const Toaster = ({ ...props }: ToasterProps) => {
       /*
         All five come from the set. Sonner ships its own icons and falls back to
         them per key, so a missing entry here is not "no icon", it is a foreign
-        one: leaving `info` out was what put a lucide glyph in the toast rather
+        one: leaving `info` out was what put a foreign glyph in the toast rather
         than removing one.
 
         `loading` is `circle-progress-half` spun, which is the same substitution

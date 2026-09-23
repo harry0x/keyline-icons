@@ -146,7 +146,7 @@ const flatten = (s) => s.replace(/\s+/g, " ").replace(/\s+\./g, ".").trim()
  */
 const CASES = [
   // The identifier forms.
-  ["CheckCircle2", ["check", "circle"], "lucide's name for circle-check"],
+  ["CheckCircle2", ["check", "circle"], "the other set's name for circle-check"],
   ["RefreshCw", ["refresh", "cw"], "two words, no digits"],
   ["ArrowDownNarrowWide", ["arrow", "down", "narrow", "wide"], "four words"],
   ["Share2", ["share"], "no case boundary anywhere. This is the one that was wrong"],
@@ -187,7 +187,7 @@ const CASES = [
  * for as long as it took someone to notice that `["trash"]` matched nothing.
  */
 const FINDS = [
-  ["Trash2", "bin", "lucide's name. The drawing is `bin` and nothing said so"],
+  ["Trash2", "bin", "the other set's name. The drawing is `bin` and nothing said so"],
   ["trash", "bin", "the word most people would type first"],
   ["delete", "bin", "and the word the rest would type"],
   ["gear", "settings", "nobody looks for `settings` before trying this"],
@@ -224,7 +224,7 @@ const FINDS = [
   ["CheckCircle2", "circle-check", "compounds here read base-first"],
   ["check circle", "circle-check", "same, typed as words"],
   ["down arrow", "arrow-down", "either order asks the same question"],
-  ["AlertCircle", "circle-alert", "lucide's old spelling, mark first"],
+  ["AlertCircle", "circle-alert", "the other set's old spelling, mark first"],
   ["Globe02Icon", "globe", "another set's export name, pasted whole"],
   ["CheckmarkCircle02Icon", "circle-check", "same, and `checkmark` is their word"],
   ["FileTextIcon", "file-text", "same, no digits"],
