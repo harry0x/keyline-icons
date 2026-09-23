@@ -228,6 +228,17 @@ const FINDS = [
   ["Globe02Icon", "globe", "another set's export name, pasted whole"],
   ["CheckmarkCircle02Icon", "circle-check", "same, and `checkmark` is their word"],
   ["FileTextIcon", "file-text", "same, no digits"],
+
+  // Empty searches from the export of 23 Sep 2026, each a drawing the set
+  // already had under words the searcher did not use.
+  ["human", "user", "5 empty searches while `person` sat on the same drawing"],
+  ["human", "boy", "and the whole figures, which carried no person word at all"],
+  ["guest", "user", "the signed-out person, same drawing"],
+  ["wrong", "circle-x", "the mark for an answer marked wrong"],
+  ["thunder", "zap", "`lightning` found it, the other half of the storm did not"],
+  ["feedback", "message-square", "the bubble on every feedback button"],
+  ["execute", "play", "`run` was there, the formal word was not"],
+  ["process", "terminal", "a running process, where it runs"],
 ]
 
 /**

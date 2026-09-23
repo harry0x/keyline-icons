@@ -870,7 +870,9 @@
         "resume",
         "video",
         "audio play",
-        "audio"
+        "audio",
+        "execute",
+        "execution"
       ]
     },
     {
@@ -1177,7 +1179,10 @@
         "bash",
         "code",
         "computer terminal",
-        "computer"
+        "computer",
+        "execute",
+        "execution",
+        "process"
       ]
     },
     {
@@ -1250,7 +1255,9 @@
         "profile",
         "account",
         "avatar",
-        "member"
+        "member",
+        "human",
+        "guest"
       ]
     },
     {
@@ -1305,7 +1312,8 @@
         "cross",
         "multiplication sign",
         "multiplication",
-        "sign"
+        "sign",
+        "wrong"
       ]
     },
     {
@@ -2137,6 +2145,27 @@
         "capture",
         "recognise",
         "recognize"
+      ]
+    },
+    {
+      "match": "^(boy|girl|accessibility)$",
+      "note": "The other drawings of a whole person. human came in empty 5 times by 23 Sep while the user family answered person, profile and member, and nothing in the set answered the word itself.",
+      "terms": [
+        "human"
+      ]
+    },
+    {
+      "match": "^zap",
+      "note": "The bolt is the thunder drawing: thunder and its first four letters came in empty 5 times by 23 Sep, with lightning already here.",
+      "terms": [
+        "thunder"
+      ]
+    },
+    {
+      "match": "^(message|message-square|thumbs-up|thumbs-down)$",
+      "note": "The two marks a feedback button is drawn with: a bubble to say something, a thumb to rate it. 3 empty searches by 23 Sep.",
+      "terms": [
+        "feedback"
       ]
     }
   ],
