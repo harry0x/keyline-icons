@@ -149,10 +149,10 @@ export default function RootLayout({
           </TooltipProvider>
         </ThemeProvider>
         {/*
-          The two Vercel scripts, which is the whole of the page-view setup.
+          The two Vercel scripts, which record everything the site measures.
 
-          Both are free on Hobby, both are cookieless, so neither of them needs
-          a consent banner, and both no-op outside a Vercel deployment: nothing
+          Both are cookieless, so neither of them needs a consent banner, and
+          both no-op outside a Vercel deployment: nothing
           is sent from `next dev` beyond one console line. Web Analytics counts
           visitors, referrers and countries; Speed Insights reports the Core Web
           Vitals of real loads, which on a page that paints 360 drawings is the
@@ -163,8 +163,10 @@ export default function RootLayout({
           takes rather less of this than it takes of a `google-analytics.com`
           script.
 
-          Custom events go through `lib/analytics.ts` instead. Those are the
-          part of this a Hobby plan does not record; see the note there.
+          Custom events are sent from `lib/analytics.ts` through the same Web
+          Analytics script and land under Events in the project's Analytics
+          tab. They need Pro, which the team has been on since 5 Sep 2026; on
+          Hobby they are accepted and discarded. See the note there.
 
           Last in the body on purpose: nothing renders, and a script tag ahead
           of the app is a script tag ahead of the app.
@@ -172,9 +174,9 @@ export default function RootLayout({
         <Analytics />
         <SpeedInsights />
         {/*
-          Renders nothing until `NEXT_PUBLIC_GA_ID` is set. It is where the
-          custom events in `lib/analytics.ts` will actually be recorded, since
-          Vercel drops them on this plan. See the note on the component,
+          Renders nothing until `NEXT_PUBLIC_GA_ID` is set, and it is not set.
+          GA4 is an optional second destination for the same events, off
+          today; Vercel already records them. See the note on the component,
           including the consent question it raises.
         */}
         <GoogleAnalytics />

@@ -191,13 +191,12 @@ export default async function Page() {
         </p>
         {googleAnalytics && (
           <p>
-            Those events are also sent to{" "}
+            Those events, and the page views they hang off, are also sent to{" "}
             <LegalLink href="https://policies.google.com/privacy">
               Google Analytics
             </LegalLink>
-            , which is where they are actually counted, along with the page view
-            they hang off. Unlike the two above, it writes cookies of its own;
-            they are Google&apos;s rather than ours, and they are described in
+            . Unlike the two above, it writes cookies of its own; they are
+            Google&apos;s rather than ours, and they are described in
             Google&apos;s policy rather than here.
           </p>
         )}
