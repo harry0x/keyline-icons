@@ -3253,24 +3253,22 @@ export const BLOG_V110_SINGLE_ICON_NAMES = [
 ] as const
 
 const RELEASE_1_1_0: BlogPost = {
-  /* Size first, then what is new in it: the title leads on 1,113 in four
-     styles and two corners, and the shelves carry the search terms. The slug
+  /* React Native first, then the count, and nothing else: the title is also
+     the breadcrumb, and every other fact is the body's to say once. The slug
      names the drawings, not the version, so it survives a renumbering. */
   slug: "free-ai-icons-math-symbols-mac-keys",
   version: "1.1.0",
-  title:
-    "1,113 free shadcn/ui icons in four styles: an AI shelf, maths marks and Mac keys",
+  title: "React Native, 114 new drawings",
   description:
-    "1,113 free, MIT-licensed SVG icons for React, shadcn/ui, Figma and " +
-    "Paper. 113 new drawings: an AI shelf of sparkles, twenty maths marks " +
-    "and the four Mac modifier keys.",
+    "1,114 free, MIT-licensed SVG icons for React, React Native, shadcn/ui, " +
+    "Figma and Paper. 114 new drawings: an AI shelf of sparkles, twenty " +
+    "maths marks and the four Mac modifier keys.",
   standfirst:
-    "Every drawing that carries a star now sits on one shelf, and every " +
-    "star on it is the same size. 113 new icons, from the sparkles to the " +
-    "maths marks and the keys a Mac prints on its modifiers.",
+    "Sparkles on one shelf, maths marks, Mac keys, and the set now installs " +
+    "in React Native, Expo included.",
   date: "2026-09-23",
   updated: "2026-09-23",
-  readingMinutes: 5,
+  readingMinutes: 3,
   thumbnail: BLOG_V110_THUMBNAIL_ICON_NAMES,
   keywords: [
     "ai icons",
@@ -3290,19 +3288,15 @@ const RELEASE_1_1_0: BlogPost = {
     {
       kind: "p",
       text:
-        "The set is 1,113 drawings now. Each one comes in stroke, two-tone, " +
-        "duotone and fill, and each of those in rounded corners or sharp " +
-        "ones: 8,904 SVGs, with nothing missing.",
+        "The set is 1,114 drawings. Each one comes in stroke, two-tone, " +
+        "duotone and fill, rounded or sharp: 8,912 SVGs.",
     },
     {
       kind: "p",
       text:
-        "113 of the drawings are new. Seventy-six of them carry a star, and " +
-        "they have a shelf of their own now. Twenty are the marks a sum " +
-        "needs. Four are the keys a Mac prints on its modifiers. Eight are " +
-        "corner turns and arrows, and the last five are a file with a " +
-        "waveform, a file with a play triangle, an eject mark, a line that " +
-        "climbs and falls, and a plain wand.",
+        "Seventy-six of the new ones carry a star. Twenty are maths marks. " +
+        "Four are command, option, escape and space. Then corner turns, two " +
+        "file kinds, eject, a line that goes both ways, and a plain wand.",
     },
     {
       kind: "figure",
@@ -3318,28 +3312,24 @@ const RELEASE_1_1_0: BlogPost = {
     {
       kind: "p",
       text:
-        "A starred drawing used to be filed wherever its object lived. " +
-        "`mail-sparkles` sat under Mail, `chart-line-sparkles` under Charts, " +
-        "`folder-sparkles` under Files, and the star they shared counted for " +
-        "nothing: to see them together you had to already know their names.",
+        "Sparkle versions used to sit next to their plain twin. " +
+        "`mail-sparkles` lived under Mail, `folder-sparkles` under Files. " +
+        "You only found them if you already knew the name.",
     },
     {
       kind: "p",
       text:
-        "They are one shelf now, with the bots, the brain wired to a circuit " +
-        "and the two bare stars. Seventy-six of them are new, and the shelf " +
-        "reads as one family because the star on every one of them is the " +
-        "same pair, in the same place relative to the thing it marks.",
+        "They're one family now: bots, a brain on a circuit, two bare stars, " +
+        "and all the new ones. Every star is the same pair, in the " +
+        "same place relative to the thing it marks. You can still search any " +
+        "of them by the object they mark.",
     },
     {
       kind: "figure",
       figure: {
         kind: "grid",
         names: BLOG_V110_AI_ICON_NAMES,
-        caption:
-          "Thirty-six of the drawings on the new shelf. Every one of them is " +
-          "on the shelf under the word AI, and every one is searchable by " +
-          "the object it marks.",
+        caption: "Thirty-six from the new shelf, which the category list calls AI.",
       },
     },
 
@@ -3347,47 +3337,31 @@ const RELEASE_1_1_0: BlogPost = {
     {
       kind: "p",
       text:
-        "The first drafts put the stars wherever they fitted, and they came " +
-        "out at whatever size was left: a lead star of seven units across on " +
-        "most of them, and a second of four. The grid is 24 units across and " +
-        "an icon is usually 16 or 24 pixels wide, so at the size these are " +
-        "used at the stars stopped being stars. They read as a small mark " +
-        "somebody had left in the corner.",
+        "Early drafts put the stars wherever they fit. At 16px they stopped " +
+        "looking like stars. They looked like a speck in the corner.",
     },
     {
       kind: "note",
       text:
-        "A sparkle has to look like a sparkle at 16 pixels, or it is just a " +
-        "small sign next to something else.",
+        "A sparkle has to read as a sparkle at 16 pixels, or it's just a " +
+        "small mark next to something else.",
     },
     {
       kind: "p",
       text:
-        "So there is one pair now, and every drawing on the shelf uses it: a " +
-        "lead star eight units across and a second one five, always at least " +
-        "two units of clear space from each other and from the drawing they " +
-        "sit beside. Two of them, `chart-column-sparkles` and " +
-        "`eraser-sparkles`, take a four-unit second star, because a five " +
-        "could not stand clear inside them without touching something.",
+        "So there's one pair now: lead star eight units, second star five, " +
+        "with clear space from each other and from the drawing. Two icons " +
+        "drop the second star to four units, because five wouldn't fit. " +
+        "Nothing gets cut: a star never breaks an outline, an axis, or a " +
+        "closed shape. If the pair couldn't sit without breaking something, " +
+        "the drawing didn't ship.",
     },
     {
       kind: "p",
       text:
-        "The rule the pair has to obey is that nothing gets cut. A star " +
-        "never breaks an outline, an axis or any closed shape: the card " +
-        "stays a card and the chart keeps its axis. Where the bigger pair " +
-        "could not be seated without breaking something, the drawing did not " +
-        "ship. `cursor-sparkles` and `credit-card-sparkles` are here because " +
-        "they follow drawings already in the set, the clicking cursor and " +
-        "the card with a plus, which had solved the same crowding.",
-    },
-    {
-      kind: "p",
-      text:
-        "`pen-sparkles` shipped in an earlier release with plus signs rather " +
-        "than stars, from before the shelf existed. It is the one drawing " +
-        "here that was already out in the world, and it now carries the same " +
-        "pair as everything else.",
+        "`pen-sparkles` shipped earlier with plus signs instead of stars. " +
+        "The pen itself never moved. Only the marks did. The star is bigger " +
+        "than the plus it replaced. That's the point.",
     },
     {
       kind: "figure",
@@ -3399,7 +3373,7 @@ const RELEASE_1_1_0: BlogPost = {
             a: { name: "pen-sparkles", take: "before" },
             b: { name: "pen-sparkles", take: "after" },
             verdict: {
-              text: "The pen itself never moved",
+              text: "Same pen in both",
               tone: "good",
             },
           },
@@ -3414,9 +3388,7 @@ const RELEASE_1_1_0: BlogPost = {
         caption:
           "One drawing painted over the other. The rose is the plus sign as " +
           "it shipped, the emerald is the star that replaced it, and the " +
-          "dark is the pen, which is identical in both: the change is the " +
-          "marks and nothing else. The star is bigger than the plus it " +
-          "replaced in both directions, which is the whole point of it.",
+          "dark is the pen, identical in both.",
         legend: {
           a: "the plus signs as they shipped",
           b: "the stars as they are now",
@@ -3429,28 +3401,25 @@ const RELEASE_1_1_0: BlogPost = {
     {
       kind: "p",
       text:
-        "Twenty marks for sums and formulas: `asterisk`, `divide`, `equal` " +
-        "with its approximate and struck forms, `hash`, `infinity`, " +
-        "`parentheses`, the `radical`, a `variable` and a crossed top line. " +
-        "Four of them come circled and squared as well, for a toolbar that " +
-        "wants a button rather than a mark.",
+        "The maths marks are for sums and formulas: asterisk, divide, equal (plus " +
+        "approximate and not-equal), hash, infinity, parentheses, radical, " +
+        "variable, and a barred x. Four of them also come circled and " +
+        "squared, for a toolbar that wants a button instead of a symbol.",
     },
     {
       kind: "figure",
       figure: {
         kind: "grid",
         names: BLOG_V110_MATH_ICON_NAMES,
-        caption:
-          "The twenty maths marks, the circled and squared halves last.",
+        caption: "The plain marks first, the eight in a circle or a square last.",
       },
     },
     {
       kind: "p",
       text:
-        "The four modifier keys are drawn as a Mac prints them, for shortcut " +
-        "hints and key caps: `command`, `option`, `escape` and `space`. They " +
-        "are drawn in stroke in every style, black, with no plate behind " +
-        "them, because a key cap that fills in stops reading as a key.",
+        "The four modifier keys are drawn the way a Mac prints them, for " +
+        "shortcut hints and keycaps. " +
+        "Stroke only. A filled keycap stops reading as a key.",
     },
     {
       kind: "figure",
@@ -3465,19 +3434,16 @@ const RELEASE_1_1_0: BlogPost = {
     {
       kind: "p",
       text:
-        "Six corner turns, one for each way a line can arrive at a corner " +
-        "and leave it, for a reply, a forward, a redirect or a branch in a " +
-        "flow. With them, a big arrow carrying a dash over its head, and an " +
-        "arrow that runs into a line and stops there.",
+        "Six corner turns, for a reply, a forward, a redirect, or a branch " +
+        "in a flow. Plus a big arrow with a dash over its head, and an arrow " +
+        "that runs into a line and stops.",
     },
     {
       kind: "figure",
       figure: {
         kind: "grid",
         names: BLOG_V110_CORNER_ICON_NAMES,
-        caption:
-          "The six corner turns, with the big arrow that carries a dash and " +
-          "the arrow that runs into a line.",
+        caption: "The six turns first, the two straight arrows after.",
       },
     },
     {
@@ -3486,8 +3452,8 @@ const RELEASE_1_1_0: BlogPost = {
         kind: "grid",
         names: BLOG_V110_SINGLE_ICON_NAMES,
         caption:
-          "The five singles: two file kinds, an eject mark, a line that goes " +
-          "both ways, and the wand without its stars.",
+          "The five singles: `file-audio`, `file-video`, `eject`, " +
+          "`trending-up-down` and `wand`.",
       },
     },
 
@@ -3495,21 +3461,19 @@ const RELEASE_1_1_0: BlogPost = {
     {
       kind: "p",
       text:
-        "The whole set now works in React Native apps too, Expo included, " +
-        "as `@keyline-icons/react-native`. It is the same drawings under the " +
-        "same names as the React package: `Check` is `Check`, the styles " +
-        "sit at `/two-tone`, `/duotone` and `/fill`, and the sharp corners " +
-        "at `/sharp`. Code shared between a web app and a phone app changes " +
-        "the package name and nothing else.",
+        "The whole set works in React Native and Expo, as " +
+        "`@keyline-icons/react-native`. Same drawings, same names as the " +
+        "React package. `Check` is `Check`. Styles live at `/two-tone`, " +
+        "`/duotone` and `/fill`. Sharp corners at `/sharp`. Shared code " +
+        "between web and phone only changes the package name.",
     },
     {
       kind: "p",
       text:
-        "The one difference is colour. On the web an icon picks up the text " +
-        "colour around it, and a phone screen has no such thing to inherit " +
-        "from, so each icon takes a `color` prop instead. The grey halves of " +
-        "the two-tone and duotone drawings follow it, so one colour still " +
-        "sets both tones.",
+        "The one difference is colour. On the web an icon inherits text " +
+        "colour. A phone has nothing to inherit from, so each icon takes a " +
+        "`color` prop. The grey halves of two-tone and duotone follow it, so " +
+        "one colour still sets both tones.",
     },
 
     { kind: "h2", text: "Getting it", id: "getting-it" },
@@ -3517,7 +3481,7 @@ const RELEASE_1_1_0: BlogPost = {
       kind: "link",
       href: "/icons",
       label: "Browse the icons",
-      text: "Every drawing, in all four styles and both corner shapes.",
+      text: "Every drawing, all four styles, both corner shapes.",
     },
     {
       kind: "link",
@@ -3525,7 +3489,7 @@ const RELEASE_1_1_0: BlogPost = {
       label: "Install",
       text:
         "React, React Native, the shadcn/ui registry, the CLI, the MCP " +
-        "server and the Figma plugin.",
+        "server, and the Figma plugin.",
     },
     {
       kind: "link",
