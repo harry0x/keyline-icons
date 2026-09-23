@@ -177,27 +177,6 @@ Also redrawn: the pointing hand in four directions, the paperclip longer, the di
 * Home, Gender, Food & Drink, Art and Stationery opened as shelves of their own, taking categories from 26 to 31
 * The calendar and the phone were redrawn, and the phone's negation slash moved to the other diagonal with it
 
-0.7.0 — 10 September 2026
-71 new drawings, taking the set to 765 names and 3,896 SVGs, and two new shelves. The message family drawn again on a square body, with every sign, badge and slash where the round bubble already puts them; a scan frame with six things to read inside it; twenty-six charts and four diagrams of boxes on wires; seven faces, two thumbs and a badge that carries nine signs.
-
-* Mail: message-square and messages-square, with plus, minus, check, x, lines, dot and off
-* Devices: scan, with line, text, barcode, qr-code, search and eye, and qr-code on its own
-* Charts: twenty-six, sixteen of them on one axis, from column and bar to candlestick, pyramid, waterfall and tree map
-* Diagrams: successor, predecessor, project and subtask, and a progress bar
-* Emoji: seven faces and the two thumbs
-* Badge: the eight-bump badge, carrying check, x, plus, minus, alert, info, question, percent and the dollar
-* Singles: scissors in both bodies, an hourglass, a slash in three bodies and search-slash
-* Emoji and Diagrams opened as shelves of their own, taking categories from 24 to 26
-
-0.6.0 — 9 September 2026
-23 new drawings, taking the set to 692 names and 3,538 SVGs, and two new shelves. The seven currency marks arrive, six of them with a circled half, and those clear the ring by 1 unit rather than the 2 the set asks between elements: a container is the frame a drawing sits in, not a neighbour it has to be told apart from, and at 2 a letterform comes out at about half the well.
-
-* Money: the dollar, euro, pound, yen, rupee, franc and bitcoin marks, six with a circled half
-* Payment: a wallet, and the card with plus, minus, check and x
-* Books: book, with open, plus, minus, check and x
-* Others: a flame, a shopfront, a skyline, a processor and a mortarboard
-* Finance and Education opened as shelves of their own, taking categories from 22 to 24
-
 Earlier releases, back to the first cut: keylineicons.com/changelog
 ```
 
@@ -728,10 +707,16 @@ the bottom, v0.2.0 and the four 0.1.x releases on 14 Sep 2026, v0.3.0 on
 v0.5.0 from the file's and 0.3.0 and 0.4.0 from the plugin's on 17 Sep 2026
 (10,363 in the plugin's once the singles batch reached 147 drawings),
 0.5.0 from the plugin's and v0.6.0 from the file's on 23 Sep 2026 (10,056 and
-9,521 with the 1.1.0 entries),
-and a last line
-points at `keylineicons.com/changelog`, which keeps every release. Trim from
-the oldest end again whenever a new entry pushes it past about 9,500.
+9,521 with the 1.1.0 entries), 0.7.0 and 0.6.0 from the plugin's later that
+day with the 1.1.1 panel entry, and a last line
+points at `keylineicons.com/changelog`, which keeps every release.
+
+**Figma counts higher than `wc -m`.** The 1.1.1 plugin description was refused
+at 9,362 by `wc -m`, under the cap by that count, while the 8,876 before it had
+been accepted. Something in the field's own count, probably markup around each
+of its hundred-odd paragraphs, adds several hundred. So measure with `wc -m` and
+trim from the oldest end whenever a new entry pushes it past about 8,800, not
+the 9,500 this note used to say.
 
 **One line per paragraph, and that is not a style choice.** Figma's Description
 field preserves newlines rather than reflowing, so a block wrapped for a text
