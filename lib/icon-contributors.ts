@@ -27,7 +27,7 @@ export type Contributor = {
   /**
    * Their GitHub handle, which is the whole avatar and link story: the face is
    * `github.com/<handle>.png` and the credit points at the profile. This is
-   * what Lucide stores per icon, and it is worth matching — a credit you can
+   * what the other set stores per icon, and it is worth matching: a credit you can
    * click through to is worth more to a contributor than a name in grey.
    */
   github?: string

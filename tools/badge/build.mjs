@@ -7,7 +7,7 @@
  * circle size, 1..23, while the notches between bumps fall on 9.06. The peak
  * is the circle size; the count and radius are Zafar's, settled 10 Sep 2026
  * after two rounds. The first cut was eight bumps of r=4 on 6, the deepest
- * that clears the signs, and that is Lucide's badge to the number: it was
+ * that clears the signs, and that is the other set's badge to the number: it was
  * measured before drawing and the "derivation" landed on it, so it went. Ten
  * bumps of r=3.5 followed and were swapped again for this, which keeps the
  * eight-lobe rosette at a shallower scallop than theirs. A badge is a

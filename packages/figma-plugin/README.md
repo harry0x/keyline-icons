@@ -7,7 +7,7 @@ Two ways into Figma exist and they solve different problems. A published library
 hands a team the component sets from the design file, versioned, with the
 container and style variants as dropdowns. This plugin hands *anyone* a searchable
 set with no library, no plan requirement and no file to duplicate, which is how
-Lucide and Hugeicons both reach people. Neither replaces the other.
+most open icon sets reach people in Figma. Neither replaces the other.
 
 ## Files
 

@@ -395,11 +395,11 @@ const answers = (haystack: string, words: string[]) => {
  * no separator in it, matching nothing at all. "check-circle" and "check circle"
  * both worked, which is what made this look fixed: the form that fails is the
  * one someone pastes out of their editor rather than types, and it is the most
- * likely thing a person migrating off lucide puts in the box.
+ * likely thing a person migrating from another set puts in the box.
  *
  * So the case boundary is read before the lowercasing, and a leftover bare digit
- * is dropped, because lucide's trailing `2` disambiguates inside lucide and
- * means nothing here. Two shapes count as an identifier: a camelCase boundary,
+ * is dropped, because another set's trailing `2` disambiguates inside that
+ * set and means nothing here. Two shapes count as an identifier: a camelCase boundary,
  * and a single capitalised word ending in digits. The second was missing, so
  * `Share2` stayed one word and matched nothing while `share` sat in the set.
  *

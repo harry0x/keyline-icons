@@ -223,10 +223,11 @@ five on the file's own test — the Icon Packs category and the description
 already say it — and the corner treatment is the thing someone is searching for
 who would otherwise leave.
 
-`lucide alternative` is deliberately absent. It is the highest-intent term
-available and Figma's review criteria mention trademark compliance, so a
-competitor's project name in the tags is a grey area not worth a rejection
-cycle on a first submission. Worth revisiting once published.
+The other set's name followed by "alternative" is deliberately absent. It is
+the highest-intent term available and Figma's review criteria mention
+trademark compliance, so a competitor's project name in the tags is a grey
+area not worth a rejection cycle on a first submission. Worth revisiting once
+published.
 
 ## Release notes
 

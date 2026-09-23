@@ -897,7 +897,7 @@ SETS['search-slash'] = () => {
  * inside clears those by the house 2, so a plot lives in x 6..22 by y 2..18
  * and every drawing below is composed inside that box.
  *
- * **What is NOT here is as deliberate as what is.** Lucide's `chart-no-axes-*`
+ * **What is NOT here is as deliberate as what is.** The other set's `chart-no-axes-*`
  * icons are this set's `bar-chart` family already: their `chart-no-axes-column`
  * is three bars on no axis, which is `bar-chart-2`, and the increasing and
  * decreasing pair are `bar-chart` and `bar-chart-down`. Drawing them again
@@ -907,12 +907,12 @@ SETS['search-slash'] = () => {
  * bars WITH one and are their own drawings rather than duplicates.
  *
  * `chart-pie` is the one with no axis, and the collision to check there is not
- * Lucide's but our own: `circle-quarter` is a ring with a wedge INSET by four
+ * the other set's but our own: `circle-quarter` is a ring with a wedge INSET by four
  * units, a level indicator. A pie's slice reaches the rim, which is a different
  * drawing and reads as one.
  *
  * **These are Zafar's drawings, redrawn 10 Sep 2026**, and they replaced a set
- * scaled off `bar-chart` that had itself replaced Lucide's coordinates. His
+ * scaled off `bar-chart` that had itself replaced the other set's coordinates. His
  * plot runs on a 5 pitch rather than the 7 the scaling gave, which is 3 units
  * of daylight between bars instead of 5 and holds together at 16. Only the
  * arithmetic was ours: a collinear cubic written as the line it paints, two
@@ -1064,7 +1064,7 @@ function chartBodies(boxes, rules = []) {
 // between and 2 to spare. **Spent one unit either side rather than both on the
 // right**, which centres the pair on the plot's own middle at 14. Sitting them
 // where his candlestick sits its bodies, on 7..11 and 15..19, is the other
-// reading of the same rule, and it produced Lucide's drawing coordinate for
+// reading of the same rule, and it produced the other set's drawing coordinate for
 // coordinate: the overlap check came back 100 against 100 and it did not ship.
 const COL_BIG = [[8, 8, 12, FOOT], [16, 5, 20, FOOT]];
 const ROW_BIG = [[START, 5, 16, 9], [START, 13, 19, 17]];

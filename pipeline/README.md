@@ -93,7 +93,7 @@ would outline every knockout.
 
 Styles are `stroke`, `duotone`, `fill`. One icon name lives in up to three
 style folders — the folder is the disambiguator, so `square-arrow-down` is one
-name with up to three files, matching how Hugeicons splits styles by package.
+name with up to three files, matching how other sets split styles by package.
 
 ## What `build` does
 
@@ -191,7 +191,7 @@ The set's ladder, in grid units:
 1    inner insets          3    square containers    5  large rounded forms
 ```
 
-This deliberately differs from the Lucide guide, which specifies 2 for shapes of
+This deliberately differs from the other set's guide, which specifies 2 for shapes of
 8 units or more and 1 below. `4` and `3` account for over 700 of this set's
 corners, so it is a house voice rather than drift, and the rule enforces the
 ladder instead of the guide. What it catches is a corner landing *near* a ladder
@@ -567,7 +567,7 @@ directly and never gain a container.
 **Containers apply only to simple glyphs.** No `square-user-check`. Wrapping an
 already-compound icon crowds the 24-unit grid: the modifier would have to shrink
 below what a 2px stroke can render legibly. Compounds carry the three styles
-directly. Lucide takes the same position.
+directly. The other set takes the same position.
 
 **Duotone secondary opacity is `0.4`.** Raised from `0.2`, where the muted layer
 was too faint on light backgrounds to read as a second tone — which is what made
