@@ -4,7 +4,7 @@
 import type { ReactNode, SVGProps } from "react"
 
 export type IconProps = Omit<SVGProps<SVGSVGElement>, "children"> & {
-  /** Rendered box in px. Matches lucide's `size` prop. */
+  /** Rendered box in px, set as both width and height. Defaults to 24. */
   size?: number | string
 }
 

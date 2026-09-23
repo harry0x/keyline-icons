@@ -289,7 +289,7 @@ export function registryComponent(name: string, art: StyleArt) {
   return `import type { SVGProps } from "react"
 
 type IconProps = Omit<SVGProps<SVGSVGElement>, "children"> & {
-  /** Rendered box in px. Matches lucide's \`size\` prop. */
+  /** Rendered box in px, set as both width and height. Defaults to 24. */
   size?: number | string
 }
 
