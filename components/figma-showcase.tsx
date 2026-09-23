@@ -415,11 +415,12 @@ export function FigmaShowcase({ icons }: { icons: Icon[] }) {
                   curated in Figma. Four surfaces, one vocabulary.
                 </Note>
 
-                <Note icon={dropGlyph} title="One click puts it on the canvas">
-                  Centred in the frame you have selected, or in the middle of
-                  the viewport when nothing is. <Code>currentColor</Code> is
-                  swapped for real ink on the way in, because Figma&rsquo;s
-                  importer cannot resolve it.
+                <Note icon={dropGlyph} title="Click it in, or drag it there">
+                  A click centres it in the frame you have selected; a drag
+                  lands it where you let go. Either way at 16, 20, 24 or 32,
+                  with the line scaled to match, and <Code>currentColor</Code>{" "}
+                  swapped for real ink, because Figma&rsquo;s importer cannot
+                  resolve it.
                 </Note>
 
                 <Note icon={editorGlyph} title="Figma and FigJam both">
@@ -429,9 +430,9 @@ export function FigmaShowcase({ icons }: { icons: Icon[] }) {
                 </Note>
 
                 <Note icon={freshGlyph} title="It reads the published set">
-                  The icons come over the network from this repository, not from
-                  the plugin&rsquo;s own bundle, so a release reaches everyone
-                  without a plugin update going through review.
+                  The icons and the shelves they sit on come over the network
+                  from this repository, not from the plugin&rsquo;s own bundle,
+                  so a release reaches everyone without a plugin update.
                 </Note>
               </Notes>
             </>
