@@ -6,16 +6,26 @@ import type { Style } from "@/lib/icons"
 /**
  * One place that says what this site counts, and one function that sends it.
  *
- * Two providers sit behind this, for one reason: page views and events are on
- * different plans. Vercel Web Analytics is free on Hobby and answers how many
- * people arrived and from where, but custom events are a Pro feature, so the
- * calls below reach it and are dropped. GA4 counts events for nothing, so it is
- * the one that will actually hold this data once its script is on the page.
+ * The data lives in Vercel Web Analytics. Custom events are a Pro feature
+ * there, and the team has been on Pro since 5 Sep 2026, so every event below is
+ * recorded under Events in the project's Analytics tab, beside the page views.
+ * Reading one means exporting it from that panel: the event, then one property,
+ * then CSV. Vercel breaks an event down by a single property at a time, so a
+ * property that only means something crossed with another cannot be read off
+ * the export; that is worth knowing before adding one.
  *
- * Nothing here is required for either to work. `<Analytics />` in the layout is
- * what records a page view; this module is only the layer above it, so a site
- * with no GA property and a Hobby plan still gets its traffic, and the call
- * sites do not have to know that.
+ * GA4 is a second provider behind the same call, and it is off. `track()` sends
+ * to `window.gtag` when it exists, and it exists only when `NEXT_PUBLIC_GA_ID`
+ * is set, which it is not. It was wired in while the site was on Hobby and
+ * Vercel discarded these events, and the plan changed before it was switched
+ * on. It stays because turning it on is then one variable rather than an edit
+ * to every call site, and stays off because it brings cookies, and with them a
+ * consent question, to a site that has neither. `components/google-analytics.tsx`
+ * has the rest.
+ *
+ * Page views do not come through here. `<Analytics />` in the layout records
+ * those on any plan; this module is only the layer above it, so the call sites
+ * never need to know which providers are listening.
  *
  * ## What is worth counting
  *
@@ -156,9 +166,9 @@ export function track<E extends EventName>(event: E, props: Events[E]) {
   if (typeof window === "undefined") return
 
   try {
-    // Dropped on Hobby, where custom events are a Pro feature. The call is
-    // harmless there and starts working the day the plan changes, which is the
-    // whole reason it is here rather than waiting for that day.
+    // Lands under Events in the Vercel Analytics tab. That needs Pro: on Hobby
+    // the same call is accepted and silently discarded, so a plan change would
+    // show up as an empty panel rather than as an error anywhere.
     vercelTrack(event, props as Record<string, Value>)
   } catch {
     // Ignored on purpose: see above.
