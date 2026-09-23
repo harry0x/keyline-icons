@@ -220,13 +220,20 @@ export default async function Page() {
               configuration to your components.json file", which is a confusing
               way to be told the instructions were wrong.
             */}
+            {/*
+              `@keyline` has been in shadcn's registry index since 21 Sep 2026
+              (shadcn-ui/ui#11976), so the CLI resolves it with no setup. The
+              `components.json` entry stays below for CLIs that predate the
+              index, and for anyone who wants the URL pinned in their repo.
+            */}
             <p>
-              The CLI reads registries from your <code>components.json</code>,
-              so adding the set is one entry:
+              Keyline is listed in shadcn&apos;s registry index, so the CLI
+              already knows <code>@keyline</code>. Add icons by name:
             </p>
-            <Code>{`"registries": {
-  "@keyline": "https://keylineicons.com/r/{name}.json"
-}`}</Code>
+            <Code>{`npx shadcn add @keyline/bell
+npx shadcn add @keyline/fill/bell         # any style but stroke is prefixed
+npx shadcn add @keyline/sharp/fill/bell   # sharp corners lead the path
+npx shadcn search @keyline                # browse the whole set`}</Code>
             <p>
               Any shadcn project already has a <code>components.json</code>, and
               this needs one: each icon arrives at{" "}
@@ -235,11 +242,13 @@ export default async function Page() {
               somewhere this set picked. In a project without one, the CLI
               offers to run <code>init</code> first.
             </p>
-            <p>Then add icons by name:</p>
-            <Code>{`npx shadcn add @keyline/bell
-npx shadcn add @keyline/fill/bell         # any style but stroke is prefixed
-npx shadcn add @keyline/sharp/fill/bell   # sharp corners lead the path
-npx shadcn search @keyline                # browse the whole set`}</Code>
+            <p>
+              On an older CLI that does not read the index, add the registry to
+              your <code>components.json</code> yourself:
+            </p>
+            <Code>{`"registries": {
+  "@keyline": "https://keylineicons.com/r/{name}.json"
+}`}</Code>
             <p>
               This is the path that gives you <strong>source</strong> rather
               than a dependency. Each icon arrives as a self-contained component

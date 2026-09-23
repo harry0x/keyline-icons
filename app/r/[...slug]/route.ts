@@ -7,8 +7,9 @@ import { SET_TITLE } from "@/lib/site-chrome"
 /**
  * The shadcn registry.
  *
- * A consumer adds one line to their own `components.json` and every icon becomes
- * installable:
+ * Listed in shadcn's registry index since 21 Sep 2026 (shadcn-ui/ui#11976), so
+ * the CLI resolves `@keyline` with no setup. On a CLI that predates the index,
+ * a consumer adds one line to their own `components.json`:
  *
  *   "registries": { "@keyline": "https://keylineicons.com/r/{name}.json" }
  *
