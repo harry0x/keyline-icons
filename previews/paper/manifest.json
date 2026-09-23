@@ -1564,7 +1564,7 @@
       "width": 742,
       "icons": 4,
       "variants": 32,
-      "bytes": 20171
+      "bytes": 20187
     },
     {
       "file": "layout-1.html",
@@ -2700,7 +2700,7 @@
       "width": 744,
       "icons": 0,
       "variants": 0,
-      "bytes": 196578
+      "bytes": 5830
     },
     {
       "file": "changelog-earlier.html",
@@ -2711,7 +2711,7 @@
       "width": 744,
       "icons": 0,
       "variants": 0,
-      "bytes": 12279
+      "bytes": 13205
     }
   ]
 }

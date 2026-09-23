@@ -5904,7 +5904,7 @@ export function OctagonX(props: IconProps) {
 export function Option(props: IconProps) {
   return (
     <Icon fill="none" stroke="currentColor" strokeWidth={2} strokeLinecap="butt" strokeLinejoin="round" {...props}>
-      <Path d="M1 4L8 4L16 20L23 20M12 4L23 4" />
+      <Path d="M2 3L8 3L16 21L22 21M12 3L22 3" />
     </Icon>
   )
 }
