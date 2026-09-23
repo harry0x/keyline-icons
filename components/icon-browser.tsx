@@ -105,6 +105,7 @@ import {
 import { PhoneToggle } from "@/components/phone-toggle"
 import { TickSlider } from "@/components/tick-slider"
 import { useBrowserSettings } from "@/hooks/use-browser-settings"
+import { useEdgeFade } from "@/hooks/use-edge-fade"
 import { type BrowserSettings, SETTINGS_DEFAULTS } from "@/lib/browser-settings"
 import { SEARCH_MIN_LENGTH, SEARCH_SETTLE_MS, track } from "@/lib/analytics"
 import { nearestWord } from "@/lib/did-you-mean"
@@ -559,6 +560,8 @@ export function IconBrowser({
   const gridRef = React.useRef<HTMLDivElement>(null)
   /** The whole browser: rail, filter row and grid, for the category scroll. */
   const sectionRef = React.useRef<HTMLDivElement>(null)
+  /** The category rail's scroller, faded at whichever end has more list. */
+  const railRef = useEdgeFade<HTMLDivElement>()
 
   /**
    * The preview dock: which icon it is showing, and the ones shown before it.
@@ -1647,10 +1650,14 @@ export function IconBrowser({
         {/*
           The category rail. It scrolls on its own so a long list never drags
           the grid down with it, and it is dropped entirely on narrow screens,
-          where the same list heads the filter drawer.
+          where the same list heads the filter drawer. Its ends fade while
+          there is more list past them, so a cut row reads as more to come.
         */}
         <aside className="hidden w-52 shrink-0 lg:block">
-          <div className="sticky top-19 max-h-[calc(100dvh-5.75rem)] overflow-y-auto py-3">
+          <div
+            ref={railRef}
+            className="edge-fade sticky top-19 max-h-[calc(100dvh-5.75rem)] overflow-y-auto py-3"
+          >
             <h2 className="px-2 pb-2 text-xs font-medium tracking-wide text-muted-foreground uppercase">
               Categories
             </h2>

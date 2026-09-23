@@ -204,3 +204,58 @@
     user-select: none;
   }
 }
+
+/* An inner scroller that fades out at an end with more behind it, so a list cut
+   at the fold reads as continuing rather than ending. `useEdgeFade` sets the
+   two data attributes; each end fades only while there is somewhere to scroll,
+   so the top of the list and the bottom of it stay crisp.
+
+   A mask, not a gradient overlay: it fades the rows themselves, so it needs no
+   background colour to match and follows the theme for free. The lengths are
+   registered so the fade can ease in rather than snap on at the first pixel.
+   `-webkit-` beside it because unprefixed `mask-image` is Safari 15.4 up. */
+@property --fade-top {
+  syntax: "<length>";
+  inherits: false;
+  initial-value: 0px;
+}
+
+@property --fade-bottom {
+  syntax: "<length>";
+  inherits: false;
+  initial-value: 0px;
+}
+
+@layer components {
+  .edge-fade {
+    --fade-size: 2.5rem;
+    -webkit-mask-image: linear-gradient(
+      to bottom,
+      transparent,
+      #000 var(--fade-top),
+      #000 calc(100% - var(--fade-bottom)),
+      transparent
+    );
+    mask-image: linear-gradient(
+      to bottom,
+      transparent,
+      #000 var(--fade-top),
+      #000 calc(100% - var(--fade-bottom)),
+      transparent
+    );
+    transition:
+      --fade-top 150ms ease-out,
+      --fade-bottom 150ms ease-out;
+  }
+  .edge-fade[data-fade-top] {
+    --fade-top: var(--fade-size);
+  }
+  .edge-fade[data-fade-bottom] {
+    --fade-bottom: var(--fade-size);
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .edge-fade {
+      transition: none;
+    }
+  }
+}
