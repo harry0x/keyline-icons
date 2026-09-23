@@ -65,8 +65,8 @@ const pascal = (name) =>
  * A query carrying a camelCase boundary is a component identifier someone
  * pasted out of their code rather than a phrase they typed, `CheckCircle2` or
  * `RefreshCw`, so it is split on those boundaries, and a leftover bare number
- * is dropped, because lucide's trailing `2` disambiguates inside lucide and
- * means nothing here.
+ * is dropped, because another set's trailing `2` disambiguates inside that
+ * set and means nothing here.
  *
  * Two shapes count as an identifier: a camelCase boundary, and a single
  * capitalised word ending in digits. `Share2` is the second and has no boundary
@@ -111,7 +111,7 @@ function wordsOf(query) {
  *
  * The query is also matched word by word, which is what lets a name borrowed
  * from another set land. Compounds here read base-first, so an agent carrying
- * lucide's `CheckCircle2` asks for "check-circle", and matching the whole
+ * `CheckCircle2` from that set asks for "check-circle", and matching the whole
  * string against the name finds nothing, because the icon is `circle-check`.
  * The honest answer there is that the words arrived in the other order, not that
  * the set lacks the glyph, and the difference is not academic: a migration

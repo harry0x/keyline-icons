@@ -291,9 +291,10 @@
    * A query carrying a camelCase boundary is a component identifier someone
    * pasted out of their code rather than a phrase they typed, `CheckCircle2` or
    * `RefreshCw`, so it is split on those boundaries and a leftover bare digit is
-   * dropped: lucide's trailing `2` disambiguates inside lucide and means nothing
-   * here. Two shapes count: a camelCase boundary, and a single capitalised word
-   * ending in digits, which is what `Share2` is and what this missed.
+   * dropped: another set's trailing `2` disambiguates inside that set and means
+   * nothing here. Two shapes count: a camelCase boundary, and a single
+   * capitalised word ending in digits, which is what `Share2` is and what this
+   * missed.
    *
    * Still guarded, because `clock-3`, `dice-5` and `bar-chart-2` are real names
    * and a lowercase query keeps its digits.
@@ -323,7 +324,7 @@
    * `arrow-down-narrow-wide`.
    *
    * The word tier is why this is not just `indexOf`. Compounds here read
-   * base-first, so a designer carrying lucide's `CheckCircle2` types
+   * base-first, so a designer carrying another set's `CheckCircle2` types
    * "check-circle", and matching the whole string finds nothing even though
    * `circle-check` is right there. This plugin shipped with that bug after the
    * MCP server and the CLI were fixed for it, because nothing checks that the

@@ -137,8 +137,8 @@ function wordsOf(query) {
 
 /**
  * Matched whole first, then word by word, so a name in another set's word order
- * still lands: compounds here read base-first, and lucide's `CheckCircle2` asks
- * for "check-circle" when the icon is `circle-check`. Kept in step with the
+ * still lands: compounds here read base-first, so `CheckCircle2` from there
+ * asks for "check-circle" when the icon is `circle-check`. Kept in step with the
  * copy in `@keyline-icons/mcp`, which carries the full reasoning.
  */
 /**
