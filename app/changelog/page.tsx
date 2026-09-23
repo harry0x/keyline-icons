@@ -25,6 +25,7 @@ import { SiteNav } from "@/components/site-nav"
 import { artOf, Glyph, STYLES } from "@/components/glyph"
 import { ReactLogo } from "@/components/brand-logos"
 import { prose } from "@/components/prose"
+import { ReleaseFold } from "@/components/release-fold"
 import { ArrowRight } from "@/components/icons"
 import { ReleaseTicks, type ReleaseTick } from "@/components/release-ticks"
 import Link from "next/link"
@@ -375,15 +376,22 @@ function Redrawn({ pairs }: { pairs: Pair[] }) {
 const COVER_GLYPH = 36
 const COVER_GAP = 28
 const COVER_ROWS = 3
-const COVER_SHOWN = 60
+/**
+ * A row at the column's widest: 768 less the page's 32 a side and the cover's
+ * 40 leaves a 624px line, which takes ten 36px drawings 28 apart. It was 60
+ * shown for 30 seen, and fourteen covers drawing twice what the crop lets
+ * through was 400 SVGs nobody could see. Widen the column and this moves.
+ */
+const COVER_PER_ROW = 10
+const COVER_SHOWN = COVER_ROWS * COVER_PER_ROW
 /**
  * Below this a release goes without a cover. Two drawings centred in a band
  * the width of the column read as a frame somebody forgot to fill, and a
  * release that small shows every drawing a few lines further down anyway.
  */
 const COVER_FEWEST = 6
-/** A line of the four-styles cover: more than the widest column holds. */
-const COVER_COLUMNS = 20
+/** A line of the four-styles cover: one row, as many as the widest holds. */
+const COVER_COLUMNS = COVER_PER_ROW
 const coverHeight = (rows: number) =>
   rows * COVER_GLYPH + (rows - 1) * COVER_GAP
 
@@ -1138,32 +1146,66 @@ export default async function Page() {
                     })
               }
             >
-              {/*
-              A look at the treatment, under the sentence that announces it.
-              Pinned to the release that introduced it rather than to whatever
-              carries a note: every later release may have a note of its own,
-              and none of them is announcing sharp.
-            */}
-              {entry.version === SHARP_RELEASE && sharp.total > 0 && (
-                <div className="mt-12">
-                  <SharpPreview icons={sharp.sample} total={sharp.total} />
-                </div>
-              )}
-              {!entry.initial && (
-                <Chips
-                  topics={
-                    entry.topics ??
-                    defaultChips(
-                      `v${entry.version}`,
-                      entry.names,
-                      entry.updatedNames
-                    )
-                  }
-                  byName={byName}
-                  redrawn={entry.redrawn}
-                  extra={stylesExtra(entry.version)}
-                />
-              )}
+              {(() => {
+                const topics =
+                  entry.topics ??
+                  defaultChips(
+                    `v${entry.version}`,
+                    entry.names,
+                    entry.updatedNames
+                  )
+                const content = (
+                  <>
+                    {/*
+                    A look at the treatment, under the sentence that announces
+                    it. Pinned to the release that introduced it rather than to
+                    whatever carries a note: every later release may have a
+                    note of its own, and none of them is announcing sharp.
+                  */}
+                    {entry.version === SHARP_RELEASE && sharp.total > 0 && (
+                      <div className="mt-12">
+                        <SharpPreview
+                          icons={sharp.sample}
+                          total={sharp.total}
+                        />
+                      </div>
+                    )}
+                    {!entry.initial && (
+                      <Chips
+                        topics={topics}
+                        byName={byName}
+                        redrawn={entry.redrawn}
+                        extra={stylesExtra(entry.version)}
+                      />
+                    )}
+                  </>
+                )
+                /* Only the first entry on the page opens in full, the way the
+                   design files carry drawings on their newest entry alone: the
+                   open window's, else the newest tag's. A release of a row or
+                   so fits inside the fold, so it stays open rather than wear a
+                   toggle that reveals nothing. */
+                const folds =
+                  (unreleased || !entry.current) &&
+                  !entry.initial &&
+                  (entry.icons.length + entry.redrawn.length > 10 ||
+                    entry.version === SHARP_RELEASE)
+                return folds ? (
+                  <ReleaseFold
+                    version={entry.version}
+                    anchors={topics.flatMap((topic) =>
+                      [
+                        topic.anchor,
+                        ...topic.sections.map((s) => s.anchor),
+                      ].filter((a): a is string => Boolean(a))
+                    )}
+                  >
+                    {content}
+                  </ReleaseFold>
+                ) : (
+                  content
+                )
+              })()}
             </Release>
           ))}
         </div>
