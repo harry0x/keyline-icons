@@ -56,6 +56,12 @@ email. Figma publishes no target turnaround, only that "approval times vary
 depending on current volume and the team's availability", so do not promise
 anyone a date.
 
+**An update can skip review.** Version 16, the 1.1.1 panel with new `ui.html`
+and `code.js`, went live the moment Publish was pressed on 23 Sep 2026, "And
+you're live!", no badge and no email. So anything that must not reach users
+yet has to be caught before Publish: test the dev plugin in Figma first,
+because the button may be the release.
+
 ---
 
 ## Name

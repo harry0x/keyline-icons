@@ -255,8 +255,9 @@ export const PAPER_NOTE_ICON_NAMES = [
  * says "the same thing again, somewhere else", which is the claim.
  *
  * `cursor-click` is the insert, because what the plugin does to the document is
- * one click; `layout-dashboard` is the pair of editors; and `refresh-cw` is the
- * set arriving over the network rather than being baked into the plugin.
+ * one click, or one drag since 1.1.1, and the click is still the first thing
+ * anyone tries; `layout-dashboard` is the pair of editors; and `refresh-cw` is
+ * the set arriving over the network rather than being baked into the plugin.
  */
 export const PLUGIN_NOTE_ICON_NAMES = [
   "search-2",
