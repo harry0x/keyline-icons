@@ -114,6 +114,18 @@ github.com/keyline-icons/keyline-icons
 
 Changelog
 
+1.1.0
+114 new drawings, taking the set to 1,114 names and 8,912 SVGs, and two new shelves. The set now installs in React Native too, as @keyline-icons/react-native.
+
+* AI: seventy-six drawings marked with the same pair of stars, from search, message, file, chart and cursor to a truck and a wallet, and a second bot; every sparkle in the set now sits on this one shelf
+* Math: asterisk, divide, equals with its approximate and not-equal forms, hash, infinity, parentheses, radical, variable and a barred x, four of them circled and squared too
+* Keyboard: command, option, escape and space
+* Arrows: six corner turns, an arrow with a dash on top and an arrow that runs into a line
+* And more: a file with a waveform and one with a play triangle, eject, a line that goes both ways and a plain wand
+* Math and Keyboard opened as shelves of their own, taking categories from 38 to 40
+
+Also redrawn: the pen with sparkles, its plus signs swapped for the pair of stars.
+
 1.0.0
 Four styles, with every name in all of them: two-tone is the outlined style that was called duotone, and duotone is new, a grey body with the part that matters in black and no outline. 149 new drawings, taking the set to 1,000 names and 8,000 SVGs, and a new shelf.
 
@@ -181,17 +193,6 @@ Also redrawn: the pointing hand in four directions, the paperclip longer, the di
 * Others: a flame, a shopfront, a skyline, a processor and a mortarboard
 * Finance and Education opened as shelves of their own, taking categories from 22 to 24
 
-0.5.0 — 8 September 2026
-35 new drawings, taking the set to 663 names and 3,392 SVGs, and two names put the right way round. link and link-2 had been on each other's drawings since the first release: link is the interlocked diagonal chain now and link-2 the horizontal one with the bar, which is the naming the rest of the set already follows. link-off drew the horizontal chain, which makes it the negated form of link-2, so it is link-2-off — and link-off still finds it in search.
-
-* Text: bold, italic, underline and strikethrough, the four-way alignment stack, the double and single quotation marks in both hands, text-quote and language
-* Links: link-2, link-2-off and unlink, the diagonal chain come apart
-* Messages: phone and phone-off, message-lines, bell-ring, and send with send-horizontal
-* Brightness: sun-dim and sun-medium
-* Others: layers, list, list-ordered, share-2, sparkle, sparkles, zap, zap-off, fullscreen-2 and fullscreen-exit-2
-
-Also redrawn in both treatments: the pen family, the same drawing scaled 10/9 with its band moved from the nib to the cap; clock, now exactly clock-3 with both names kept; and the two sliders, whose rails break at the knob.
-
 Earlier releases, back to the first cut: keylineicons.com/changelog
 ```
 
@@ -249,6 +250,21 @@ without a plugin update or a review cycle. A republish is only required when the
 plugin's own code changes, or when the listing copy goes stale, which it does
 every time the counts move. jsDelivr serves the repository, so the drawings have
 to be **pushed** before any of this is true for anyone but you.
+
+### 1.1.0
+
+```
+114 new drawings, taking the set to 1,114 names and 8,912 SVGs: seventy-six drawings marked with the same pair of stars and a second bot, all on the AI shelf now; twenty maths marks, four of them circled and squared; command, option, escape and space; six corner turns and two arrows; a file for audio and one for video, eject, a line that goes both ways and a plain wand.
+
+Math and Keyboard opened as shelves with them, taking categories from 38 to 40.
+
+Redrawn: the pen with sparkles, now on the same pair of stars.
+```
+
+**A republish is required for the listing**, whose counts moved: the tagline,
+the style bullets, the totals, the curated-word count and the category count
+all changed with the set. The plugin's own code did not change. One line per
+paragraph here too, for the reason given under *The file listing*.
 
 ### 1.0.0
 
@@ -603,6 +619,18 @@ Also available as React and React Native components, a shadcn registry, an MCP s
 keylineicons.com
 github.com/keyline-icons/keyline-icons
 
+v1.1.0
+114 new drawings, and two new shelves. The set is 1,114 names now, 989 component sets and 8,912 variants, up from 1,000 and 8,000. Nothing was renamed and no component was replaced, so instances already placed in your files keep their link.
+
+* AI: seventy-six drawings marked with the same pair of stars, from search, message, file, chart and cursor to a truck and a wallet, and a second bot; every sparkle in the file now sits on this one shelf
+* Math: asterisk, divide, equals with its approximate and not-equal forms, hash, infinity, parentheses, radical, variable and a barred x, four of them circled and squared too
+* Keyboard: command, option, escape and space
+* Arrows: six corner turns, an arrow with a dash on top and an arrow that runs into a line
+* Singles: a file with a waveform and one with a play triangle, eject, a line that goes both ways and a plain wand
+* Categories went from 38 to 40: Math and Keyboard took the new marks that had nowhere honest to sit
+
+Also redrawn: the pen with sparkles, its plus signs swapped for the pair of stars every other drawing on the AI shelf carries. The vectors were swapped inside the existing set, so its instances keep their link too.
+
 v1.0.0
 Four styles, and a new shelf. Every set now carries stroke, two-tone, duotone and fill in both corners: the outlined style that was called duotone is Style=two-tone, and Style=duotone is a new drawing with no outline, a grey body with the part that matters in black. 149 new drawings. The set is 1,000 names now, 883 component sets and 8,000 variants, up from 851 and 4,394. The rename happened in place, so instances already placed in your files keep their link and their look.
 
@@ -663,16 +691,6 @@ v0.7.0
 * Singles: scissors in both bodies, an hourglass, a slash in three bodies and search-slash
 * Categories went from 24 to 26: Emoji took the faces and the thumbs, Diagrams took the boxes on wires off Charts
 
-v0.6.0
-23 new drawings under 29 names, and two new shelves. The set is 692 names now, 577 component sets and 3,538 variants, up from 663 and 3,392. Nothing was renamed and no component was replaced, so instances already placed in your files keep their link.
-
-* The seven currency marks: dollar, euro, pound, yen, rupee, franc and bitcoin, six of them with a circled half
-* Money: a wallet, and the payment card with plus, minus, check and x
-* Books: book, with open, plus, minus, check and x
-* Singles: a flame, a shopfront, a skyline, a processor and a mortarboard
-* The circled currencies clear the ring by 1 rather than the 2 the set asks between elements: a container is a frame, not a neighbour, and at 2 a letterform comes out at about half the well
-* Categories went from 22 to 24: Finance took the currency marks, the payment cards and the wallet off Commerce, and Education took the mortarboard off Sport
-
 Earlier releases, back to the first cut: keylineicons.com/changelog
 ```
 
@@ -689,6 +707,8 @@ the bottom, v0.2.0 and the four 0.1.x releases on 14 Sep 2026, v0.3.0 on
 15 Sep 2026, v0.4.0 on 16 Sep 2026 (9,823 with the four-style 1.0.0 entry),
 v0.5.0 from the file's and 0.3.0 and 0.4.0 from the plugin's on 17 Sep 2026
 (10,363 in the plugin's once the singles batch reached 147 drawings),
+0.5.0 from the plugin's and v0.6.0 from the file's on 23 Sep 2026 (10,056 and
+9,521 with the 1.1.0 entries),
 and a last line
 points at `keylineicons.com/changelog`, which keeps every release. Trim from
 the oldest end again whenever a new entry pushes it past about 9,500.
@@ -711,6 +731,15 @@ It is a different image from the plugin's `plugin-cover.png` and the two are
 regenerated together; re-upload whichever modal you are in.
 
 ### What changed, for the final details page
+
+```
+114 new icons, and two new categories. Every icon with a sparkle now sits on one AI shelf, seventy-six of them new and all marked with the same pair of stars, beside twenty maths marks, the command, option, escape and space keys, six corner turns and a few singles. The pen with sparkles was redrawn on the same stars.
+
+The file went from 883 component sets to 989 and from 8,000 variants to 8,912. Nothing that shipped in 1.0.0 was renamed or removed, so instances already placed in your files keep their link.
+```
+
+The 1.0.0 entry this replaced, kept because a listing's history is worth
+reading back:
 
 ```
 Out of beta, a month after the first release: 1,000 icons, every one in four
