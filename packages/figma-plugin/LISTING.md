@@ -624,6 +624,11 @@ Also available as React and React Native components, a shadcn registry, an MCP s
 keylineicons.com
 github.com/keyline-icons/keyline-icons
 
+v1.1.1
+One drawing redrawn, and nothing else in the file moved. The set is still 1,114 names, 989 component sets and 8,912 variants. Nothing was renamed and no component was replaced, so instances already placed in your files keep their link.
+
+Also redrawn: option. Its two bars now land on whole pixels at 12px, the size shortcut hints use, and it takes the same 20 by 20 box as command. The vectors were swapped inside the existing set, so its instances pick the new drawing up.
+
 v1.1.0
 114 new drawings, and two new shelves. The set is 1,114 names now, 989 component sets and 8,912 variants, up from 1,000 and 8,000. Nothing was renamed and no component was replaced, so instances already placed in your files keep their link.
 
@@ -742,6 +747,13 @@ It is a different image from the plugin's `plugin-cover.png` and the two are
 regenerated together; re-upload whichever modal you are in.
 
 ### What changed, for the final details page
+
+```
+One icon redrawn. Option's two bars now land on whole pixels at 12px, the size shortcut hints use, and it takes the same 20 by 20 box as command. It was swapped inside the existing component, so every instance already placed picks it up. Nothing else changed: 989 component sets, 8,912 variants, 1,114 names.
+```
+
+The 1.1.0 entry this replaced, kept because a listing's history is worth
+reading back:
 
 ```
 114 new icons, and two new categories. Every icon with a sparkle now sits on one AI shelf, seventy-six of them new and all marked with the same pair of stars, beside twenty maths marks, the command, option, escape and space keys, six corner turns and a few singles. The pen with sparkles was redrawn on the same stars.
