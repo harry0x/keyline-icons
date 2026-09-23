@@ -257,6 +257,32 @@ npx shadcn search @keyline                # browse the whole set`}</Code>
           </Section>
 
           {/*
+            Ours, unlike the section below it, and generated in the same pass as
+            the React package, so it carries the same names and entry points.
+            The colour paragraph is the one difference worth a sentence: every
+            snippet above leans on `className`, and a native reader copying one
+            gets an icon that ignores their theme.
+          */}
+          <Section id="react-native" title="Install in React Native">
+            <p>
+              The same components, drawn through{" "}
+              <code>react-native-svg</code>, with the same entry points and
+              export names. It works in Expo, web included.
+            </p>
+            <Code>{`npm i @keyline-icons/react-native react-native-svg`}</Code>
+            <Code>{`import { Check } from "@keyline-icons/react-native"
+import { Folder } from "@keyline-icons/react-native/duotone"
+
+<Check size={16} color="#2563eb" />
+<Folder color={theme.colors.primary} />`}</Code>
+            <p>
+              A native view has no CSS to inherit from, so colour is a{" "}
+              <code>color</code> prop rather than <code>currentColor</code>. It
+              defaults to black, and the two-tone and duotone plates follow it.
+            </p>
+          </Section>
+
+          {/*
             The section that stops this page reading as React-only.
  
             It sits after both install paths and before everything below, which

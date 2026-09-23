@@ -12,6 +12,7 @@ them.** The source of truth is `raw/`, and everything else is built from it:
 ```
 raw/<name>/*.svg   ->  icons/<style>/<name>.svg   ->  components/icons/index.tsx
                                                   ->  packages/react/src/index.tsx
+                                                  ->  packages/react-native/src/index.tsx
 ```
 
 A hand-edit to a generated file passes review, gets committed, and is silently

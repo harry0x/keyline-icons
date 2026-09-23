@@ -695,7 +695,7 @@ export default async function Page() {
             // It names all three frameworks the picker offers, and attaches the
             // "same files" claim only to React, which is the only one this repo
             // generates. Vue and Svelte read the set from Iconify.
-            lead="React components generated from the same files as the SVGs, plus Vue and Svelte through Iconify."
+            lead="React and React Native components generated from the same files as the SVGs, plus Vue and Svelte through Iconify."
           />
 
           {/*

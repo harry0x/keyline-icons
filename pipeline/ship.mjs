@@ -75,6 +75,7 @@ const OWNED = [
   "icons",
   "components/icons",
   "packages/react/src",
+  "packages/react-native/src",
   "packages/mcp/icons.json",
   "packages/cli/icons.json",
   "packages/figma-plugin/icons.json",
@@ -82,6 +83,7 @@ const OWNED = [
   "lib/icon-history.json",
   "README.md",
   "packages/react/README.md",
+  "packages/react-native/README.md",
   /* The other two files `check-readmes --fix` rewrites. It is run above, by
      `ship` itself, so leaving these out does not merely fail to stage work
      someone else did: it edits them and then walks past them, and the counts

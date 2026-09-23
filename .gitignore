@@ -23,6 +23,8 @@
 # `build-react.mjs --check` diffs against it in CI; `dist` is compiled from
 # that source at publish time and would only be a second copy in the history.
 packages/*/dist
+# react-native installs its own devDependencies to build; see pipeline/README.md.
+packages/*/node_modules
 
 # misc
 .DS_Store

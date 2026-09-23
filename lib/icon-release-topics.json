@@ -2,8 +2,13 @@
  "$comment": "SOURCE, NOT GENERATED. How a release reads on the changelog, shaped after Preline's (Zafar, 17 Sep 2026, pointing at preline.co/docs/changelog.html): a title, then chips (an icon and a label, like Preline's \"New Components & Improvements\" and \"Fixes and Improvements\"), each followed by its items with a bold lead (\"People:\", \"Layout:\") and the drawings the item is about. His asks on the way: \"topic > icons, topic > icons. not all topics first and then all icons after that\", \"categorize them, not just text > icons. titles, etc.\", \"redrawns deserve to be a separate topic, not within a topic and each subtitle must carry shareable link like the main titles\". So redraws are always their own chip. Per version: `title` (the release's headline, which every version has, released ones included, because the page heads each entry by it) and optionally `sections`: chips with `title`, `icon` (a drawing from this set, by name), `text`, and items in `sections` with `title`, `text`, `names` (added) or `redraws`. A version with no `sections` is drawn with default chips, New drawings and Redrawn, straight off git. pipeline/build-history.mjs gives every chip and item an `anchor` (v<version>-<chip>, v<version>-<chip>-<item>) that the site links, keeps only the drawings the entry carries, and appends anything no item claims in a last untitled group, reported, so a stale list never drops a drawing. Keyed by the version the work ships as, so nothing is re-keyed at the tag. Numbers go in as {names} and {files}. Where a version has sections they replace the note.",
  "releases": {
   "1.1.0": {
-   "title": "An AI shelf, the maths marks and the modifier keys: 113 new drawings",
+   "title": "React Native support and 113 new drawings, from an AI shelf to the modifier keys",
    "sections": [
+    {
+     "title": "React Native",
+     "icon": "laptop-smartphone",
+     "text": "The whole set now installs in React Native apps too, Expo included, as @keyline-icons/react-native, with the same names, styles and corners as the React package. Code shared between a web app and a phone app changes the package name and nothing else; on a phone the colour comes from a color prop, since there is no text colour to inherit."
+    },
     {
      "title": "New drawings",
      "icon": "sparkles",

@@ -15,6 +15,7 @@ import {
 import {
   ICONIFY_PREFIX,
   ICONIFY_URL,
+  REACT_NATIVE_PACKAGE,
   REACT_PACKAGE,
   SVELTE_PACKAGE,
   VUE_PACKAGE,
@@ -32,7 +33,7 @@ import { cn } from "@/lib/utils"
  * and one for installing the package, which asked the reader to compare two
  * things instead of picking the one that applies to them.
  *
- * **Only what ships is named**, and three things ship now. The row carried Vue,
+ * **Only what ships is named**, and four things ship now. The row carried Vue,
  * Svelte and Angular as disabled chips, then as chips with "Soon" badges, and
  * both versions promised three specific packages that nobody had started. Vue
  * and Svelte are back as real chips because the set is on Iconify, which is a
@@ -44,18 +45,18 @@ import { cn } from "@/lib/utils"
 
 /**
  * What the set can be installed into, what installing it costs, and what you
- * type afterwards. Three entries, and the third column is the point: the chips
+ * type afterwards. Four entries, and the last column is the point: the chips
  * do not select a label, they select a command and the snippet under it.
  *
- * **Only React installs something of ours.** Vue and Svelte install Iconify's
- * component for their framework, which reads the set from
+ * **Only React and React Native install something of ours.** Vue and Svelte
+ * install Iconify's component for their framework, which reads the set from
  * `ICONIFY_PREFIX` over Iconify's API. That is why `pkg` is here rather than
- * derived: two of these three are somebody else's package, and a table that
+ * derived: two of these four are somebody else's package, and a table that
  * assumed the scope would quietly emit `@keyline-icons/vue`, which does not
  * exist and is not planned. See the note on `ICONIFY_PREFIX` in
  * `lib/icon-code.ts` for why it is not going to.
  *
- * `ready` stays, and all three are true today. It is a fact about what a reader
+ * `ready` stays, and all four are true today. It is a fact about what a reader
  * can run rather than a plan: a name here with `ready: true` is a command on the
  * landing page that has to work, so anything added before its install resolves
  * goes in as `false` and arrives disabled.
@@ -78,6 +79,30 @@ const FRAMEWORKS = [
     usage: `import { Bell, Check, Search } from "${REACT_PACKAGE}"
 
 <Bell className="size-4" />
+<Check size={16} />
+<Search strokeWidth={1.5} />`,
+  },
+  /*
+    Ours, like React, and the same names, so the snippet is React's with the
+    one prop a phone needs: no `className` to colour from, so `color`. The
+    peer install rides `pkg` because a command that leaves out
+    `react-native-svg` fails on first render, and the terminal is the worst
+    place on the page to show an install that does not work. The logo is
+    React's atom because that is React Native's own mark.
+  */
+  {
+    value: "react-native",
+    label: "React Native",
+    logo: ReactLogo,
+    ready: true,
+    pkg: `${REACT_NATIVE_PACKAGE} react-native-svg`,
+    mark: "circle-check",
+    markClass: "text-green-400 dark:text-green-600",
+    hint: "This project's own package, Expo included",
+    note: "Every icon, as React Native components",
+    usage: `import { Bell, Check, Search } from "${REACT_NATIVE_PACKAGE}"
+
+<Bell color="#2563eb" />
 <Check size={16} />
 <Search strokeWidth={1.5} />`,
   },
@@ -223,7 +248,7 @@ export function FrameworkInstaller({
                             disabled={!entry.ready}
                             onClick={() => setFramework(entry.value)}
                             aria-label={`${entry.label}. ${entry.hint}`}
-                            className="gap-2"
+                            className="gap-2 px-2.5 sm:px-3"
                           />
                         }
                       >
@@ -231,8 +256,17 @@ export function FrameworkInstaller({
                           The mark is in its own brand colour rather than the
                           chip's ink, which is most of what makes a logo legible
                           at 16px. See `components/brand-logos.tsx`.
+
+                          Hidden on a phone, with the padding a step tighter.
+                          Four chips with marks come to 380px against a 287px
+                          header at 375 wide, and React Native was the chip
+                          that broke it. Dropping the marks rather than the
+                          words, because React and React Native share one, so
+                          a marks-only row would show the atom twice and say
+                          nothing. Words alone measure 268px, which also fits
+                          a 360px phone.
                         */}
-                        <Logo className="size-4 shrink-0" />
+                        <Logo className="hidden size-4 shrink-0 sm:block" />
                         {entry.label}
                       </TooltipTrigger>
                       <TooltipContent>
@@ -336,7 +370,7 @@ export function FrameworkInstaller({
                 browser
               </Link>{" "}
               copies as plain SVG that works in any framework, or none. Beyond
-              the three above, the whole set is on{" "}
+              the four above, the whole set is on{" "}
               {/*
                 External, so a real anchor rather than `Link`: this is the one
                 pointer on the block that leaves the site, and it is here because

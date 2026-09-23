@@ -87,6 +87,25 @@ site, and `@/components/icons` is the import to use inside it. Both come off
 `icons/stroke/`, so they hold the same drawings; the package is the one to
 install anywhere else.
 
+**Import them in React Native.** `@keyline-icons/react-native` is the same
+components drawn through `react-native-svg`, with the same entry points and
+export names, so shared code changes the package name and nothing else. It
+works in Expo, on the web through Expo too.
+
+```bash
+npm i @keyline-icons/react-native react-native-svg
+```
+
+```tsx
+import { Check } from "@keyline-icons/react-native"
+import { Folder } from "@keyline-icons/react-native/duotone"
+
+<Check size={16} color="#2563eb" />
+```
+
+A native view has no CSS to inherit from, so colour is a `color` prop rather
+than `currentColor`.
+
 **Own the source with the shadcn CLI.** The registry is served by the site, so
 adding the set to a project is one entry in `components.json`:
 

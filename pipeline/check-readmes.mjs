@@ -148,6 +148,11 @@ const CLAIMS = [
   ['packages/react/README.md', /\/\/ two-tone, ([\d,]+) icons/, 'two-tone'],
   ['packages/react/README.md', /\/\/ duotone, ([\d,]+) icons/, 'duotone'],
   ['packages/react/README.md', /\/\/ fill, +([\d,]+) icons/, 'fill'],
+  ['packages/react-native/README.md', /^([\d,]+) icons on one/m, 'icons'],
+  ['packages/react-native/README.md', /\/\/ stroke, +([\d,]+) icons/, 'stroke'],
+  ['packages/react-native/README.md', /\/\/ two-tone, ([\d,]+) icons/, 'two-tone'],
+  ['packages/react-native/README.md', /\/\/ duotone, ([\d,]+) icons/, 'duotone'],
+  ['packages/react-native/README.md', /\/\/ fill, +([\d,]+) icons/, 'fill'],
   /* This one was not here, and it went stale exactly as predicted: the plugin
      README said 484 names against an actual 503, and nothing caught it because
      nothing was looking. Every README that states a count belongs in this list,

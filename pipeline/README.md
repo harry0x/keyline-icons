@@ -1097,6 +1097,7 @@ each directory:
 
 ```bash
 cd packages/react && npm publish && cd ../..
+cd packages/react-native && npm install && npm publish && cd ../..
 cd packages/cli && npm publish && cd ../..
 cd packages/mcp && npm publish && cd ../..
 ```
@@ -1110,6 +1111,14 @@ Two things that cost time when they go wrong:
   package that plainly exists means the token was refused, not that the package
   is missing. Check with `npm whoami` before believing the error, and re-run
   `npm login` if it answers 401.
+- **`react-native` installs its own devDependencies.** Its build needs the
+  types of `react-native` and `react-native-svg`, which the site has no use
+  for, so they live in the package rather than the root manifest, and the root
+  `tsconfig.json` excludes the package so `icons:ci` does not need them.
+  `build-react --check` still guards it against drift, and it is written from
+  the same pass as `react`, so the two cannot diverge. What only `npm publish`
+  proves is that it compiles, which is why the `npm install` sits in the line
+  above.
 
 `react` builds its `dist/` from `prepublishOnly`, so the directory is
 gitignored and never commits; a stale local build cannot ship. `npm publish

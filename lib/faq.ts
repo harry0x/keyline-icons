@@ -39,6 +39,7 @@
  */
 import {
   ICONIFY_PREFIX,
+  REACT_NATIVE_PACKAGE,
   REACT_PACKAGE,
   SVELTE_PACKAGE,
   VUE_PACKAGE,
@@ -197,6 +198,14 @@ export function installFaq(): FaqEntry[] {
         `${REACT_PACKAGE}, which generates one component per icon from the same SVGs, so the two cannot ` +
         `disagree. Each style is its own entry point, and the drawings are also in icons/ in the ` +
         `repository at ${repo} if you would rather copy them than install anything.`,
+    },
+    {
+      question: `Does it work in React Native?`,
+      answer:
+        `Yes, as ${REACT_NATIVE_PACKAGE}, installed next to react-native-svg, and in Expo too. The names ` +
+        `and entry points are the same as ${REACT_PACKAGE}, so shared code changes the package name and ` +
+        `nothing else. A native view has no CSS to inherit from, so colour is a color prop rather than ` +
+        `currentColor.`,
     },
     {
       question: `Why does each style have its own import path?`,

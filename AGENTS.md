@@ -7,7 +7,7 @@ This version has breaking changes — APIs, conventions, and file structure may 
 # Keyline Icons
 
 A 24×24 icon set in three styles and two corner treatments, its build pipeline,
-the site that browses it, and three packages. 476 icons, 2,994 SVGs, MIT.
+the site that browses it, and its packages. 476 icons, 2,994 SVGs, MIT.
 
 ## The one rule
 
@@ -18,6 +18,7 @@ Figma exports, and everything downstream is built from it:
 ```
 raw/<name>/*.svg  ->  icons/<style>/<name>.svg  ->  components/icons/index.tsx
                                                 ->  packages/react/src/*.tsx
+                                                ->  packages/react-native/src/*.tsx
                                                 ->  packages/{mcp,cli,figma-plugin}/icons.json
                                                 ->  previews/{figma-cover,social-preview}.svg
                                                 ->  previews/paper/*.html
