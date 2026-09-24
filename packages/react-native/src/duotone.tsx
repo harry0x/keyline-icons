@@ -17,14 +17,16 @@ export type IconProps = Omit<SvgProps, "children"> & {
  */
 function Icon({
   size = 24,
+  width,
+  height,
   color = "#000",
   ...props
 }: IconProps & { children?: ReactNode }) {
   return (
     <Svg
       viewBox="0 0 24 24"
-      width={size}
-      height={size}
+      width={width || size}
+      height={height || size}
       color={color}
       aria-hidden
       {...props}

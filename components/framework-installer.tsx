@@ -3,7 +3,11 @@
 import * as React from "react"
 import Link from "next/link"
 
-import { ReactLogo, SvelteLogo, VueLogo } from "@/components/brand-logos"
+import {
+  ReactLogo,
+  SvelteLogo,
+  VueLogo,
+} from "@/components/brand-logos"
 import { InstallTerminal } from "@/components/install-terminal"
 import { Glyph } from "@/components/glyph"
 import { Segmented, SegmentedItem } from "@/components/segmented"

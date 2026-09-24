@@ -259,6 +259,52 @@ export function ReactLogo(props: LogoProps) {
 }
 
 /**
+ * React Native's mark, for the framework picker on the landing page.
+ *
+ * React Native uses the same atom as React. The visual difference here is the
+ * treatment: the web React chip is a stroked atom (hairline orbits), and this
+ * one fills the orbits with a heavier stroke and adds the "RN" convention of a
+ * slightly thicker line weight, which is enough at 16px for a reader who sees
+ * both chips to tell them apart.
+ *
+ * Same brand colour (`#61DAFB`), same provenance: the geometry is React's own
+ * atom, unchanged, because React Native's official branding uses the identical
+ * mark. Fixed in both themes for the reason every other logo here is.
+ */
+export function ReactNativeLogo(props: LogoProps) {
+  return (
+    <svg
+      xmlns="http://www.w3.org/2000/svg"
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="#61DAFB"
+      aria-hidden="true"
+      focusable="false"
+      {...props}
+    >
+      <circle cx="12" cy="12" r="2.5" fill="#61DAFB" stroke="none" />
+      <g strokeWidth="1.5">
+        <ellipse cx="12" cy="12" rx="11" ry="4.2" />
+        <ellipse
+          cx="12"
+          cy="12"
+          rx="11"
+          ry="4.2"
+          transform="rotate(60 12 12)"
+        />
+        <ellipse
+          cx="12"
+          cy="12"
+          rx="11"
+          ry="4.2"
+          transform="rotate(120 12 12)"
+        />
+      </g>
+    </svg>
+  )
+}
+
+/**
  * Vue's and Svelte's marks, for the two frameworks the set reaches through
  * Iconify rather than through a package of its own.
  *

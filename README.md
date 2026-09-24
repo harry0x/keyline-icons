@@ -97,14 +97,19 @@ npm i @keyline-icons/react-native react-native-svg
 ```
 
 ```tsx
-import { Check } from "@keyline-icons/react-native"
-import { Folder } from "@keyline-icons/react-native/duotone"
+import { ArrowUpRight, Check, Menu } from "@keyline-icons/react-native"
+import { Folder as FolderFill } from "@keyline-icons/react-native/fill"
 
-<Check size={16} color="#2563eb" />
+<Check size={16} color="green" />
+<ArrowUpRight size={16} />
 ```
 
 A native view has no CSS to inherit from, so colour is a `color` prop rather
 than `currentColor`.
+
+The same eight entry points as the web package, the same names, the same
+tree-shaking. `sideEffects: false` and ESM, so an app importing ten icons
+ships only those ten.
 
 **Own the source with the shadcn CLI.** The registry is served by the site, so
 adding the set to a project is one entry in `components.json`:
@@ -146,7 +151,7 @@ claude mcp add keyline-icons -- npx -y @keyline-icons/mcp
 Anything else that speaks MCP over stdio runs the same command; the package's
 own README has the JSON.
 
-**Use them outside React.** The whole set is on
+**Use them outside React and React Native.** The whole set is on
 [Iconify](https://icon-sets.iconify.design/keyline-icons/) as `keyline-icons`,
 which covers Vue, Svelte, Solid, web components and the Tailwind plugin. Stroke
 is the bare name and everything else is a suffix on it:
@@ -217,6 +222,7 @@ pnpm install
 pnpm dev            # the site
 pnpm icons:build    # raw/ -> icons/
 pnpm icons:react    # icons/ -> components/icons/ and packages/react/
+pnpm icons:react-native  # icons/ -> packages/react-native/
 pnpm icons:lint     # geometry and coverage rules
 pnpm icons:ci       # everything CI runs
 ```

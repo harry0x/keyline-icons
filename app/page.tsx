@@ -354,7 +354,9 @@ export default async function Page() {
                   one. `text-muted-foreground` on a heading is the same device
                   the hero's tagline uses, one level up.
                 */}
-                <span className="text-muted-foreground">four styles, two corners</span>
+                <span className="text-muted-foreground">
+                  four styles, two corners
+                </span>
               </h1>
 
               {/*
@@ -692,9 +694,9 @@ export default async function Page() {
             // introduce themselves. They do not: the framework picker is inside
             // the terminal now, so the heading stands alone over a card and the
             // section loses the one line that says what the card is for.
-            // It names all three frameworks the picker offers, and attaches the
-            // "same files" claim only to React, which is the only one this repo
-            // generates. Vue and Svelte read the set from Iconify.
+            // It names all four frameworks the picker offers, and attaches the
+            // "same files" claim to React and React Native, which are the ones
+            // this repo generates. Vue and Svelte read the set from Iconify.
             lead="React and React Native components generated from the same files as the SVGs, plus Vue and Svelte through Iconify."
           />
 

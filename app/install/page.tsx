@@ -44,17 +44,13 @@ import {
  */
 export const metadata = pageMetadata({
   path: "/install",
-  // The verb someone searches, then the two things they are installing into.
-  // It was "Install and use with shadcn/ui" at `/shadcn`, which named the
-  // context rather than the job and put the term this page must not chase into
-  // the URL as well as the title. See the route policy.
-  title: "Install the icons in React or shadcn/ui",
+  title: "Install the icons in React, React Native or shadcn/ui",
   description:
-    "How to add Keyline Icons to a shadcn/ui project: copy an SVG, import " +
-    "the React components, size them inside Button and Sidebar, and swap out " +
+    "How to add Keyline Icons to a React, React Native or shadcn/ui project: copy an SVG, import " +
+    "the components, size them inside Button and Sidebar, and swap out " +
     "lucide without touching your markup.",
   socialDescription:
-    "Add Keyline Icons to a shadcn/ui project: copy an SVG, import the components, and swap out lucide.",
+    "Add Keyline Icons to a React, React Native or shadcn/ui project: copy an SVG, import the components, and swap out lucide.",
 })
 
 /**
@@ -156,7 +152,7 @@ export default async function Page() {
               not match what the page visibly leads with, and the rewrite is
               usually worse than the one you wrote. */}
           <h1 className="text-4xl font-semibold tracking-tight">
-            Install the icons in React or shadcn/ui
+            Install the icons in React, React Native or shadcn/ui
           </h1>
           <p className="mt-3 text-base text-balance text-muted-foreground">
             The set is drawn on the same 24 grid and the same 2px keyline that
@@ -504,15 +500,15 @@ npm i -D @iconify/tailwind4
             <p>
               Each style is its own entry point in the package, so an app ships
               only the styles it imports. Code that imported duotone before
-              1.0.0 and wants the outlined look changes the path to two-tone. The sharp
-              corner treatment is one segment further along, and the export is
-              called the same thing at either path:
+              1.0.0 and wants the outlined look changes the path to two-tone.
+              The sharp corner treatment is one segment further along, and the
+              export is called the same thing at either path:
             </p>
             <Code>{importSample}</Code>
             <p>
               A name that does not exist is a build error rather than a blank
-              glyph, which is the better time to find out. Every style is
-              also on disk as plain SVG in the{" "}
+              glyph, which is the better time to find out. Every style is also
+              on disk as plain SVG in the{" "}
               <a
                 href={SET_REPO_URL}
                 target="_blank"
